@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Created with Inkscape (http://www.inkscape.org/)-->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg8"
+   width="15.25249mm"
+   height="51.10297mm"
+   class="element"
+   version="1.1"
+   viewBox="0 0 15.25249 51.10297"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="quarter_nuevo.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     fit-margin-bottom="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-top="0"
+     pagecolor="#ffffff"
+     showgrid="false"
+     inkscape:current-layer="layer1"
+     inkscape:cx="142.60314"
+     inkscape:cy="512.76522"
+     inkscape:document-units="mm"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:window-height="847"
+     inkscape:window-maximized="1"
+     inkscape:window-width="1600"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:zoom="0.60578002" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>
+                    image/svg+xml
+                </dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="translate(-67.269585,-233.06616)"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <g
+       class="note"
+       id="g6"
+       transform="matrix(0.18000433,0,0,0.18000433,55.160768,233.01746)">
+      <path
+         d="m 152.0036,238.43652 q 0,10.88871 -8.11704,22.56934 -8.513,11.08669 -21.97541,17.22397 -13.26444,5.9393 -25.934947,5.9393 -11.284671,0 -20.193621,-6.53323 -8.512997,-6.53323 -8.512997,-17.42195 0,-11.68062 8.512997,-22.76732 3.959533,-4.35548 9.700857,-8.90895 5.741324,-4.75144 12.670508,-9.3049 7.325133,-3.16763 13.264433,-4.55347 6.13728,-1.38583 11.8786,-1.38583 12.07658,0 21.38149,6.7312 V 0.27057129 h 7.32513 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:MusiSync;-inkscape-font-specification:MusiSync;stroke-width:10.1364069"
+         id="path10"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>
