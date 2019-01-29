@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import DrawingArea from '@/DrawingArea'
+import DrawingArea from '@/Drawing/DrawingArea'
 import Game from '@/Game'
 
 @Component

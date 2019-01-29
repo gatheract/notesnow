@@ -1,6 +1,6 @@
 import { Library } from 'svg.js'
 import AbstractMusicElement from '@/MusicElements/AbstractMusicElement'
-import {PianoKey} from './Notation/NoteConstants'
+import {PianoKey} from '@/Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
 
 const pianoImage = require('@/assets/images/piano_keys.svg')

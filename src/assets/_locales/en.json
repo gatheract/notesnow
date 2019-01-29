@@ -1,0 +1,9 @@
+{
+  "mainScreen": {
+    "title": "Note Snow",
+    "subtitle": "A sheet music note guessing game",
+    "startButton": "Start Playing",
+    "levelEasy": "Easy",
+    "levelHard": "Hard"
+  }
+}

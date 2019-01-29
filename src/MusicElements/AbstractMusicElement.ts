@@ -1,5 +1,5 @@
 import { G, Library } from 'svg.js'
-import DrawingArea from '../DrawingArea'
+import DrawingArea from '@/Drawing/DrawingArea'
 
 /**
  * All the music elements inserted into the canvas from an SVG drawing

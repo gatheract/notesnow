@@ -1,7 +1,7 @@
-import DrawingArea from './DrawingArea'
+import DrawingArea from './Drawing/DrawingArea'
 import Staff from './MusicElements/Staff'
 import Note from './MusicElements/Note'
-import PianoKeys from './PianoOctave'
+import PianoKeys from './MusicElements/PianoOctave'
 import KeyboardHelper from './KeyboardHelper'
 import {PianoKey} from './Notation/NoteConstants'
 import { NOTES_INFO } from './Notation/NotesInfo'
@@ -145,8 +145,6 @@ export default class Game {
     return noteGuess === this.activeNote!.getNoteRepresentation.key
   }
 
-
-
   /**
    * After enough right guesses go to a new level
    */
@@ -230,15 +228,12 @@ export default class Game {
       }
     }
   }
-
   
   /**
    * Adds a note to the staff
    */
-  private addNewNote() {
-    let note: PianoKey
-      
-    let noteData = this.staff.getRandomNote()
+  private addNewNote() {  
+    const noteData = this.staff.getRandomNote()
     this.activeNote = new Note(AllNotes[noteData.allNotesIndex])   
     
     this.activeNote.draw(
@@ -247,7 +242,6 @@ export default class Game {
       0.45,
     )
     
-    console.log(this.activeNote.width, AllNotes[noteData.allNotesIndex].pitch)
     this.activeNote.fadeIn(500)
   }
 

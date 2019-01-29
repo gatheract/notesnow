@@ -1,7 +1,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Sidebar from '@/components/Sidebar.vue'
-import MainScreen from '@/components/MainScreen.vue'
+import Sidebar from '@/Components/Sidebar.vue'
+import MainScreen from '@/Components/MainScreen.vue'
 
 @Component({
   components: {
@@ -16,9 +16,8 @@ export default class Home extends Vue { }
   display: flex;
 }
 #sidebar {
-  flex: 1;
-  max-width: 300px;
-  min-width: 300px;
+  
+  display: none;
 }
 </style>
 

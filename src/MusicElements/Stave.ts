@@ -1,4 +1,4 @@
-import DA from '../DrawingArea'
+import DA from '@/Drawing/DrawingArea'
 import { PolyLine } from 'svg.js'
 /**
  *  A line inside the staff, a stave!
