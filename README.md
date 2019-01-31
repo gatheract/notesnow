@@ -1,6 +1,6 @@
 # Notesnow
 
-###A sheet music note guessing game
+### A sheet music note guessing game
 
 ![](src/assets/images/logo.jpg?raw=true "")
 
