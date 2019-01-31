@@ -12,9 +12,9 @@ import * as enLocale from '@/assets/_locales/en.json'
 import * as esLocale from '@/assets/_locales/es.json'
 
 Vue.config.productionTip = false
-Vue.use(iView)
-Vue.use(VueI18n)
 
+Vue.use(VueI18n)
+Vue.use(iView)
 const i18n = new VueI18n({
   locale: 'en', 
   messages: {
