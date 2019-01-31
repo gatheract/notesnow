@@ -2,7 +2,7 @@
 
 ###A sheet music note guessing game
 
-![](assets/images/cyberscooty-stylised_piano.svg?raw=true "")
+![](src/assets/images/cyberscooty-stylised_piano.svg?raw=true "")
 
 Project setup
 ```
