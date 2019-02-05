@@ -2,7 +2,7 @@
   "mainScreen": {
     "title": "Note Snow",
     "subtitle": "Juego de adivinanza de notas musicales",
-    "startButton": "Jugar",
+    "startButton": "Comenzar",
     "levelEasy": "Fácil",
     "levelHard": "Difícil"
   }

@@ -17,6 +17,7 @@ export default class DrawingArea {
     public initialize() {
         this.drawing = SVG('drawing').size('100%', '100%')
         this.drawing.viewbox(0, 0, this.WINDOW_WIDTH, this.WINDOW_HEIGHT)
+        this.drawing.attr('preserveAspectRatio', 'xMidYMax meet')
     }
 
     public static get Instance() {

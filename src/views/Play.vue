@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="playView">
     <div id="drawing"></div>
   </div>
 </template>
@@ -9,15 +9,9 @@ import DrawingArea from '@/Drawing/DrawingArea'
 import Game from '@/Game'
 
 @Component
-export default class Play extends Vue {
-  public sel: string = 'xMidYMax meet'
-  
-  public cambio() {
-    DrawingArea.Instance.area.attr('preserveAspectRatio', this.sel)
-  }
+export default class Play extends Vue {  
   public mounted() {
     this.initialize()
-    this.cambio()
   }
   public initialize() {
     const dArea = DrawingArea.Instance
@@ -29,11 +23,16 @@ export default class Play extends Vue {
 }
 </script>
 <style lang="scss">
-#borrar{position: absolute} 
-#drawing {
+
+#playView{
+  
   height: 100%;
-  overflow: hidden;
+  max-height: 100vh;
+  min-height: 100vh;
 }
+
+
+#drawing > svg{height: 100vh}
 
 @font-face {
   font-family: "MusiSync";
