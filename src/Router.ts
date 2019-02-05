@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './Views/Home.vue'
+import Home from './Views/Home/Home.vue'
 import Play from './Views/Play.vue'
 import StaffSel from './Views/StaffSel/StaffSel.vue'
 
