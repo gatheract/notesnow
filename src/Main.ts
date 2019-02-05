@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './Router'
 import store from './Store/Store'
 import './registerServiceWorker'
 import iView from 'iview'
