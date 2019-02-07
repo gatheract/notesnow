@@ -7,7 +7,7 @@ export enum DifficultyLevel {
 
 export enum GameStaff {
   gStaff,
-  cStaff,
+  fStaff,
   both
 }
 

@@ -1,7 +1,7 @@
 <template >
   <div class="option" @click="select" v-bind:class="{ selected: isSelected }">
     <div class="optionText">{{selectedText}}</div>
-    <img class="imgResponsive" src="@/assets/images/gcleff_option.png" alt="">
+    <img class="imgResponsive" :src="'/assets/images/gcleff_option.png'" alt="">
   </div>  
 </template>
 <script lang="ts">
@@ -33,7 +33,7 @@ export default class StaffOption extends Vue {
   
   private type: GameStaff
   
-  private select(){
+  private select() {
     this.setStaff(this.type)
   }
     
@@ -41,17 +41,27 @@ export default class StaffOption extends Vue {
     return this.staffSelected === this.type
   }
   
-  get selectedText() {
-    switch(this.type){
+  get imgPath(): string {
+    switch (this.type) {
       case GameStaff.gStaff:
-        return this.$t('StaffOption.gCleff')
-      case GameStaff.cStaff:
-        return this.$t('StaffOption.cCleff')
+        return 'gcleff_option.png'
+      case GameStaff.fStaff:
+        return 'fcleff_option.png'
+      default:
+        return 'gcleff_option.png'
+    }
+  }
+  
+  get selectedText() {
+    switch (this.type) {
+      case GameStaff.gStaff:
+        return this.$t('StaffOption.gClef')
+      case GameStaff.fStaff:
+        return this.$t('StaffOption.fClef')
       default:
         return this.$t('StaffOption.both')
     }
   }
-
 }
 </script>
 
@@ -81,6 +91,6 @@ export default class StaffOption extends Vue {
   .imgResponsive{
     width: 100%;
     height: auto;
-    max-height: 100%;
+    max-height: 100px;
   }
 </style>

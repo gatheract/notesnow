@@ -1,4 +1,31 @@
-h1 {
+h1.title {
   color: black;
-  font-size: 30px;
+  font-family: "Arial", sans-serif;
+  font-size: 54px;
+  font-weight: 600;
+  line-height: 58px;
+}
+h2.subtitle {
+  color: #7c795d;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+body{
+  border: solid 2px black;
+  min-height: 100vh; 
+  max-height: 100vh;
+  height: 100%;
+}
+
+.titleContainer{
+  margin-bottom: 5vh;
+  width: 100%;
+  text-align: center;
+}
+
+.mainContainer{
+  padding: 10px 30px;
 }

@@ -1,16 +1,17 @@
 <template>
   <div class="mainContainer">
     <div class="logoArea">
-      <h1 class="title">{{$t("mainScreen.title")}}</h1>
-      <h2 class="subtitle">{{$t("mainScreen.subtitle")}}</h2>
+      <div class="titleContainer">
+        <h1 class="title">{{$t("mainScreen.title")}}</h1>
+        <h2 class="subtitle">{{$t("mainScreen.subtitle")}}</h2>  
+      </div>      
       <HomeLogo></HomeLogo>
-    </div>
-    
+    </div>    
     <LevelSelect class="levelArea"></LevelSelect>
     <Button
-      v-on:click="startGame"
+      v-on:click="levelSelect"
       size="large"
-      id="gameStart"
+      id="levelSelect"
       type="error"
     >{{$t("mainScreen.startButton")}}</Button>
   </div>
@@ -21,45 +22,26 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import HomeLogo from './Components/HomeLogo.vue'
 import LevelSelect from './Components/LevelSelect.vue'
 @Component({
-  components:{
+  components: {
     HomeLogo,
     LevelSelect
   }
 })
-export default class GamerContainer extends Vue {
-  
-  
-  private startGame() {
+export default class Home extends Vue {
+  private levelSelect() {
     this.$router.push('staffsel')
   }
-
 }
 </script>
 
 <style scoped lang="scss">
-h1.title {
-  color: black;
-  font-family: "Arial", sans-serif;
-  font-size: 54px;
-  font-weight: 600;
-  line-height: 58px;
-}
-h2.subtitle {
-  color: #7c795d;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 32px;
-}
-
 .mainContainer {
   background: white;
   margin: 0 auto;
   width: 100%;
   text-align: center;
   height: 100%;
-  padding: 10px 30px;
-  border: solid 2px black;
+  
   min-height: 100vh;
 }
 .logoArea {

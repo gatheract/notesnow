@@ -1,35 +1,37 @@
-import Stave from './Stave'
-import CleffG from './CleffG'
-import NotesGenerator from '../Notation/NotesGenerator'
-import { NotePitch, Alterations, PentegramNote } from '../Notation/NoteConstants'
-import { NoteData, getNotePitchMod, AllNotes } from '../Notation/NoteData'
+import Stave from '../Stave'
+
+import { PentegramNote } from '../../Notation/NoteConstants'
+import { AllNotes } from '../../Notation/NoteData'
 import { Library } from 'svg.js'
-import Note from './Note'
 
 interface INotePosition {
     yPosition: number
     allNotesIndex: number
 }
 
-export default class Staff {
+export default abstract class Staff {
+    
     public xEnd: number
     public notePositions: INotePosition[] = [] 
     public usableNotePositions: INotePosition[] = [] 
     public noteMask: Library['Mask']
     public readonly NOTE_Y_FIX = 76
+    
+    protected x: number
+    protected y: number
+    
     private lines: number = 5
     private readonly STAVE_SEPARATION: number = 25
     private readonly NOTE_SEPARATION: number = this.STAVE_SEPARATION / 2    
-    private size: number
-    private x: number
-    private y: number
+    private size: number    
+    
     private staves: Stave[]
     private noteHeight: number
 
     /* Magic number to make the font work with the size of staff */
     private readonly EXTRA_NOTES_BELOW_STAFF = 10
-
-    constructor() {
+    
+    public constructor() {
         this.staves = []
     }
     
@@ -58,14 +60,13 @@ export default class Staff {
 
         this.generatePositions()
         
-        const cleffG = new CleffG()
-        cleffG.draw(this.x, 55, 0.5)
+        this.drawClef()
     }
     
     public getRandomStaffNote() {
         return 1
     }
-
+    protected abstract drawClef(): void
     /**
      * Generate an array with all the possible note pitches and their corresponding
      * Y value inside the canvas
@@ -120,4 +121,5 @@ export default class Staff {
             }            
         }
     }    
+    
 }

@@ -46,7 +46,6 @@ export default class HomeLogo extends Vue {
 
 <style scoped lang="scss">
 .svgContainer {
-  padding-top: 5vh;
   height: 100%;
   width: 100%;
   margin: 0 auto;

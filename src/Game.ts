@@ -1,13 +1,13 @@
 import DrawingArea from './Drawing/DrawingArea'
-import Staff from './MusicElements/Staff'
+import StaffFactory from './MusicElements/Staff/StaffFactory'
+import AbstractStaff from './MusicElements/Staff/AbstractStaff'
 import Note from './MusicElements/Note'
 import PianoKeys from './MusicElements/PianoOctave'
-import KeyboardHelper from './KeyboardHelper'
 import {PianoKey} from './Notation/NoteConstants'
-import { NOTES_INFO } from './Notation/NotesInfo'
-import NotesGenerator from './Notation/NotesGenerator'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
 import { AllNotes } from './Notation/NoteData'
+import { GameStaff, DifficultyLevel } from '@/Store/Modules/Settings/Types'
+
 const PIANO_PRESSED_EVENT = 'pianopressed'
 const PIANO_RELEASED_EVENT = 'pianoreleased'
 
@@ -16,13 +16,14 @@ export default class Game {
   protected animFrame: number
   protected running: boolean
   protected activeNote?: Note
-  protected staff: Staff
+  protected staff: AbstractStaff
   protected pianoKeys: PianoKeys
   protected levelRunning: boolean
   private readonly GUESSES_PER_LEVEL = 2
   private readonly NOTE_BASE_SPEED = 2
   private readonly NOTE_SPEED_INCREMENT = 0.5
-
+  private gameStaff: GameStaff
+  private difficultyLevel: DifficultyLevel
   private stats: {
     right: number
     wrong: number
@@ -46,6 +47,11 @@ export default class Game {
     J: PianoKey.A_MOD,
     M: PianoKey.B
   }
+  
+  public constructor(staff: GameStaff, level: DifficultyLevel) {
+    this.gameStaff = staff
+    this.difficultyLevel = level
+  }
 
   /**
    *
@@ -53,13 +59,14 @@ export default class Game {
    *
    */
   public start() {
+    DrawingArea.Instance.initialize()
     this.addKeyListeners()
     this.running = true
     this.fillScreen()
     this.newLevel()
     this.mainLoop(0)
   }
-
+  
   /**
    * Finisih the game
    */
@@ -73,7 +80,7 @@ export default class Game {
    */
   private fillScreen() {
     const dArea = DrawingArea.Instance
-    this.staff = new Staff()
+    this.staff = StaffFactory.createStaff(this.gameStaff)
     this.pianoKeys = new PianoKeys()
     this.staff.draw(0, 100, dArea.WINDOW_WIDTH, Note.NOTE_HEIGHT)
     this.pianoKeys.draw(

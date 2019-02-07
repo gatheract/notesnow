@@ -7,8 +7,11 @@
     "levelHard": "Hard"
   },
   "StaffOption": {
-    "gCleff": "G Cleff",
-    "cCleff": "C Cleff",
-    "both": "G and C Cleff"
+    "gClef": "G Clef",
+    "fClef": "F Clef",
+    "both": "G and F Clef"
+  },
+  "StaffSel": {
+    "start": "Start Playing"
   }
 }
