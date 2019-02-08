@@ -17,6 +17,7 @@ export default abstract class Staff {
     public noteMask: Library['Mask']
     public readonly NOTE_Y_FIX = 76
     
+    protected abstract startingPitch: string
     protected x: number
     protected y: number
     
@@ -29,7 +30,7 @@ export default abstract class Staff {
     private noteHeight: number
 
     /* Magic number to make the font work with the size of staff */
-    private readonly EXTRA_NOTES_BELOW_STAFF = 10
+    private readonly EXTRA_NOTES_BELOW_STAFF = 10    
     
     public constructor() {
         this.staves = []
@@ -78,7 +79,7 @@ export default abstract class Staff {
         const g4Position = this.staves[3].getY() - this.NOTE_Y_FIX
                
         const g4Index = AllNotes.findIndex((element) => {
-            return element.pitch === 'G4'
+            return element.pitch === this.startingPitch
         })      
         let staffPos: number = 0             
         let staveCount: number = 0

@@ -73,6 +73,7 @@ export default class Game {
   public stop() {
     this.running = false
     this.removeKeyListeners()
+    DrawingArea.Instance.destroy()
   }
 
   /**

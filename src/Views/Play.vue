@@ -19,9 +19,15 @@ export default class Play extends Vue {
   @settingsModule.Getter(STAFF_SELECTED)
   private staffSelected: GameStaff
   
+  private game: Game
+  
   public mounted() {
-    const game = new Game(this.staffSelected, this.difficultyLevel)
-    game.start()
+    this.game = new Game(this.staffSelected, this.difficultyLevel)
+    this.game.start()
+  }
+  
+  public beforeDestroy() {
+    this.game.stop()
   }
 }
 </script>

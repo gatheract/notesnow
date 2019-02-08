@@ -5,7 +5,7 @@ export default class DrawingArea {
     public readonly WINDOW_WIDTH = 800
     public readonly WINDOW_HEIGHT = 1000
 
-    private drawing: SVG.Doc
+    private drawing: SVG.Doc 
 
     private constructor() {
     }
@@ -22,5 +22,9 @@ export default class DrawingArea {
 
     public static get Instance() {
         return this.instance || (this.instance = new this())
+    }
+    
+    public destroy() {
+        this.drawing.remove()
     }
 }

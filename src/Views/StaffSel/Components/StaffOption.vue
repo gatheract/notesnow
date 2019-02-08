@@ -1,6 +1,6 @@
 <template >
   <div class="option" @click="select" v-bind:class="{ selected: isSelected }">
-    <div class="optionText">{{selectedText}}</div>
+    <!-- <div class="optionText">{{selectedText}}</div> -->
     <img class="imgResponsive" :src="imgPath" alt="">
   </div>  
 </template>
@@ -12,6 +12,7 @@ import { SET_STAFF } from '@/Store/Modules/Settings/Actions'
 import { STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
 const imgGStaff = require('@/assets/images/g_staff_option.png')
 const imgFStaff = require('@/assets/images/f_staff_option.png')
+const imgBoth = require('@/assets/images/both_staff_option.png')
 
 const settingsModule = namespace('Settings')
 
@@ -48,11 +49,15 @@ export default class StaffOption extends Vue {
         return imgGStaff
       case GameStaff.fStaff:
         return imgFStaff
-      default:
-        return imgFStaff
+      case GameStaff.both:
+        return imgBoth
     }
   }
   
+  /**
+   * Doesn't look good
+   * @deprecated
+   */
   get selectedText() {
     switch (this.type) {
       case GameStaff.gStaff:
@@ -72,7 +77,7 @@ export default class StaffOption extends Vue {
     border: 1px solid transparent;    
     padding: 5px;
     position: relative;
-    font-size: 14px;
+    
     font-weight: 700;
     color: black;
     transition: all 0.3s;
@@ -87,7 +92,8 @@ export default class StaffOption extends Vue {
   .optionText{
     position: absolute;
     right: 10px;  
-    z-index: 9999
+    z-index: 9999;
+    font-size: 10px;
   }
   .imgResponsive{
     width: 100%;

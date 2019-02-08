@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContainer">
+  <MainContainer>
     <div class="logoArea">
       <div class="titleContainer">
         <h1 class="title">{{$t("mainScreen.title")}}</h1>
@@ -14,17 +14,19 @@
       id="levelSelect"
       type="error"
     >{{$t("mainScreen.startButton")}}</Button>
-  </div>
+  </MainContainer>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 import HomeLogo from './Components/HomeLogo.vue'
 import LevelSelect from './Components/LevelSelect.vue'
+import MainContainer from '@/Components/Template/MainContainer.vue'
 @Component({
   components: {
     HomeLogo,
-    LevelSelect
+    LevelSelect,
+    MainContainer
   }
 })
 export default class Home extends Vue {
@@ -35,15 +37,7 @@ export default class Home extends Vue {
 </script>
 
 <style scoped lang="scss">
-.mainContainer {
-  background: white;
-  margin: 0 auto;
-  width: 100%;
-  text-align: center;
-  height: 100%;
-  
-  min-height: 100vh;
-}
+
 .logoArea {
   height: 65vh;
   display: flex;

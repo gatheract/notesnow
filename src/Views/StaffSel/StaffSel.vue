@@ -1,5 +1,5 @@
 <template>
-  <div class="staffScreen mainContainer">
+  <MainContainer>
     <div class="titleContainer">
       <h1 class="title">{{$t("mainScreen.title")}}</h1>
       <h2 class="subtitle">{{$t("mainScreen.subtitle")}}</h2>
@@ -22,8 +22,8 @@
         id="gameStart"
         type="error"
       >{{$t("StaffSel.start")}}</Button>
-    </div>    
-  </div>
+    </div>  
+  </MainContainer>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
@@ -32,11 +32,13 @@ import { namespace } from 'vuex-class'
 import { DIFFICULTY_LEVEL } from '@/Store/Modules/Settings/Getters'
 import { SET_DIFFICULTY } from '@/Store/Modules/Settings/Actions'
 import StaffOption from './Components/StaffOption.vue'
+import MainContainer from '@/Components/Template/MainContainer.vue'
 const settingsModule = namespace('Settings')
 
 @Component({
   components: {
-    StaffOption
+    StaffOption,
+    MainContainer
   }
 })
 export default class StaffSel extends Vue {

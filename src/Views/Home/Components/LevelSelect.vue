@@ -16,7 +16,7 @@
       </RadioGroup>
     </div>
     <div id="levelSelect">
-      <Select v-bind:value="difficultyLevel" style="width:200px">
+      <Select v-bind:value="difficultyLevel" class="selectElem">
         <Option
           :value="DifficultyLevel.easy"
           :key="DifficultyLevel.easy"
@@ -57,6 +57,10 @@ export default class LevelSelect extends Vue {
 </script>
 
 <style scoped lang="scss">
+
+.selectElem{
+  max-width:200px;
+}
 
 #levelSelect {
   display: none;
