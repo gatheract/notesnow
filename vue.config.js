@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = { 
   chainWebpack: config => {    
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
@@ -12,4 +12,8 @@ module.exports = {
       .end()
     
   },
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/notesnow/'
+    : '/',
+  productionSourceMap: false
 }
