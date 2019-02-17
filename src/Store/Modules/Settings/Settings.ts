@@ -7,7 +7,8 @@ import { RootState } from '../../Types'
 
 export const state: SettingsState = {
     difficultyLevel: DifficultyLevel.hard,
-    staffSelected: GameStaff.gStaff    
+    staffSelected: GameStaff.gStaff,
+    initialMistakesAllowed: 10
 }
 
 export const settings: Module<SettingsState, RootState> = {

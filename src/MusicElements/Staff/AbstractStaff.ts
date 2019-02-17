@@ -2,37 +2,36 @@ import Stave from '../Stave'
 
 import { PentegramNote } from '../../Notation/NoteConstants'
 import { AllNotes } from '../../Notation/NoteData'
-import { Library } from 'svg.js'
+import { Library, G } from 'svg.js'
+import DrawingArea from '@/Drawing/DrawingArea'
+import AbstractMusicElement from '@/MusicElements/AbstractMusicElement'
 
 interface INotePosition {
     yPosition: number
     allNotesIndex: number
 }
 
-export default abstract class Staff {
-    
+export default abstract class Staff extends AbstractMusicElement {
     public xEnd: number
     public notePositions: INotePosition[] = [] 
     public usableNotePositions: INotePosition[] = [] 
     public noteMask: Library['Mask']
+    public readonly Y_POSITION = 100
     public readonly NOTE_Y_FIX = 76
-    
+    protected readonly NUMBER_LINES: number = 5
     protected abstract startingPitch: string
     protected x: number
-    protected y: number
+    protected y: number    
     
-    private lines: number = 5
-    private readonly STAVE_SEPARATION: number = 25
-    private readonly NOTE_SEPARATION: number = this.STAVE_SEPARATION / 2    
-    private size: number    
+    protected readonly STAVE_SEPARATION: number = 25
+    protected readonly NOTE_SEPARATION: number = this.STAVE_SEPARATION / 2    
+    protected size: number    
     
-    private staves: Stave[]
-    private noteHeight: number
-
-    /* Magic number to make the font work with the size of staff */
-    private readonly EXTRA_NOTES_BELOW_STAFF = 10    
+    protected staves: Stave[]
+    protected noteHeight: number
     
     public constructor() {
+        super()
         this.staves = []
     }
     
@@ -42,37 +41,41 @@ export default abstract class Staff {
     }
 
     public draw(x: number, y: number, size: number, noteHeight: number) {
+        
         this.x = x
         this.y = y
         this.size = size
         this.xEnd = this.x + this.size
         this.noteHeight = noteHeight
         
-        for (let a = 0; a < this.lines; a++) {
+        for (let a = 0; a < this.NUMBER_LINES; a++) {
+            if (a === 5) {
+                /**
+                 * when there are two staffs the 5th line is invisible
+                 * in the middle of both
+                 */
+                continue
+              }
             const startX = this.x
             const endX = this.x + this.size
             const yPosition = this.y + (this.STAVE_SEPARATION * a)
             
-            const stave = new Stave()
+            const stave = new Stave(this)
             
             stave.draw(startX, endX, yPosition)
             this.staves.push(stave)
         }
 
         this.generatePositions()
-        
         this.drawClef()
     }
     
-    public getRandomStaffNote() {
-        return 1
-    }
     protected abstract drawClef(): void
     /**
      * Generate an array with all the possible note pitches and their corresponding
      * Y value inside the canvas
      */
-    private generatePositions() {
+    protected generatePositions() {
         /**
          * First set a starting point (g for the key of g!)
          */
@@ -117,7 +120,7 @@ export default abstract class Staff {
             staffPos = g4Position - (staveCount * this.NOTE_SEPARATION)            
             const data = {allNotesIndex: a, yPosition: staffPos}
             this.notePositions.push(data)
-            if (staffPos > this.noteHeight) {
+            if (staffPos > 0) { // alternate staffPos > this.noteHeight
                 this.usableNotePositions.push(data)
             }            
         }

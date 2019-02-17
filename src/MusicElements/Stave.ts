@@ -1,31 +1,40 @@
-import DA from '@/Drawing/DrawingArea'
-import { PolyLine } from 'svg.js'
+import { PolyLine, G } from 'svg.js'
+import DrawingArea from '@/Drawing/DrawingArea'
+import AbstractMusicElement from './AbstractMusicElement'
+import AbstractStaff from '@/MusicElements/Staff/AbstractStaff'
 /**
  *  A line inside the staff, a stave!
  */
-export default class Stave {
-    private element: PolyLine
-    private y: number
+export default class Stave extends AbstractMusicElement {
+    protected staff: AbstractStaff
+    private y: number      
+     
+    constructor(staff: AbstractStaff) {
+        super()
+        this.staff = staff
+        this.staff.getGroup().add(this.group)
+    }
     
     public getY() {
         return this.y
     }
     
     /**
-     * The two set of coordinates represent the begining and end
-     * of the line
-     * @param startX
-     * @param startY
-     * @param endX
-     * @param endY
+     * X origin / end coordinates and Y position
+     * @param xStart 
+     * @param xEnd 
+     * @param y 
      */
-    public draw(startX: number, endX: number, yPosition: number) {
-        this.y = yPosition
-        this.element = DA.Instance.area.polyline(
+    public draw(xStart: number, xEnd: number, y: number) {
+        this.y = y
+        
+        const element = DrawingArea.Instance.area.polyline(
             [
-                [startX, yPosition],
-                [endX, yPosition]
+                [xStart, y],
+                [xEnd, y]
             ]
         ).fill('none').stroke({ width: 1 })
+        
+        this.group.add(element)
     }
 }

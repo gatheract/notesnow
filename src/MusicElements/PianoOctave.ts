@@ -1,5 +1,5 @@
 import { Library } from 'svg.js'
-import AbstractMusicElement from '@/MusicElements/AbstractMusicElement'
+import AbstractMusicElement from '@/MusicElements/AbstractMusicDrawing'
 import {PianoKey} from '@/Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
 

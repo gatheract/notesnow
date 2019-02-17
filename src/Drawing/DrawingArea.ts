@@ -2,7 +2,7 @@ import SVG = require('svg.js')
 
 export default class DrawingArea {
     private static instance: DrawingArea
-    public readonly WINDOW_WIDTH = 800
+    public readonly WINDOW_WIDTH = 900
     public readonly WINDOW_HEIGHT = 1000
 
     private drawing: SVG.Doc 

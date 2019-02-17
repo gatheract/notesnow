@@ -1,7 +1,8 @@
 import { G } from 'svg.js'
-import {NotePitch, Alterations} from '@/Notation/NoteConstants'
-import {getNotePitchMod, INoteData} from '@/Notation/NoteData'
-import AbstractMusicElement from './AbstractMusicElement'
+import { Alterations} from '@/Notation/NoteConstants'
+import { INoteData} from '@/Notation/NoteData'
+import AbstractMusicElement from './AbstractMusicDrawing'
+import AbstractStaff from '@/MusicElements/Staff/AbstractStaff'
 const noteSVG = require('@/assets/images/quarter.svg')
 const noteSharpSVG = require('@/assets/images/quarter_sharp.svg')
 const noteFlatSVG = require('@/assets/images/quarter_flat.svg')
@@ -29,7 +30,8 @@ export default class Note extends AbstractMusicElement {
                     throw new Error('Note not defined')
             }
         })())
-        this.noteRepresentation = note        
+        this.noteRepresentation = note
+        
     }
     
     public get getNoteRepresentation(): INoteData {

@@ -37,6 +37,7 @@ export default class Play extends Vue {
   height: 100%;
   max-height: 100vh;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 #drawing > svg{height: 100vh}

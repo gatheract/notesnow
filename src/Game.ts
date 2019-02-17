@@ -1,17 +1,16 @@
 import DrawingArea from './Drawing/DrawingArea'
 import StaffFactory from './MusicElements/Staff/StaffFactory'
 import AbstractStaff from './MusicElements/Staff/AbstractStaff'
+import ProgressMeter from '@/GameElements/ProgressMeter'
+import LevelBanner from '@/GameElements/LevelBanner'
 import Note from './MusicElements/Note'
 import PianoKeys from './MusicElements/PianoOctave'
 import {PianoKey} from './Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
 import { AllNotes } from './Notation/NoteData'
 import { GameStaff, DifficultyLevel } from '@/Store/Modules/Settings/Types'
-
-const PIANO_PRESSED_EVENT = 'pianopressed'
-const PIANO_RELEASED_EVENT = 'pianoreleased'
-
-export default class Game {
+import GameStore from '@/GameStore'
+export default class Game  {
   protected lastTime: number
   protected animFrame: number
   protected running: boolean
@@ -19,6 +18,8 @@ export default class Game {
   protected staff: AbstractStaff
   protected pianoKeys: PianoKeys
   protected levelRunning: boolean
+  protected progressMeter: ProgressMeter
+    
   private readonly GUESSES_PER_LEVEL = 2
   private readonly NOTE_BASE_SPEED = 2
   private readonly NOTE_SPEED_INCREMENT = 0.5
@@ -58,8 +59,9 @@ export default class Game {
    * Let the games begin
    *
    */
-  public start() {
+  public start() {    
     DrawingArea.Instance.initialize()
+    GameStore.setClearStats()
     this.addKeyListeners()
     this.running = true
     this.fillScreen()
@@ -83,12 +85,14 @@ export default class Game {
     const dArea = DrawingArea.Instance
     this.staff = StaffFactory.createStaff(this.gameStaff)
     this.pianoKeys = new PianoKeys()
-    this.staff.draw(0, 100, dArea.WINDOW_WIDTH, Note.NOTE_HEIGHT)
+    this.staff.draw(0, 150, dArea.WINDOW_WIDTH, Note.NOTE_HEIGHT)
     this.pianoKeys.draw(
       dArea.WINDOW_WIDTH / 2 - this.pianoKeys.width / 2,
       dArea.WINDOW_HEIGHT - this.pianoKeys.height,
       1
     )
+    this.progressMeter = new ProgressMeter()
+    this.progressMeter.draw(dArea.WINDOW_WIDTH / 2, 0)
   }
 
   /**
@@ -136,7 +140,7 @@ export default class Game {
     const correct = this.checkCorrectGuess(note)
     this.pianoKeys.keyPress(note, correct)
 
-    correct ? this.rightGuess() : this.wrongGuess()
+    this.newGuess(correct)
 
     this.checkCurrentLevel()
   }
@@ -166,18 +170,11 @@ export default class Game {
    * Show a text with the current level
    */
   private showLevelBanner() {
-    const width = 400
-    const height = 150
-
-    const text = DrawingArea.Instance.area
-      .text('Level ' + this.level)
-      .font({ family: 'Arial', size: 70, leading: '1.5em' })
-      .opacity(0)
-    text.x(DrawingArea.Instance.WINDOW_WIDTH / 2 - text.bbox().w / 2)
-    text.y(DrawingArea.Instance.WINDOW_HEIGHT / 2 - text.bbox().h / 2)
-
-    text.animate().attr({ opacity: 1 })
-    return text.animate().attr({ opacity: 0 })
+    return LevelBanner.draw(
+      this.level, 
+      DrawingArea.Instance.WINDOW_WIDTH / 2, 
+      DrawingArea.Instance.WINDOW_HEIGHT / 2
+      )
   }
 
   /**
@@ -190,20 +187,12 @@ export default class Game {
       this.levelRunning = true
     })
   }
-
-  /**
-   * Correct try removes the note
-   */
-  private rightGuess() {
-    this.stats.right++
-    this.removeCurrentNote()
-  }
-
-  /**
-   * Wrong guess or when the note exits the staff
-   */
-  private wrongGuess() {
-    this.stats.wrong++
+  
+  private newGuess(correct: boolean) {
+    if (correct) {
+      this.removeCurrentNote()
+    } 
+    GameStore.setNewGuess(correct)
   }
 
   /**
@@ -226,12 +215,12 @@ export default class Game {
       // kconsole.log(this.activeNote.width, this.staff.xEnd)
       if (
         (!this.activeNote.fadingOut) 
-        && (this.activeNote.x() > this.staff.xEnd - (this.activeNote.width * 3))) {
+        && (this.activeNote.getX() > this.staff.xEnd - (this.activeNote.width * 3))) {
           this.activeNote.fadeOutNote()
       }
       
-      if (this.activeNote.x() + this.activeNote.width > this.staff.xEnd) {
-        this.wrongGuess()
+      if (this.activeNote.getX() + this.activeNote.width > this.staff.xEnd) {
+        this.newGuess(false)
         this.removeCurrentNote()
       }
     }

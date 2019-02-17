@@ -1,4 +1,4 @@
-import AbstractMusicElement from './AbstractMusicElement'
+import AbstractMusicElement from './AbstractMusicDrawing'
 
 const clefSVG = require('@/assets/images/clefg.svg')
 
