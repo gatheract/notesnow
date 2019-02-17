@@ -1,6 +1,6 @@
 {
-  "name": "sheetfront",
-  "short_name": "sheetfront",
+  "name": "Note Snow",
+  "short_name": "notesnow",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
