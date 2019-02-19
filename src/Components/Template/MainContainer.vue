@@ -14,7 +14,7 @@ export default class MainContainer extends Vue {
 
 <style scoped lang="scss">
   .mainContainer{
-    box-shadow: inset 3px 3px black, inset 3px -3px black, inset -3px 3px black;
+    // box-shadow: inset 3px 3px black, inset 3px -3px black, inset -3px 3px black;
     background: white;
     margin: 0 auto;
     width: 100%;
