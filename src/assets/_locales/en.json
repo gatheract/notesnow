@@ -12,6 +12,18 @@
     "both": "G and F Clef"
   },
   "StaffSel": {
-    "start": "Start Playing"
+    "start": "Start Playing",
+    "title": "Select the staff you would like to play"
+  },
+  "GameOver": {
+    "title": "Game Over",
+    "subtitle": "Level",
+    "home": "Home",
+    "playAgain": "Play Again"
+  },
+  "Hamburguer":{
+    "home": "Home",
+    "settings": "Settings",
+    "github": "Github Repository"
   }
 }
