@@ -5,11 +5,12 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import Game from '@/Game'
+import Game from '@/Game/Game'
 import { namespace } from 'vuex-class'
 import { DIFFICULTY_LEVEL, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
 import { DifficultyLevel, GameStaff } from '@/Store/Modules/Settings/Types'
 const settingsModule = namespace('Settings')
+import { EventBus, GAME_OVER } from '@/EventBus'
 
 @Component
 export default class Play extends Vue {  
@@ -22,12 +23,19 @@ export default class Play extends Vue {
   private game: Game
   
   public mounted() {
-    this.game = new Game(this.staffSelected, this.difficultyLevel)
+    EventBus.$on(GAME_OVER, this.gameOver.bind(this))
+    this.game = new Game()
     this.game.start()
+    
   }
   
   public beforeDestroy() {
     this.game.stop()
+    EventBus.$off(GAME_OVER)
+  }
+  
+  private gameOver() {
+    this.$router.push('over')
   }
 }
 </script>

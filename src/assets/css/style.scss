@@ -17,6 +17,12 @@ body{
   min-height: 100vh; 
   max-height: 100vh;
   height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  height: 100%;
 }
 
 .titleContainer{
@@ -27,4 +33,8 @@ body{
 
 .mainContainer{
   padding: 10px 30px;
+}
+
+.contentContainer{
+  height: 80vh;
 }

@@ -8,7 +8,9 @@ import { RootState } from '../../Types'
 export const state: StatsState = {
     right: 0,
     wrong: 0,
-    level: 1
+    level: 1,
+    notesAdded: 0,
+    levelNotes: 0
 }
 
 export const stats: Module<StatsState, RootState> = {

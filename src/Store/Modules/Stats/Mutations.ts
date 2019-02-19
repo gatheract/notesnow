@@ -1,31 +1,27 @@
 import { MutationTree } from 'vuex'
 import { StatsState } from './Types'
-import { GAME_SCORE_CHANGE, EventBus } from '@/EventBus'
 
-export const MUT_NEW_TRY = 'MUT_TRY'
 export const MUT_LEVEL = 'MUT_LEVEL'
-export const MUT_CLEAR_STATS = 'MUT_CLEAR_STATS'
+export const MUT_NOTES_ADDED = 'MUT_NOTE_ADDED'
+export const MUT_LEVEL_NOTES = 'MUT_LEVEL_NOTES'
+export const MUT_RIGHT = 'MUT_RIGHT'
+export const MUT_WRONG = 'MUT_WRONG'
 
 export const mutations: MutationTree<StatsState> = {
-    [MUT_NEW_TRY](state, right: boolean) {
-        
-        if (right === true) {
-            state.right += 1
-        } else {
-            state.wrong += 1
-        }
-        EventBus.$emit(GAME_SCORE_CHANGE)
-    },    
     [MUT_LEVEL](state, level: number) {
-        if (level < 1 ){
-            throw new Error('Invalid level')
-        }
         state.level = level
+        state.levelNotes = 0
     },
-    [MUT_CLEAR_STATS](state) {
-        EventBus.$emit(GAME_SCORE_CHANGE)
-        state.wrong = 0
-        state.right = 0
-        state.level = 1
-    },      
+    [MUT_NOTES_ADDED](state, notesAdded) {
+        state.notesAdded = notesAdded
+    },
+    [MUT_LEVEL_NOTES](state, levelNotes) {
+        state.levelNotes = levelNotes
+    },
+    [MUT_RIGHT](state, right: number) {
+        state.right = right
+    },
+    [MUT_WRONG](state, wrong: number) {
+        state.wrong = wrong
+    },
 }

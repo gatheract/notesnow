@@ -3,12 +3,12 @@
  * not to have to look at them
  */
 import { LEVEL, RIGHT_GUESSES, WRONG_GUESSES, PROGRESS } from '@/Store/Modules/Stats/Getters'
-import { INITIAL_MISTAKES_ALLOWED } from '@/Store/Modules/Settings/Getters'
+import { INITIAL_MISTAKES_ALLOWED, BASE_SPEED, SPEED_INCREMENT, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
 import { SET_CLEAR_STATS, SET_NEW_TRY } from '@/Store/Modules/Stats/Actions'
 import Store from '@/Store/Store'
 
 const statsModule = 'Stats/'
-const settingsModule = 'Stats/'
+const settingsModule = 'Settings/'
 
 export default class GameStore {
   public static getWrongGuesses() {
@@ -20,8 +20,20 @@ export default class GameStore {
   public static getInitialMistakesAllowed() {
     return Store.getters[settingsModule + INITIAL_MISTAKES_ALLOWED]
   }
-  public static getProgress(){
+  public static getProgress() {
     return Store.getters[statsModule + PROGRESS]
+  }
+  public static getBaseSpeed() {
+    return Store.getters[settingsModule + BASE_SPEED]
+  }
+  public static getSpeedIncrement() {
+    return Store.getters[settingsModule + SPEED_INCREMENT]
+  }
+  public static getStaffSelected() {
+    return Store.getters[settingsModule + STAFF_SELECTED]
+  }
+  public static getLevel() {
+    return Store.getters[statsModule + LEVEL]
   }
   public static setNewGuess(right: boolean) {
     Store.dispatch(statsModule + SET_NEW_TRY, right)

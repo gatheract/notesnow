@@ -1,17 +1,17 @@
 <template>
   <MainContainer>
-    <div class="logoArea">
+    <div class="contentContainer logoArea">
       <div class="titleContainer">
         <h1 class="title">{{$t("mainScreen.title")}}</h1>
         <h2 class="subtitle">{{$t("mainScreen.subtitle")}}</h2>  
       </div>      
       <HomeLogo></HomeLogo>
+      <LevelSelect class="levelArea"></LevelSelect>
     </div>    
-    <LevelSelect class="levelArea"></LevelSelect>
+    
     <Button
       v-on:click="levelSelect"
       size="large"
-      id="levelSelect"
       type="error"
     >{{$t("mainScreen.startButton")}}</Button>
   </MainContainer>
@@ -39,7 +39,6 @@ export default class Home extends Vue {
 <style scoped lang="scss">
 
 .logoArea {
-  height: 65vh;
   display: flex;
   flex-direction: column;
 }

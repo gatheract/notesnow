@@ -14,5 +14,8 @@ export enum GameStaff {
 export interface SettingsState {
   difficultyLevel: DifficultyLevel
   staffSelected: GameStaff,
-  initialMistakesAllowed: number
+  initialMistakesAllowed: number,
+  notesPerLevel: number,
+  baseSpeed: number,
+  speedIncrement: number
 }

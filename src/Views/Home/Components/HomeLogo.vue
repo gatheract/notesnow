@@ -19,7 +19,9 @@ export default class HomeLogo extends Vue {
   private mounted() {
     this.insertPiano()
   }
-    
+  private beforeDestroy() {
+    this.drawing.remove()
+  }
   /**
    * Draw a little svg piano 
    */

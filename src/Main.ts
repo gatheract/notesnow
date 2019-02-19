@@ -6,7 +6,6 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import './assets/css/style.scss'
 import VueI18n from 'vue-i18n'
-
 import * as enLocale from '@/assets/_locales/en.json'
 import * as esLocale from '@/assets/_locales/es.json'
 

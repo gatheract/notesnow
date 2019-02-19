@@ -1,7 +1,7 @@
 import DrawingArea from '@/Drawing/DrawingArea'
 import { GAME_SCORE_CHANGE, EventBus } from '@/EventBus'
 import { Library } from 'svg.js'
-import GameStore from '@/GameStore'
+import GameStore from '@/Game/GameStore'
 
 /**
  * Draw a status bar on top of the screen

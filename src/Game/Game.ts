@@ -1,15 +1,15 @@
-import DrawingArea from './Drawing/DrawingArea'
-import StaffFactory from './MusicElements/Staff/StaffFactory'
-import AbstractStaff from './MusicElements/Staff/AbstractStaff'
+import DrawingArea from '../Drawing/DrawingArea'
+import StaffFactory from '../MusicElements/Staff/StaffFactory'
+import AbstractStaff from '../MusicElements/Staff/AbstractStaff'
 import ProgressMeter from '@/GameElements/ProgressMeter'
 import LevelBanner from '@/GameElements/LevelBanner'
-import Note from './MusicElements/Note'
-import PianoKeys from './MusicElements/PianoOctave'
-import {PianoKey} from './Notation/NoteConstants'
+import Note from '../MusicElements/Note'
+import PianoKeys from '../MusicElements/PianoOctave'
+import {PianoKey} from '../Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
-import { AllNotes } from './Notation/NoteData'
+import { AllNotes } from '../Notation/NoteData'
 import { GameStaff, DifficultyLevel } from '@/Store/Modules/Settings/Types'
-import GameStore from '@/GameStore'
+import GameStore from '@/Game/GameStore'
 export default class Game  {
   protected lastTime: number
   protected animFrame: number
@@ -20,18 +20,14 @@ export default class Game  {
   protected levelRunning: boolean
   protected progressMeter: ProgressMeter
     
-  private readonly GUESSES_PER_LEVEL = 2
-  private readonly NOTE_BASE_SPEED = 2
-  private readonly NOTE_SPEED_INCREMENT = 0.5
+  private baseSpeed: number
+  private speedIncrement: number
+  private difficultyLevel: number
   private gameStaff: GameStaff
-  private difficultyLevel: DifficultyLevel
-  private stats: {
-    right: number
-    wrong: number
-  } = {
-      right: 0,
-      wrong: 0
-    }
+  
+  private keyUpListener: any
+  private keyDownListener: any
+    
   private level = 0  
 
   private notesKeyEquivalents: { [key: string]: PianoKey } = {
@@ -49,9 +45,11 @@ export default class Game  {
     M: PianoKey.B
   }
   
-  public constructor(staff: GameStaff, level: DifficultyLevel) {
-    this.gameStaff = staff
-    this.difficultyLevel = level
+  public constructor() {
+    this.gameStaff = GameStore.getStaffSelected()
+    this.difficultyLevel = GameStore.getLevel()
+    this.baseSpeed = GameStore.getBaseSpeed()
+    this.speedIncrement = GameStore.getSpeedIncrement()
   }
 
   /**
@@ -99,8 +97,10 @@ export default class Game  {
    * Attach keyboard listeners
    */
   private addKeyListeners() {
-    document.addEventListener('keydown', (this.handleKeyDown.bind(this)), false)
-    document.addEventListener('keyup', this.handleKeyUp.bind(this), false)
+    this.keyUpListener = this.handleKeyUp.bind(this)
+    this.keyDownListener = this.handleKeyDown.bind(this)
+    document.addEventListener('keydown', this.keyDownListener, false)
+    document.addEventListener('keyup', this.keyUpListener, false)
     EventBus.$on(EVENT_PIANO_KEY_PRESSED, this.handleNotePress.bind(this))
     EventBus.$on(EVENT_PIANO_KEY_RELEASED, this.handleNoteRelease.bind(this))
   }
@@ -108,9 +108,11 @@ export default class Game  {
   /**
    * Remove the keyboard listeners for overhead
    */
-  private removeKeyListeners() {
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this), false)
-    document.removeEventListener('keyup', this.handleKeyUp.bind(this), false)
+  private removeKeyListeners() { 
+    document.removeEventListener('keydown', this.keyDownListener, false)
+    document.removeEventListener('keyup', this.keyUpListener, false)
+    EventBus.$off(EVENT_PIANO_KEY_PRESSED)
+    EventBus.$off(EVENT_PIANO_KEY_RELEASED)
   }
   
   /**
@@ -128,7 +130,10 @@ export default class Game  {
    */
   private handleKeyDown(event: KeyboardEvent) {
     const note = this.notesKeyEquivalents[event.key.toUpperCase()]
-    this.handleNotePress(note)
+    if (typeof note !== 'undefined') {
+      this.handleNotePress(note)  
+    }
+    
   }
 
   /**
@@ -137,12 +142,13 @@ export default class Game  {
    * @param note
    */
   private handleNotePress(note: PianoKey) {
-    const correct = this.checkCorrectGuess(note)
-    this.pianoKeys.keyPress(note, correct)
-
-    this.newGuess(correct)
-
-    this.checkCurrentLevel()
+    if(this.activeNote){
+      const correct = this.checkCorrectGuess(note)
+      this.pianoKeys.keyPress(note, correct)
+  
+      this.newGuess(correct)  
+    }
+    
   }
 
   private handleNoteRelease(note: PianoKey) {
@@ -155,15 +161,6 @@ export default class Game  {
    */
   private checkCorrectGuess(noteGuess: PianoKey) {
     return noteGuess === this.activeNote!.getNoteRepresentation.key
-  }
-
-  /**
-   * After enough right guesses go to a new level
-   */
-  private checkCurrentLevel() {
-    if (!((this.stats.right) % (this.GUESSES_PER_LEVEL * this.level)) && this.stats.right) {
-      this.newLevel()
-    }
   }
 
   /**
@@ -211,8 +208,6 @@ export default class Game  {
    */
   private checkActiveNote() {
     if (this.activeNote) {
-      
-      // kconsole.log(this.activeNote.width, this.staff.xEnd)
       if (
         (!this.activeNote.fadingOut) 
         && (this.activeNote.getX() > this.staff.xEnd - (this.activeNote.width * 3))) {
@@ -251,7 +246,7 @@ export default class Game  {
   private handleGameLogic(dt: number) {
     if (this.levelRunning) {
       if (this.activeNote) {
-        this.activeNote.moveX((this.level * this.NOTE_SPEED_INCREMENT) + this.NOTE_BASE_SPEED)
+        this.activeNote.moveX((this.level * this.speedIncrement) + this.baseSpeed)
       } else {
         this.addNewNote()
       }

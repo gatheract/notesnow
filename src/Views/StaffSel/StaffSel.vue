@@ -1,28 +1,29 @@
 <template>
   <MainContainer>
-    <div class="titleContainer">
-      <h1 class="title">{{$t("mainScreen.title")}}</h1>
-      <h2 class="subtitle">{{$t("mainScreen.subtitle")}}</h2>
-    </div>
-    <div class="staffContainer">
-      <div class="staffOption">
-        <StaffOption :type="GameStaff.gStaff"></StaffOption>
-      </div>  
-      <div class="staffOption">
-        <StaffOption :type="GameStaff.fStaff"></StaffOption>
-      </div>  
-      <div class="staffOption">
-        <StaffOption :type="GameStaff.both"></StaffOption>
-      </div>  
+    <div class="contentContainer">
+        <div class="titleContainer">
+        <h2 class="subtitle">{{$t("StaffSel.title")}}</h2>
+      </div>
+      <div class="staffContainer">
+        <div class="staffOption">
+          <StaffOption :type="GameStaff.gStaff"></StaffOption>
+        </div>  
+        <div class="staffOption">
+          <StaffOption :type="GameStaff.fStaff"></StaffOption>
+        </div>  
+        <div class="staffOption">
+          <StaffOption :type="GameStaff.both"></StaffOption>
+        </div>  
+      </div>      
     </div>
     <div class="buttonContainer">
-      <Button
-        v-on:click="startGame"
-        size="large"
-        id="gameStart"
-        type="error"
-      >{{$t("StaffSel.start")}}</Button>
-    </div>  
+        <Button
+          v-on:click="startGame"
+          size="large"
+          id="gameStart"
+          type="error"
+        >{{$t("StaffSel.start")}}</Button>
+      </div>  
   </MainContainer>
 </template>
 <script lang="ts">
@@ -60,19 +61,13 @@ export default class StaffSel extends Vue {
     text-align: center;
     
   }
-  h1.title {
-    color: black;
-    font-family: "Arial", sans-serif;
-    font-size: 54px;
-    font-weight: 600;
-    line-height: 58px;
-  }
+  
   h2.subtitle {
-    color: #7c795d;
+    color:black;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 28px;
     font-weight: 400;
-    line-height: 32px;
+    line-height: 58px;
   }
   .staffOption{
     
@@ -98,7 +93,6 @@ export default class StaffSel extends Vue {
   .optionText{
     position: absolute;
     right: 10px; 
-    
   }
   
 </style>
