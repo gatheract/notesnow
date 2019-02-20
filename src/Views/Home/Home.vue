@@ -1,5 +1,6 @@
 <template>
   <MainContainer>
+    <ForkMe></ForkMe>
     <div class="contentContainer logoArea">
       <div class="titleContainer">
         <h1 class="title">{{$t("mainScreen.title")}}</h1>
@@ -22,8 +23,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import HomeLogo from './Components/HomeLogo.vue'
 import LevelSelect from './Components/LevelSelect.vue'
 import MainContainer from '@/Components/Template/MainContainer.vue'
+import ForkMe from '@/Views/Home/Components/ForkMe.vue'
 @Component({
   components: {
+    ForkMe,
     HomeLogo,
     LevelSelect,
     MainContainer

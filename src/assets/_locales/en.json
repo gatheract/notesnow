@@ -25,5 +25,8 @@
     "home": "Home",
     "settings": "Settings",
     "github": "Github Repository"
+  },
+  "ForkMe":{
+    "title": "View source on GitHub"
   }
 }
