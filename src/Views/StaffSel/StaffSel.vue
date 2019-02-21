@@ -17,21 +17,18 @@
       </div>      
     </div>
     <div class="buttonContainer">
-        <Button
+        <el-button
           v-on:click="startGame"
           size="large"
-          id="gameStart"
-          type="error"
-        >{{$t("StaffSel.start")}}</Button>
+          type="danger"
+        ><i class='uil uil-check'> </i> {{$t("StaffSel.start")}}</el-button>
       </div>  
   </MainContainer>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { DifficultyLevel, GameStaff } from '@/Store/Modules/Settings/Types'
+import { GameType, GameStaff } from '@/Store/Modules/Settings/Types'
 import { namespace } from 'vuex-class'
-import { DIFFICULTY_LEVEL } from '@/Store/Modules/Settings/Getters'
-import { SET_DIFFICULTY } from '@/Store/Modules/Settings/Actions'
 import StaffOption from './Components/StaffOption.vue'
 import MainContainer from '@/Components/Template/MainContainer.vue'
 const settingsModule = namespace('Settings')

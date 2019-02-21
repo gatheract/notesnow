@@ -10,19 +10,15 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import Hamburguer from '@/Components/Template/Hamburguer.vue'
 @Component({
-  components:{
+  components: {
     Hamburguer
   }
 })
 export default class App extends Vue {
-} 
+}
 </script>
 <style lang="scss">
   #app, #main{
     height: 100%;
   }
-  
-  
-  
-  
 </style>

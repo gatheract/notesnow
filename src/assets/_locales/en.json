@@ -2,9 +2,9 @@
   "mainScreen": {
     "title": "Note Snow",
     "subtitle": "A sheet music note guessing game",
-    "startButton": "Begin",
-    "levelEasy": "Easy",
-    "levelHard": "Hard"
+    "startButton": "Game Start",
+    "game": "Game",
+    "practice": "Practice"
   },
   "StaffOption": {
     "gClef": "G Clef",

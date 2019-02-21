@@ -8,11 +8,11 @@
     </div>
     <ul id="menu" v-bind:class="{ hidden: showMenu}">
         <div class="linksContainer">
-        <router-link to="/home">
-          <li>{{$t('Hamburguer.home')}}</li>
+        <router-link to="/">        
+          <li><i class='uil uil-home'> </i>  {{$t('Hamburguer.home')}}</li>
         </router-link>
         <a href="#">
-          <li>{{$t('Hamburguer.settings')}}</li>
+          <li><i class='uil uil-cog'> </i>{{$t('Hamburguer.settings')}}</li>
         </a>
         <a href="https://github.com/Enchufadoo/notesnow" class="lastLink">
           <li>{{$t('Hamburguer.github')}}</li>
@@ -46,7 +46,7 @@ a {
 }
 
 a:hover {
-  color: purple;
+  color: #D00;
 }
 nav{
   position: absolute;
@@ -55,8 +55,8 @@ nav{
 #menuToggle {
   display: block;
   position: relative;
-  top: 50px;
-  left: 50px;
+  top: 40px;
+  left: 40px;
   z-index: 1;
 
   -webkit-user-select: none;
@@ -144,8 +144,8 @@ nav{
   height: 100vh;
   width: 300px;
   
-  padding: 50px;
-  padding-top: 125px;
+  padding: 40px;
+  padding-top: 115px;
   height: 100vh;
   background: #e7ebef;
   list-style-type: none;

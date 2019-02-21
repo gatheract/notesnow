@@ -7,15 +7,15 @@
 import { Vue, Component } from 'vue-property-decorator'
 import Game from '@/Game/Game'
 import { namespace } from 'vuex-class'
-import { DIFFICULTY_LEVEL, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
-import { DifficultyLevel, GameStaff } from '@/Store/Modules/Settings/Types'
+import { GAME_TYPE, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
+import { GameType, GameStaff } from '@/Store/Modules/Settings/Types'
 const settingsModule = namespace('Settings')
 import { EventBus, GAME_OVER } from '@/EventBus'
 
 @Component
 export default class Play extends Vue {  
-  @settingsModule.Getter(DIFFICULTY_LEVEL)
-  private difficultyLevel: DifficultyLevel
+  @settingsModule.Getter(GAME_TYPE)
+  private gameType: GameType
   
   @settingsModule.Getter(STAFF_SELECTED)
   private staffSelected: GameStaff

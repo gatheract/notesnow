@@ -1,8 +1,7 @@
 
-export enum DifficultyLevel {
-  easy,
-  hard,
-  custom
+export enum GameType {
+  game,
+  practice
 }
 
 export enum GameStaff {
@@ -12,7 +11,7 @@ export enum GameStaff {
 }
 
 export interface SettingsState {
-  difficultyLevel: DifficultyLevel
+  gameType: GameType
   staffSelected: GameStaff,
   initialMistakesAllowed: number,
   notesPerLevel: number,

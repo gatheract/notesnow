@@ -12,15 +12,15 @@
         </div>
         
         <div class="buttons">
-          <Button
+          <el-button
             v-on:click="goHome"
             size="large"        
-          >{{$t("GameOver.home")}}</Button>
-          <Button
+          ><i class='uil uil-home'> </i> {{$t("GameOver.home")}}</el-button>
+          <el-button
             v-on:click="playAgain"
             size="large"       
-            type="error" 
-          >{{$t("GameOver.playAgain")}}</Button>
+            type="danger" 
+          ><i class='uil uil-repeat'> </i> {{$t("GameOver.playAgain")}}</el-button>
         </div>
       </div>
       
@@ -54,13 +54,6 @@ export default class GameOver extends Vue {
 </script>
 
 <style scoped lang="scss">
-.stats{
-  
-}
-.buttons{
-  
-}
-
 .title{
   font-size: 30px;
   font-weight: 700;

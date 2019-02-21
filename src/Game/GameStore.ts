@@ -3,7 +3,8 @@
  * not to have to look at them
  */
 import { LEVEL, RIGHT_GUESSES, WRONG_GUESSES, PROGRESS } from '@/Store/Modules/Stats/Getters'
-import { INITIAL_MISTAKES_ALLOWED, BASE_SPEED, SPEED_INCREMENT, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
+import { GAME_TYPE, INITIAL_MISTAKES_ALLOWED, BASE_SPEED, 
+  SPEED_INCREMENT, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
 import { SET_CLEAR_STATS, SET_NEW_TRY } from '@/Store/Modules/Stats/Actions'
 import Store from '@/Store/Store'
 
@@ -11,6 +12,9 @@ const statsModule = 'Stats/'
 const settingsModule = 'Settings/'
 
 export default class GameStore {
+  public static getGameType() {
+    return Store.getters[settingsModule + GAME_TYPE]
+  }
   public static getWrongGuesses() {
     return Store.getters[statsModule + WRONG_GUESSES]
   }

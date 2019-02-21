@@ -8,7 +8,7 @@ import PianoKeys from '../MusicElements/PianoOctave'
 import {PianoKey} from '../Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
 import { AllNotes } from '../Notation/NoteData'
-import { GameStaff, DifficultyLevel } from '@/Store/Modules/Settings/Types'
+import { GameStaff, GameType } from '@/Store/Modules/Settings/Types'
 import GameStore from '@/Game/GameStore'
 export default class Game  {
   protected lastTime: number
@@ -22,7 +22,7 @@ export default class Game  {
     
   private baseSpeed: number
   private speedIncrement: number
-  private difficultyLevel: number
+  private gameType: GameType
   private gameStaff: GameStaff
   
   private keyUpListener: any
@@ -47,11 +47,11 @@ export default class Game  {
   
   public constructor() {
     this.gameStaff = GameStore.getStaffSelected()
-    this.difficultyLevel = GameStore.getLevel()
+    this.gameType = GameStore.getGameType()
     this.baseSpeed = GameStore.getBaseSpeed()
     this.speedIncrement = GameStore.getSpeedIncrement()
   }
-
+  
   /**
    *
    * Let the games begin
@@ -63,7 +63,13 @@ export default class Game  {
     this.addKeyListeners()
     this.running = true
     this.fillScreen()
-    this.newLevel()
+    
+    if (this.gameType === GameType.game) {
+      this.newLevel()  
+    } else {
+      this.levelRunning = true  
+    }
+        
     this.mainLoop(0)
   }
   
@@ -89,8 +95,11 @@ export default class Game  {
       dArea.WINDOW_HEIGHT - this.pianoKeys.height,
       1
     )
-    this.progressMeter = new ProgressMeter()
-    this.progressMeter.draw(dArea.WINDOW_WIDTH / 2, 0)
+    if (this.gameType === GameType.game) {
+      this.progressMeter = new ProgressMeter()
+      this.progressMeter.draw(dArea.WINDOW_WIDTH / 2, 0)
+    }
+    
   }
 
   /**
@@ -142,7 +151,7 @@ export default class Game  {
    * @param note
    */
   private handleNotePress(note: PianoKey) {
-    if(this.activeNote){
+    if (this.activeNote) {
       const correct = this.checkCorrectGuess(note)
       this.pianoKeys.keyPress(note, correct)
   

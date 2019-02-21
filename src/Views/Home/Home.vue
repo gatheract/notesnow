@@ -7,33 +7,31 @@
         <h2 class="subtitle">{{$t("mainScreen.subtitle")}}</h2>  
       </div>      
       <HomeLogo></HomeLogo>
-      <LevelSelect class="levelArea"></LevelSelect>
-    </div>    
-    
-    <Button
-      v-on:click="levelSelect"
-      size="large"
-      type="error"
-    >{{$t("mainScreen.startButton")}}</Button>
+      <GameTypeSelect class="levelArea"></GameTypeSelect>
+    </div>   
+    <el-button  v-on:click="selectStaff" type="danger"><i class='uil uil-play'> </i> 
+      {{$t("mainScreen.startButton")}}</el-button>     
   </MainContainer>
+  
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 import HomeLogo from './Components/HomeLogo.vue'
-import LevelSelect from './Components/LevelSelect.vue'
+import GameTypeSelect from './Components/GameTypeSelect.vue'
 import MainContainer from '@/Components/Template/MainContainer.vue'
 import ForkMe from '@/Views/Home/Components/ForkMe.vue'
+
 @Component({
   components: {
     ForkMe,
     HomeLogo,
-    LevelSelect,
+    GameTypeSelect,
     MainContainer
   }
 })
 export default class Home extends Vue {
-  private levelSelect() {
+  private selectStaff() {
     this.$router.push('staffsel')
   }
 }
@@ -47,7 +45,7 @@ export default class Home extends Vue {
 }
 
 .levelArea {
-  padding: 20px 30px;
+  padding: 20px 0px;
   padding-bottom: 30px;
 }
 

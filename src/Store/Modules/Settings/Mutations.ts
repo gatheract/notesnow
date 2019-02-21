@@ -1,12 +1,12 @@
 import { MutationTree } from 'vuex'
-import { SettingsState, DifficultyLevel, GameStaff } from './Types'
+import { SettingsState, GameType, GameStaff } from './Types'
 
-export const MUT_DIFFICULTY = 'MUT_DIFFICULTY'
+export const MUT_GAME_TYPE = 'MUT_GAME_TYPE'
 export const MUT_STAFF = 'MUT_STAFF'
 
 export const mutations: MutationTree<SettingsState> = {
-    [MUT_DIFFICULTY](state, difficulty: DifficultyLevel) {
-        state.difficultyLevel = difficulty
+    [MUT_GAME_TYPE](state, gameType: GameType) {
+        state.gameType = gameType
     },
     [MUT_STAFF](state, staff: GameStaff) {
         state.staffSelected = staff

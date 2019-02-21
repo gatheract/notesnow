@@ -1,17 +1,17 @@
 import { GetterTree } from 'vuex'
 import { SettingsState } from './Types'
 import { RootState } from '../../Types'
-import {DifficultyLevel, GameStaff} from './Types'
+import {GameType, GameStaff} from './Types'
 
-export const DIFFICULTY_LEVEL = 'DIFFICULTY_LEVEL'
+export const GAME_TYPE = 'GAME_TYPE'
 export const STAFF_SELECTED = 'STAFF_SELECTED'
 export const INITIAL_MISTAKES_ALLOWED = 'INITIAL_MISTAKES_ALLOWED'
 export const BASE_SPEED = 'BASE_SPEED'
 export const SPEED_INCREMENT = 'SPEED_INCREMENT'
 
 export const getters: GetterTree<SettingsState, RootState> = {
-    [DIFFICULTY_LEVEL](state): DifficultyLevel {
-        return state.difficultyLevel
+    [GAME_TYPE](state): GameType {
+        return state.gameType
     },    
     [STAFF_SELECTED](state): GameStaff {
         return state.staffSelected
