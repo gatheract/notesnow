@@ -82,11 +82,7 @@ export default class StaffSel extends Vue {
     padding: 1px 1px;
     border-radius: 3px;
   }
-  .imgResponsive{
-    width: 100%;
-    height: auto;
-    max-height: 100%;
-  }
+
   .optionText{
     position: absolute;
     right: 10px; 

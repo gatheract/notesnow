@@ -96,7 +96,7 @@ export default class StaffOption extends Vue {
     font-size: 10px;
   }
   .imgResponsive{
-    width: 100%;
+    width: auto;
     height: auto;
     max-height: 100px;
   }

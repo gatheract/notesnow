@@ -21,7 +21,7 @@ export default abstract class AbstractMusicDrawing extends AbstractMusicElement 
         /** Create a new group where the element will be inserted in the main SVG */
         this.group = DrawingArea.Instance.area.group()
         this.element = this.group.svg(elementSVG)
-        this.elementGroup = this.element.select(this.ELEMENT_CLASS).first()
+        this.elementGroup = this.element.select(this.ELEMENT_CLASS).first().parent() as Library['Element']
         if (!this.elementGroup) {
             throw new Error(`The class ${this.ELEMENT_CLASS} was not found`)
         }

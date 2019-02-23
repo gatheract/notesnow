@@ -223,7 +223,7 @@ export default class Game  {
           this.activeNote.fadeOutNote()
       }
       
-      if (this.activeNote.getX() + this.activeNote.width > this.staff.xEnd) {
+      if (this.activeNote.getX() > this.staff.xEnd) {
         this.newGuess(false)
         this.removeCurrentNote()
       }
