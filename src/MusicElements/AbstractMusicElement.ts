@@ -1,7 +1,7 @@
-import { G } from 'svg.js'
+import { G, Library } from 'svg.js'
 import DrawingArea from '@/Drawing/DrawingArea'
 export default abstract class AbstractMusicElement {
-  protected element: G
+  protected element: Library['Element']
   protected group: G
   
   constructor() {
@@ -50,4 +50,12 @@ export default abstract class AbstractMusicElement {
   public get height() {
       return this.group.bbox().height
   }
+
+  /**
+   * Remove svg element from the canvas
+   */
+  public destroy() {
+    this.group.remove()            
+  }
+  
 }

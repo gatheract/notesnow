@@ -11,7 +11,7 @@ import AbstractMusicElement from '@/MusicElements/AbstractMusicElement'
  * The enclosing svg/group of the the drawing must have a class named 'element'
  */
 export default abstract class AbstractMusicDrawing extends AbstractMusicElement {   
-    protected elementGroup: Library['Element']
+    
     protected readonly ELEMENT_CLASS = '.element'
     /**
      * @param elementSVG imported svg string (with the raw-loader)
@@ -19,10 +19,10 @@ export default abstract class AbstractMusicDrawing extends AbstractMusicElement 
     public constructor(elementSVG: string) {
         super()
         /** Create a new group where the element will be inserted in the main SVG */
-        this.group = DrawingArea.Instance.area.group()
-        this.element = this.group.svg(elementSVG)
-        this.elementGroup = this.element.select(this.ELEMENT_CLASS).first().parent() as Library['Element']
-        if (!this.elementGroup) {
+        const svg = this.group.svg(elementSVG)
+        this.element = svg.select(this.ELEMENT_CLASS).first()
+                
+        if (!this.element) {
             throw new Error(`The class ${this.ELEMENT_CLASS} was not found`)
         }
         this.setVisible(false)
@@ -36,10 +36,12 @@ export default abstract class AbstractMusicDrawing extends AbstractMusicElement 
      * @param sizeRatio
      */
     public draw(x: number, y: number, sizeRatio?: number) {
+        
         if (sizeRatio) {
-            this.elementGroup.transform({ scale: sizeRatio })
+            this.group.transform({ scale: sizeRatio })
         }
-        this.elementGroup.transform({ x, y })
+        
+        this.group.transform({ x, y })
         this.setVisible(true)
     }
 }

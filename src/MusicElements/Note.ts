@@ -12,7 +12,6 @@ const noteFlatSVG = require('@/assets/images/quarter_flat.svg')
  */
 export default class Note extends AbstractMusicElement {
     public static readonly NOTE_HEIGHT = 50
-    public element: G
     public  fadingOut = false
     
     private noteRepresentation: INoteData
@@ -38,7 +37,7 @@ export default class Note extends AbstractMusicElement {
         return this.noteRepresentation
     }
     
-    public draw(x: number, y: number, sizeRatio?: number) {
+    public draw(x: number, y: number, sizeRatio?: number) {       
         super.draw(x, y, sizeRatio)    
     }    
      
@@ -64,30 +63,6 @@ export default class Note extends AbstractMusicElement {
         this.element.fill(color)
     }
 
-    /**
-     * Returns hex representation of a random color
-     * Most inefficient way TM
-     */
-    public randomColor(): string {
-        function zeroPad() {
-            const res = (Math.floor(Math.random() * 255).toString(16))
-            return res.length < 2 ? '0' + res : res
-        }
-        const colorHex = '#'
-            + zeroPad()
-            + zeroPad()
-            + zeroPad()
-
-        return colorHex
-    }
-
-    /**
-     * Remove svg element from the canvas
-     */
-    public destroy() {
-        this.element.remove()            
-    }
-    
     public fadeOutNote() {
         this.fadingOut = true
         this.fadeOut(500)
