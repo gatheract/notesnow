@@ -1,7 +1,7 @@
 import {GameStaff} from '@/Store/Modules/Settings/Types'
-import staffFAndG from '@/MusicElements/Staff/StaffFAndG'
-import staffF from '@/MusicElements/Staff/StaffF'
-import staffG from '@/MusicElements/Staff/StaffG'
+import staffFAndG from '@/MusicElements/Staffs/StaffFAndG'
+import staffF from '@/MusicElements/Staffs/StaffF'
+import staffG from '@/MusicElements/Staffs/StaffG'
 
 export default class StaffFactory {
   public static createStaff(staff: GameStaff) {

@@ -61,7 +61,7 @@ export default class PianoOctave extends AbstractMusicElement {
     private getNoteClass(note: PianoKey): Library['Element'] | undefined {
         if (this.NOTES_SVG_CLASSES[note]) {
             const noteClass = '.' + this.NOTES_SVG_CLASSES[note]
-            return this.group.select(noteClass).first()
+            return this.parentGroup.select(noteClass).first()
         }
     }
 
@@ -117,7 +117,7 @@ export default class PianoOctave extends AbstractMusicElement {
      * Piano key events for the mouse/touch interface
      */
     private addClickListeners() {
-        const keys = this.group.select('.piano_key')
+        const keys = this.parentGroup.select('.piano_key')
         for (let i = 0; i < keys.length(); i++) {
             const key = keys.get(i)
             key.on('mousedown touchstart', this.handleMouseDown.bind(this))

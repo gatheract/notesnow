@@ -13,6 +13,7 @@ import AbstractMusicElement from '@/MusicElements/AbstractMusicElement'
 export default abstract class AbstractMusicDrawing extends AbstractMusicElement {   
     
     protected readonly ELEMENT_CLASS = '.element'
+    protected sizeRatio: number = 1
     /**
      * @param elementSVG imported svg string (with the raw-loader)
      */
@@ -35,13 +36,14 @@ export default abstract class AbstractMusicDrawing extends AbstractMusicElement 
      * @param y
      * @param sizeRatio
      */
-    public draw(x: number, y: number, sizeRatio?: number) {
+    public draw(x: number, y: number, sizeRatio?: number, visible: boolean = true) {
         
         if (sizeRatio) {
+            this.sizeRatio = sizeRatio
             this.group.transform({ scale: sizeRatio })
         }
         
         this.group.transform({ x, y })
-        this.setVisible(true)
+        this.setVisible(visible)
     }
 }

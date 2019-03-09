@@ -19,12 +19,4 @@ const BasicNoteData = {
   [PianoKey.B]: {mod: false}
 }
 
-/**
- * Returns if a note is a modified note
- * @param note 
- */
-const getNoteMod = (note: PianoKey) => {
-  return BasicNoteData[note].mod
-}
-
 export {BasicNoteData}

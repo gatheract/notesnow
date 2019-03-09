@@ -1,33 +1,31 @@
 import DrawingArea from '../Drawing/DrawingArea'
-import StaffFactory from '../MusicElements/Staff/StaffFactory'
-import AbstractStaff from '../MusicElements/Staff/AbstractStaff'
+import StaffFactory from '../MusicElements/Staffs/StaffFactory'
+import AbstractStaff from '../MusicElements/Staffs/AbstractStaff'
 import ProgressMeter from '@/GameElements/ProgressMeter'
 import LevelBanner from '@/GameElements/LevelBanner'
-import Note from '../MusicElements/Note'
+import Note from '../MusicElements/Notes/AbstractNote'
 import PianoKeys from '../MusicElements/PianoOctave'
 import {PianoKey} from '../Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
 import { AllNotes } from '../Notation/NoteData'
 import { GameStaff, GameType } from '@/Store/Modules/Settings/Types'
 import GameStore from '@/Game/GameStore'
+import NoteFactory from '@/MusicElements/Notes/NoteFactory'
 export default class Game  {
-  protected lastTime: number
-  protected animFrame: number
-  protected running: boolean
-  protected activeNote?: Note
-  protected staff: AbstractStaff
-  protected pianoKeys: PianoKeys
-  protected levelRunning: boolean
-  protected progressMeter: ProgressMeter
-    
+  private lastTime: number
+  private animFrame: number
+  private running: boolean
+  private activeNote?: Note
+  private staff: AbstractStaff
+  private pianoKeys: PianoKeys
+  private levelRunning: boolean
+  private progressMeter: ProgressMeter    
   private baseSpeed: number
   private speedIncrement: number
   private gameType: GameType
-  private gameStaff: GameStaff
-  
+  private gameStaff: GameStaff  
   private keyUpListener: any
-  private keyDownListener: any
-    
+  private keyDownListener: any    
   private level = 0  
 
   private notesKeyEquivalents: { [key: string]: PianoKey } = {
@@ -85,14 +83,14 @@ export default class Game  {
   /**
    * Populate the svg drawing with all the necesary things of the game, staff, keyboard, etc
    */
-  private fillScreen() {
+  private fillScreen() {    
     const dArea = DrawingArea.Instance
     this.staff = StaffFactory.createStaff(this.gameStaff)
     this.pianoKeys = new PianoKeys()
     this.staff.draw(0, 150, dArea.WINDOW_WIDTH, Note.NOTE_HEIGHT)
     this.pianoKeys.draw(
-      dArea.WINDOW_WIDTH / 2 - this.pianoKeys.width / 2,
-      dArea.WINDOW_HEIGHT - this.pianoKeys.height,
+      dArea.WINDOW_WIDTH / 2 - this.pianoKeys.getWidth() / 2,
+      dArea.WINDOW_HEIGHT - this.pianoKeys.getHeight(),
       1
     )
     if (this.gameType === GameType.game) {
@@ -169,7 +167,7 @@ export default class Game  {
    * @param noteGuess
    */
   private checkCorrectGuess(noteGuess: PianoKey) {
-    return noteGuess === this.activeNote!.getNoteRepresentation.key
+    return noteGuess === this.activeNote!.getNoteRepresentation().key
   }
 
   /**
@@ -215,15 +213,18 @@ export default class Game  {
    * Check the boundaries of the staff for the current active note
    * if its
    */
-  private checkActiveNote() {
+  private checkActiveNote() {    
     if (this.activeNote) {
+      const xPosFade = this.activeNote.getX() + (this.activeNote.getWidth() * 3)
+      const xPos = this.activeNote.getX()
+      
       if (
-        (!this.activeNote.fadingOut) 
-        && (this.activeNote.getX() > this.staff.xEnd - (this.activeNote.width * 3))) {
+        (!this.activeNote.getFadingOut()) && 
+        (this.staff.noteOutsideStaff(xPosFade))
+      ) {
           this.activeNote.fadeOutNote()
       }
-      
-      if (this.activeNote.getX() > this.staff.xEnd) {
+      if (this.staff.noteOutsideStaff(xPos)) {
         this.newGuess(false)
         this.removeCurrentNote()
       }
@@ -235,14 +236,8 @@ export default class Game  {
    */
   private addNewNote() {  
     const noteData = this.staff.getRandomNote()
-    this.activeNote = new Note(AllNotes[noteData.allNotesIndex])   
-    
-    this.activeNote.draw(
-      30,
-      noteData.yPosition,
-      0.45,
-    )
-    
+    this.activeNote = NoteFactory.createNote(AllNotes[noteData.allNotesIndex], this.staff)
+    this.activeNote.draw(30, noteData.yPosition, 0.45)
     this.activeNote.fadeIn(500)
   }
 
@@ -280,4 +275,5 @@ export default class Game  {
     this.lastTime = ms
     this.animFrame = requestAnimationFrame(this.mainLoop.bind(this))
   }
+  
 }

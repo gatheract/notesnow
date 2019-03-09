@@ -1,7 +1,7 @@
 import { PolyLine, G } from 'svg.js'
 import DrawingArea from '@/Drawing/DrawingArea'
 import AbstractMusicElement from './AbstractMusicElement'
-import AbstractStaff from '@/MusicElements/Staff/AbstractStaff'
+import AbstractStaff from '@/MusicElements/Staffs/AbstractStaff'
 /**
  *  A line inside the staff, a stave!
  */
@@ -12,7 +12,7 @@ export default class Stave extends AbstractMusicElement {
     constructor(staff: AbstractStaff) {
         super()
         this.staff = staff
-        this.staff.getGroup().add(this.group)
+        this.staff.getParentGroup().add(this.parentGroup)
     }
     
     public getY() {
@@ -35,6 +35,6 @@ export default class Stave extends AbstractMusicElement {
             ]
         ).fill('none').stroke({ width: 1 })
         
-        this.group.add(element)
+        this.parentGroup.add(element)
     }
 }

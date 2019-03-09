@@ -1,6 +1,7 @@
 module.exports = { 
   chainWebpack: config => {    
     const svgRule = config.module.rule('svg')
+    config.plugins.delete('named-chunks')
     svgRule.uses.clear()
     svgRule
       .use('raw-loader')
