@@ -6,6 +6,8 @@ import { LEVEL, RIGHT_GUESSES, WRONG_GUESSES, PROGRESS } from '@/Store/Modules/S
 import { GAME_TYPE, INITIAL_MISTAKES_ALLOWED, BASE_SPEED, 
   SPEED_INCREMENT, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
 import { SET_CLEAR_STATS, SET_NEW_TRY } from '@/Store/Modules/Stats/Actions'
+import * as Settings from '@/Store/Modules/Settings/Actions'
+import { MidiStatus } from '@/Store/Modules/Settings/Types'
 import Store from '@/Store/Store'
 
 const statsModule = 'Stats/'
@@ -44,5 +46,8 @@ export default class GameStore {
   }
   public static setClearStats() {
     Store.dispatch(statsModule + SET_CLEAR_STATS)
+  }
+  public static setMidiStatus(status: MidiStatus) {
+    Store.dispatch(settingsModule + Settings.SET_MIDI_AVAILABLE, status)
   }
 } 

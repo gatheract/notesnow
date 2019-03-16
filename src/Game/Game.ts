@@ -6,11 +6,14 @@ import LevelBanner from '@/GameElements/LevelBanner'
 import Note from '../MusicElements/Notes/AbstractNote'
 import PianoKeys from '../MusicElements/PianoOctave'
 import {PianoKey} from '../Notation/NoteConstants'
-import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
+import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED,
+  EVENT_MIDI_DEV_KEY_PRESSED, EVENT_MIDI_DEV_KEY_RELEASED
+} from '@/EventBus'
 import { AllNotes } from '../Notation/NoteData'
 import { GameStaff, GameType } from '@/Store/Modules/Settings/Types'
 import GameStore from '@/Game/GameStore'
 import NoteFactory from '@/MusicElements/Notes/NoteFactory'
+
 export default class Game  {
   private lastTime: number
   private animFrame: number
@@ -61,7 +64,7 @@ export default class Game  {
     this.addKeyListeners()
     this.running = true
     this.fillScreen()
-    
+        
     if (this.gameType === GameType.game) {
       this.newLevel()  
     } else {
@@ -110,6 +113,8 @@ export default class Game  {
     document.addEventListener('keyup', this.keyUpListener, false)
     EventBus.$on(EVENT_PIANO_KEY_PRESSED, this.handleNotePress.bind(this))
     EventBus.$on(EVENT_PIANO_KEY_RELEASED, this.handleNoteRelease.bind(this))
+    EventBus.$on(EVENT_MIDI_DEV_KEY_PRESSED, this.handleMidiNotePress.bind(this))
+    EventBus.$on(EVENT_MIDI_DEV_KEY_RELEASED, this.handleMidiNoteRelease.bind(this))
   }
 
   /**
@@ -120,6 +125,8 @@ export default class Game  {
     document.removeEventListener('keyup', this.keyUpListener, false)
     EventBus.$off(EVENT_PIANO_KEY_PRESSED)
     EventBus.$off(EVENT_PIANO_KEY_RELEASED)
+    EventBus.$off(EVENT_MIDI_DEV_KEY_PRESSED)
+    EventBus.$off(EVENT_MIDI_DEV_KEY_RELEASED)
   }
   
   /**
@@ -140,7 +147,6 @@ export default class Game  {
     if (typeof note !== 'undefined') {
       this.handleNotePress(note)  
     }
-    
   }
 
   /**
@@ -160,6 +166,29 @@ export default class Game  {
 
   private handleNoteRelease(note: PianoKey) {
     this.pianoKeys.keyRelease(note)
+  }
+  
+  private handleMidiNotePress(midiValue: number, velocity: number) {
+    for (const note of AllNotes) {
+      if (note.midiValue === midiValue) {
+        this.handleNotePress(note.key)   
+        return
+      }
+    }    
+    /**
+     * @todo create data structure
+     */
+    throw new Error('Invalid note from the midi controller')
+  }
+  
+  private handleMidiNoteRelease(midiValue: number) {
+    for (const note of AllNotes) {
+      if (note.midiValue === midiValue) {
+        this.handleNoteRelease(note.key)   
+        return
+      }
+    }
+    throw new Error('Invalid note from the midi controller')  
   }
 
   /**

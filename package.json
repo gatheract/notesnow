@@ -7,9 +7,11 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy": "gh-pages -d dist",
-    "predeploy": ""
+    "predeploy": "vue-cli-service build"
   },
   "dependencies": {
+    "@types/webaudioapi": "0.0.27",
+    "@types/webmidi": "^2.0.3",
     "element-ui": "^2.5.4",
     "g": "^2.0.1",
     "gh-pages": "^2.0.1",

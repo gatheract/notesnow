@@ -4,6 +4,8 @@ import Home from './Views/Home/Home.vue'
 import Play from './Views/Play.vue'
 import StaffSel from './Views/StaffSel/StaffSel.vue'
 import GameOver from './Views/GameOver/GameOver.vue'
+import Options from './Views/Options/Options.vue'
+import MidiHelp from './Views/Help/MidiHelp.vue'
 
 Vue.use(Router)
 
@@ -27,9 +29,19 @@ export default new Router({
       component: Play
     },
     {
+      path: '/options',
+      name: 'options',
+      component: Options
+    },
+    {
       path: '/over',
       name: 'gameover',
       component: GameOver
+    },
+    {
+      path: '/midihelp',
+      name: 'midihelp',
+      component: MidiHelp
     }
   ],
 })

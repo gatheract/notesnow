@@ -8,8 +8,11 @@ import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex)
 
 const vuexLocal = new VuexPersistence({
-    storage: window.sessionStorage,
-    key: 'notesnow'
+    // storage: window.sessionStorage,
+    key: 'notesnow',
+    modules: [
+        
+    ]
 })
 
 const store: StoreOptions<RootState> = {

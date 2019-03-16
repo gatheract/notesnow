@@ -1,4 +1,7 @@
 {
+  "Site":{
+      "back": "Go Back"
+  },
   "mainScreen": {
     "title": "Note Snow",
     "subtitle": "A sheet music note guessing game",
@@ -12,7 +15,7 @@
     "both": "G and F Clef"
   },
   "StaffSel": {
-    "start": "Start Playing",
+    "next": "Game Options",
     "title": "Select the staff you would like to play"
   },
   "GameOver": {
@@ -28,5 +31,17 @@
   },
   "ForkMe":{
     "title": "View source on GitHub"
+  },
+  "Options":{
+    "title": "Game Options",
+    "start": "Start Playing",
+    "enabledLabel": "MIDI Controller Enabled",
+    "disabledLabel": "Enable MIDI Controller"
+  },
+  "MidiHelp":{
+    "title": "MIDI Browser Support",
+    "para1": "Some browsers don't provide MIDI support but it can be enabled through third party extensions.",
+    "para2": "You can get the extensions and plugin here:",
+    "para3": "I've tested Firefox with the plugin and it works, haven't tested it on Safari though."
   }
 }

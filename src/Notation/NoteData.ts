@@ -18,7 +18,9 @@ interface INoteData {
 }
 
 interface INotePitch extends INoteData {
-  pitch: string
+  pitch: string, /** string representation */
+  midiValue: number /** midi ocnstant value */
+  octave: number
 }
 
 /**
@@ -56,27 +58,49 @@ const NoteData: { [key: string]:
   [NotePitch.BS]: { key: PianoKey.C, natEnharmonic: true, alt: Alt.sharp, penNote: Pen.B},
 }
 
+/**
+ * Generates all 222 notes with 127 values in the midi specification
+ * from C_1 to G9
+ */
 const getAllNotes = () => { 
   let skipFlag = 0
   const allNotes = []
   const postFixList = [
     '_1', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
   ]  
-    
+  let midiValue = 0
+  let lastPianoKey = PianoKey.C
+  
   for ( const post of postFixList) {
-    for (const key of Object.keys(NoteData)) {
+    let i = 0  
+    const noteDataKeys = Object.keys(NoteData)
+    for (const key of noteDataKeys) {
+      ++i
       if (++skipFlag < 2) { continue } // CF_1 doesnt exist
       let newData: INotePitch
-      const newKey = NotePitch[Number(key)] + post      
+      const newKey = NotePitch[Number(key)] + post
       newData = Object.assign({}, Object(NoteData[key])) 
       newData.pitch = newKey
+      /**
+       * The midi value grows as the note it refers to changes
+       * a lot of notes are enharmonics, so they are the same,
+       * and the midi value shouldnt change
+       * piano key is good enough for detecting this
+       */
+      if (newData.key !== lastPianoKey) {
+        /**
+         * Hack to make this work, i when its C or when the octave changes and its 0
+         * should increase the midivalue even though the pianokey is less than the one before
+         */
+        midiValue += (newData.key < lastPianoKey) && (i !== 1) && (i !== noteDataKeys.length ) ? -1 : 1
+      }
+      newData.midiValue = midiValue    
+      lastPianoKey = newData.key
       
-      allNotes.push(newData)
-      
+      allNotes.push(newData)      
       if (newKey === 'G9') { break }
-    }
+    }    
   }
-  
   return allNotes
 }
 

@@ -18,10 +18,10 @@
     </div>
     <div class="buttonContainer">
         <el-button
-          v-on:click="startGame"
+          v-on:click="moreOptions"
           size="large"
           type="danger"
-        ><i class='uil uil-check'> </i> {{$t("StaffSel.start")}}</el-button>
+        ><i class='uil uil-check'> </i> {{$t("StaffSel.next")}}</el-button>
       </div>  
   </MainContainer>
 </template>
@@ -40,8 +40,8 @@ const settingsModule = namespace('Settings')
   }
 })
 export default class StaffSel extends Vue {
-  private startGame() {
-    this.$router.push('play')
+  private moreOptions() {
+    this.$router.push('options')
   }
   private data() {
     return {
