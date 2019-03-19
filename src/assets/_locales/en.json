@@ -43,5 +43,10 @@
     "para1": "Some browsers don't provide MIDI support but it can be enabled through third party extensions.",
     "para2": "You can get the extensions and plugin here:",
     "para3": "I've tested Firefox with the plugin and it works, haven't tested it on Safari though."
+  },
+  "MidiSel":{
+    "enabledLabel": "MIDI Controller Enabled",
+    "disabledLabel": "Enable MIDI Controller",
+    "none": "none"
   }
 }

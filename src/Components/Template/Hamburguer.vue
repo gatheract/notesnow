@@ -7,15 +7,19 @@
       <span></span>
     </div>
     <ul id="menu" v-bind:class="{ hidden: showMenu}">
+        
         <div class="linksContainer">
+          <div id="menuTitle">
+            Game Menu
+          </div>
         <router-link to="/">        
           <li><i class='uil uil-home'> </i>  {{$t('Hamburguer.home')}}</li>
         </router-link>
-        <a href="#">
+        <router-link to="/options">
           <li><i class='uil uil-cog'> </i>{{$t('Hamburguer.settings')}}</li>
-        </a>
+        </router-link>
         <a href="https://github.com/Enchufadoo/notesnow" class="lastLink">
-          <li>{{$t('Hamburguer.github')}}</li>
+          <li><i></i>{{$t('Hamburguer.github')}}</li>
         </a>  
         </div>
         
@@ -46,17 +50,18 @@ a {
 }
 
 a:hover {
-  color: #D00;
+  color:#888;
 }
 nav{
   position: absolute;
+  z-index: 999;
 }
 
 #menuToggle {
   display: block;
   position: relative;
-  top: 40px;
-  left: 40px;
+  top: 20px;
+  left: 20px;
   z-index: 1;
 
   -webkit-user-select: none;
@@ -144,7 +149,7 @@ nav{
   height: 100vh;
   width: 300px;
   
-  padding: 40px;
+  padding: 20px;
   padding-top: 115px;
   height: 100vh;
   background: #e7ebef;
@@ -157,15 +162,23 @@ nav{
  
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    
+    @media only screen and (max-width: 600px) {
+      width: 100vw;
+    }
 }
 
 #menu li {
   padding: 10px 0;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 #menu.hidden{
   transform: none;
+}
+
+#menuTitle{
+  font-size: 20px; font-weight: bold; margin-left: 5px
 }
 
 .linksContainer{
