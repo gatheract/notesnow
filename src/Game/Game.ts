@@ -30,21 +30,6 @@ export default class Game  {
   private keyUpListener: any
   private keyDownListener: any    
   private level = 0  
-
-  private notesKeyEquivalents: { [key: string]: PianoKey } = {
-    Z: PianoKey.C,
-    S: PianoKey.C_MOD,
-    X: PianoKey.D,
-    D: PianoKey.D_MOD,
-    C: PianoKey.E,
-    V: PianoKey.F,
-    G: PianoKey.F_MOD,
-    B: PianoKey.G,
-    H: PianoKey.G_MOD,
-    N: PianoKey.A,
-    J: PianoKey.A_MOD,
-    M: PianoKey.B
-  }
   
   public constructor() {
     this.gameStaff = GameStore.getStaffSelected()
@@ -88,28 +73,15 @@ export default class Game  {
    * Populate the svg drawing with all the necesary things of the game, staff, keyboard, etc
    */
   private fillScreen() {    
-    const dArea = DrawingArea.Instance
-    this.staff = StaffFactory.createStaff(this.gameStaff)
-    this.pianoKeys = new PianoKeys()
-    this.staff.draw(0, 150, dArea.WINDOW_WIDTH, Note.NOTE_HEIGHT)
-    this.pianoKeys.draw(
-      dArea.WINDOW_WIDTH / 2 - this.pianoKeys.getWidth() / 2,
-      dArea.WINDOW_HEIGHT - this.pianoKeys.getHeight(),
-      1
-    )
-    if (this.gameType === GameType.game) {
-      this.progressMeter = new ProgressMeter()
-      this.progressMeter.draw(dArea.WINDOW_WIDTH / 2, 0)
-    }
-    
+    this.drawStaff()
+    this.drawPiano()
+    this.drawProgressMeter()
   }
 
   /**
    * Attach keyboard listeners
    */
   private addKeyListeners() {
-    this.keyUpListener = this.handleKeyUp.bind(this)
-    this.keyDownListener = this.handleKeyDown.bind(this)
     document.addEventListener('keydown', this.keyDownListener, false)
     document.addEventListener('keyup', this.keyUpListener, false)
     EventBus.$on(EVENT_PIANO_KEY_PRESSED, this.handleNotePress.bind(this))
@@ -122,34 +94,12 @@ export default class Game  {
    * Remove the keyboard listeners for overhead
    */
   private removeKeyListeners() { 
-    document.removeEventListener('keydown', this.keyDownListener, false)
-    document.removeEventListener('keyup', this.keyUpListener, false)
     EventBus.$off(EVENT_PIANO_KEY_PRESSED)
     EventBus.$off(EVENT_PIANO_KEY_RELEASED)
     EventBus.$off(EVENT_MIDI_DEV_KEY_PRESSED)
     EventBus.$off(EVENT_MIDI_DEV_KEY_RELEASED)
   }
   
-  /**
-   * Grab the release of the key, mostly to update the drawing of the piano keyboard
-   * @param event
-   */
-  private handleKeyUp(event: KeyboardEvent) {
-    const note = this.notesKeyEquivalents[event.key.toUpperCase()]
-    this.handleNoteRelease(note)
-  }
-
-  /**
-   * Grab the keypress and check if the note is right or wrong
-   * @param event
-   */
-  private handleKeyDown(event: KeyboardEvent) {
-    const note = this.notesKeyEquivalents[event.key.toUpperCase()]
-    if (typeof note !== 'undefined') {
-      this.handleNotePress(note)  
-    }
-  }
-
   /**
    * Use the note pressed (by keyboard/touch/click)
    * to display wrong/right guess behaviour
@@ -264,11 +214,12 @@ export default class Game  {
   /**
    * Adds a note to the staff
    */
-  private addNewNote() {  
+  private addNewNote() {
+    const NOTE_SIZE_RATIO = 0.45
     const notes = AllNotes.getInstance().notes
     const noteData = this.staff.getRandomNote()
     this.activeNote = NoteFactory.createNote(notes[noteData.allNotesIndex], this.staff)    
-    this.activeNote.draw(this.staff.getPlayableArea(), noteData.yPosition, 0.45)
+    this.activeNote.draw(this.staff.getPlayableArea(), noteData.yPosition, NOTE_SIZE_RATIO)
     this.activeNote.fadeIn(500)
   }
 
@@ -306,4 +257,36 @@ export default class Game  {
     this.lastTime = ms
     this.animFrame = requestAnimationFrame(this.mainLoop.bind(this))
   }  
+  
+  /**
+   * Draws the piano keys on the bottom on the screen
+   */
+  private drawPiano() {
+    this.pianoKeys = new PianoKeys()
+    this.pianoKeys.draw(
+      DrawingArea.Instance.WINDOW_WIDTH / 2 - this.pianoKeys.getWidth() / 2,
+      DrawingArea.Instance.WINDOW_HEIGHT - this.pianoKeys.getHeight(),
+      1
+    )
+  }
+  
+  /**
+   * Draws the sheet staff
+   */
+  private drawStaff() {
+    const Y_START = 150
+    const X_START = 0
+    this.staff = StaffFactory.createStaff(this.gameStaff)
+    this.staff.draw(X_START, Y_START, DrawingArea.Instance.WINDOW_WIDTH, Note.NOTE_HEIGHT)    
+  }
+  
+  /**
+   * Draws a progress meter whe  practice mode is not on
+   */
+  private drawProgressMeter() {
+    if (this.gameType === GameType.game) {
+      this.progressMeter = new ProgressMeter()
+      this.progressMeter.draw(DrawingArea.Instance.WINDOW_WIDTH / 2, 0)
+    }
+  }
 }
