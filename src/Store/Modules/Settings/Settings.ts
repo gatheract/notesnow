@@ -15,7 +15,8 @@ export const state: SettingsState = {
     useAllNotesGuesses: false,
     enableMidi: false,
     midiAvailable: MidiStatus.INITIALIZING,
-    midiInputId: ''
+    midiInputId: '',
+    keySignature: null
 }
 
 export const settings: Module<SettingsState, RootState> = {

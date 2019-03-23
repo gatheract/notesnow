@@ -24,9 +24,6 @@ const settingsModule = namespace('Settings')
   }
 })
 export default class StaffSel extends Vue {
-  private moreOptions() {
-    this.$router.push('options')
-  }
   private data() {
     return {
       GameStaff

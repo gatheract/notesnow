@@ -90,6 +90,14 @@ export default class StaffOption extends Vue {
     border: 1px solid #aaa;
   }
   
+  .option:hover:not(.selected){
+    transition: all 0.3s;
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    cursor: pointer;
+  }
+  
+  
   .optionText{
     position: absolute;
     right: 10px;  

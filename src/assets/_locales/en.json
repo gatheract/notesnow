@@ -47,6 +47,18 @@
   "MidiSel":{
     "enabledLabel": "MIDI Controller Enabled",
     "disabledLabel": "Enable MIDI Controller",
-    "none": "none"
+    "none": "None",
+    "noInputs": "No MIDI inputs available",
+    "notAvailable": "Browser does not support MIDI or an error occurred",
+    "notSupported": "This browser doesn't support MIDI controllers"
+  },
+  "KeySel": {
+    "random": "Random",
+    "noKey": "No key signature",
+    "keySignature": "Key Signature"
+  },
+  "Notation":{
+    "major": "major",
+    "minor": "minor"
   }
 }

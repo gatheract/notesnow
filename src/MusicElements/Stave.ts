@@ -1,4 +1,3 @@
-import { PolyLine, G } from 'svg.js'
 import DrawingArea from '@/Drawing/DrawingArea'
 import AbstractMusicElement from './AbstractMusicElement'
 import AbstractStaff from '@/MusicElements/Staffs/AbstractStaff'
@@ -12,7 +11,7 @@ export default class Stave extends AbstractMusicElement {
     constructor(staff: AbstractStaff) {
         super()
         this.staff = staff
-        this.staff.getParentGroup().add(this.parentGroup)
+        this.staff.addParent(this)
     }
     
     public getY() {

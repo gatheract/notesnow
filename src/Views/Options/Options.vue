@@ -12,6 +12,12 @@
       </div>
       <div class="option">
         <div class="label">
+          Key Signature
+        </div>
+        <KeySel></KeySel>
+      </div>      
+      <div class="option">
+        <div class="label">
           MIDI Controller
         </div>
         <MidiSel></MidiSel>
@@ -32,12 +38,14 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import MainContainer from '@/Components/Template/MainContainer.vue'
 import MidiSel from './Components/MidiSel.vue'
 import StaffSel from './Components/StaffSel.vue'
+import KeySel from './Components/KeySel.vue'
 
 @Component({
   components: {
     MainContainer,
     MidiSel,
-    StaffSel
+    StaffSel,
+    KeySel
   }
 })
 export default class Options extends Vue {  

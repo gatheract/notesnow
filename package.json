@@ -13,6 +13,7 @@
     "@types/webaudioapi": "0.0.27",
     "@types/webmidi": "^2.0.3",
     "element-ui": "^2.5.4",
+    "fast-clone": "^1.5.13",
     "g": "^2.0.1",
     "gh-pages": "^2.0.1",
     "register-service-worker": "^1.6.0",

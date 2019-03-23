@@ -1,16 +1,19 @@
 import { INoteData} from '@/Notation/NoteData'
-import AbstractMusicElement from '../AbstractMusicDrawing'
+import AbstractMusicDrawing from '../AbstractMusicDrawing'
 import AbstractStaff from '@/MusicElements/Staffs/AbstractStaff'
 import LedgerLines from '../LedgerLines'
 import LedgerLinesTypes from '@/Notation/LedgerLinesTypes'
+import Sharp from '../Alterations/Sharp'
+import Flat from '../Alterations/Flat'
 const noteSVG = require('@/assets/images/quarter.svg')
 
 /**
  * Just a quarter note (for now)
  */
-export default class AbstractNote extends AbstractMusicElement {
+export default class AbstractNote extends AbstractMusicDrawing {
     public static readonly NOTE_HEIGHT = 50
     protected staff: AbstractStaff 
+    protected alteration: Sharp | Flat
     private  fadingOut = false
     private noteRepresentation: INoteData
     
@@ -27,12 +30,15 @@ export default class AbstractNote extends AbstractMusicElement {
     /**
      * Get the width of the note
      */
-    public getWidth() {
-        return this.element.bbox().w
+    public getWidth() {        
+        return this.group.bbox().w
     }
     
-    public getRbox() {
-        return this.element.rbox(this.element.doc())
+    /**
+     * Gets the note alteration
+     */
+    public getAlteration() {
+        return this.alteration
     }
 
     /**
@@ -49,11 +55,15 @@ export default class AbstractNote extends AbstractMusicElement {
         const position = this.staff.ledgerLinesPosition(y)
         if (position !== LedgerLinesTypes.NONE) {
             const numberLines = this.staff.numberLedgeLines(y, position)
-            ledgerLines = new LedgerLines(numberLines, position, this)
+            ledgerLines = new LedgerLines(numberLines, position, this, x)
             ledgerLines.draw()
         }
         
         this.setVisible(true)
+    }
+    
+    public getX(): number {        
+        return this.element.rbox(this.element.doc()).x
     }
     
     public getStaff() {
@@ -67,5 +77,13 @@ export default class AbstractNote extends AbstractMusicElement {
     public fadeOutNote() {
         this.fadingOut = true
         this.fadeOut(500)
+    }
+    
+    public getNotePlusAlterationWidth() {
+        let width = this.getRbox().width 
+        if (this.alteration) {
+            width += + this.getAlteration().getRbox().width
+        }
+        return width
     }
 }

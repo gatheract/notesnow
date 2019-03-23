@@ -9,7 +9,7 @@ import {PianoKey} from '../Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED,
   EVENT_MIDI_DEV_KEY_PRESSED, EVENT_MIDI_DEV_KEY_RELEASED
 } from '@/EventBus'
-import { AllNotes } from '../Notation/NoteData'
+import AllNotes from '../Notation/AllNotes'
 import { GameStaff, GameType } from '@/Store/Modules/Settings/Types'
 import GameStore from '@/Game/GameStore'
 import NoteFactory from '@/MusicElements/Notes/NoteFactory'
@@ -61,10 +61,11 @@ export default class Game  {
   public start() {    
     DrawingArea.Instance.initialize()
     GameStore.setClearStats()
+    AllNotes.getInstance().initialize(GameStore.getKeySignature())
     this.addKeyListeners()
     this.running = true
     this.fillScreen()
-        
+    
     if (this.gameType === GameType.game) {
       this.newLevel()  
     } else {
@@ -169,7 +170,7 @@ export default class Game  {
   }
   
   private handleMidiNotePress(midiValue: number, velocity: number) {
-    for (const note of AllNotes) {
+    for (const note of AllNotes.getInstance().notes) {
       if (note.midiValue === midiValue) {
         this.handleNotePress(note.key)   
         return
@@ -182,7 +183,7 @@ export default class Game  {
   }
   
   private handleMidiNoteRelease(midiValue: number) {
-    for (const note of AllNotes) {
+    for (const note of AllNotes.getInstance().notes) {
       if (note.midiValue === midiValue) {
         this.handleNoteRelease(note.key)   
         return
@@ -244,9 +245,9 @@ export default class Game  {
    */
   private checkActiveNote() {    
     if (this.activeNote) {
-      const xPosFade = this.activeNote.getX() + (this.activeNote.getWidth() * 3)
+            
       const xPos = this.activeNote.getX()
-      
+      const xPosFade = xPos + this.activeNote.getNotePlusAlterationWidth() * 1.8
       if (
         (!this.activeNote.getFadingOut()) && 
         (this.staff.noteOutsideStaff(xPosFade))
@@ -264,9 +265,10 @@ export default class Game  {
    * Adds a note to the staff
    */
   private addNewNote() {  
+    const notes = AllNotes.getInstance().notes
     const noteData = this.staff.getRandomNote()
-    this.activeNote = NoteFactory.createNote(AllNotes[noteData.allNotesIndex], this.staff)
-    this.activeNote.draw(30, noteData.yPosition, 0.45)
+    this.activeNote = NoteFactory.createNote(notes[noteData.allNotesIndex], this.staff)    
+    this.activeNote.draw(this.staff.getPlayableArea(), noteData.yPosition, 0.45)
     this.activeNote.fadeIn(500)
   }
 
@@ -303,6 +305,5 @@ export default class Game  {
 
     this.lastTime = ms
     this.animFrame = requestAnimationFrame(this.mainLoop.bind(this))
-  }
-  
+  }  
 }

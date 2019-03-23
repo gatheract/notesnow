@@ -2,6 +2,7 @@ import { ActionTree } from 'vuex'
 import { SettingsState, GameStaff, GameType, MidiStatus } from './Types'
 import { RootState } from '../../Types'
 import * as MUT from './Mutations'
+import { KeySignaturesIndex } from '@/Notation/KeySignatures'
 
 export const SET_GAME_TYPE = 'SET_GAME_TYPE'
 export const SET_STAFF = 'SET_STAFF'
@@ -9,6 +10,7 @@ export const SET_USE_ALL_NOTES_GUESSES = 'SET_USE_ALL_NOTES_GUESSES'
 export const SET_MIDI_AVAILABLE = 'SET_MIDI_AVAILABLE'
 export const SET_ENABLE_MIDI = 'SET_ENABLE_MIDI'
 export const SET_MIDI_INPUT_ID = 'SET_MIDI_INPUT_ID'
+export const SET_KEY_SIGNATURE = 'SET_KEY_SIGNATURE'
 
 export const actions: ActionTree<SettingsState, RootState> = {
   [SET_GAME_TYPE]({ commit }, gameType: GameType) {
@@ -28,5 +30,8 @@ export const actions: ActionTree<SettingsState, RootState> = {
   },
   [SET_MIDI_INPUT_ID]({ commit }, id: string) {
     commit(MUT.MUT_MIDI_INPUT_ID, id )
+  },
+  [SET_KEY_SIGNATURE]({ commit }, key: KeySignaturesIndex | null) {
+    commit(MUT.MUT_KEY_SIGNATURE, key)
   },
 }

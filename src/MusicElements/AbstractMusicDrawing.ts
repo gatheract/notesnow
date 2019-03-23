@@ -46,4 +46,8 @@ export default abstract class AbstractMusicDrawing extends AbstractMusicElement 
         this.group.transform({ x, y })
         this.setVisible(visible)
     }
+    
+    public getRbox() {
+        return this.element.rbox(this.element.doc())
+    }
 }

@@ -32,7 +32,7 @@ import ForkMe from '@/Views/Home/Components/ForkMe.vue'
 })
 export default class Home extends Vue {
   private selectStaff() {
-    this.$router.push('staffsel')
+    this.$router.push('options')
   }
 }
 </script>

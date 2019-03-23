@@ -7,11 +7,13 @@ export default class LedgerLines extends AbstractMusicElement {
   private numberLines: number
   private position: LedgerLinesTypes
   private note: AbstractNote
-  public constructor(numberLines: number, position: LedgerLinesTypes, note: AbstractNote) {
+  private startX: number
+  public constructor(numberLines: number, position: LedgerLinesTypes, note: AbstractNote, startX: number) {
     super()
     this.numberLines = numberLines
     this.position = position
     this.note = note
+    this.startX = startX
   }
   
   public draw() {
@@ -35,15 +37,16 @@ export default class LedgerLines extends AbstractMusicElement {
     }
     
     for (let i = 0 ; i < this.numberLines; i++) {
+      
       yPos += sign * this.note.getStaff().STAVE_SEPARATION
       
       const line = DrawingArea.Instance.area.polyline([
-          [18, yPos ],
-          [67, yPos ]
+          [18 + this.startX - 30 , yPos ],
+          [67 + this.startX - 30, yPos ]
       ]).fill('none').stroke({ width: 1 })    
       
-      this.parentGroup.add(line)    
-      this.note.getParentGroup().add(this.parentGroup)
+      this.parentGroup.add(line)          
+      this.note.addParent(this)
       
     }
   }

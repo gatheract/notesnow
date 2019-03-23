@@ -18,7 +18,7 @@
             <div>
               <el-select style="max-width: 300px;" v-on:change="inputSelected" :value="midiInputId" placeholder="MIDI Controller">
                 <template v-if="midiInputsAvailable.length > 0">
-                  <el-option key="none" label="$t('MidiSel.none')" :value="NO_INPUT"></el-option>
+                  <el-option key="none" :label="$t('MidiSel.none')" :value="NO_INPUT"></el-option>
                   <el-option
                     v-for="input in midiInputsAvailable"
                     :key="input.id"
@@ -27,19 +27,19 @@
                   </el-option>  
                 </template> 
                 <template v-else>
-                  <el-option key="None" label="No MIDI Inputs available" :value="NO_INPUT"></el-option>
+                  <el-option key="None" :label="$t('MidiSel.noInputs')" :value="NO_INPUT"></el-option>
                 </template>        
               </el-select>
             </div>
           </div>
           <div v-else-if="midiAvailable === MidiStatus.FAILED">
-            Browser does not support MIDI or an error occurred
+            {{$t('MidiSel.notAvailable')}}
           </div>
         </div>  
       </div>
       <div class="notSupported" v-else>
         <span >
-        This browser doesn't support MIDI controllers  
+        {{$t('MidiSel.notSupported')}}
         </span>        
         <br />        
         <router-link class="link" to="/midihelp">Need help?</router-link>
@@ -69,6 +69,22 @@ interface MIDIInput {
 })
 export default class MidiSel extends Vue {
   
+  private readonly NO_INPUT = ''
+  
+  @settingsModule.Getter(MIDI_INPUT_ID)
+  private midiInputId: string
+  @settingsModule.Getter(MIDI_AVAILABLE)
+  private midiAvailable: string
+  @settingsModule.Getter(ENABLE_MIDI)
+  private midiEnabled: boolean
+  
+  @settingsModule.Action(SET_ENABLE_MIDI)
+  private setMidiEnabled: any
+  @settingsModule.Action(SET_MIDI_INPUT_ID)
+  private setMidiInputId: any
+   
+  private midiInputsAvailable: MIDIInput[] = []
+  
   /**
    * Shows wheter midi is available or not
    */
@@ -85,22 +101,7 @@ export default class MidiSel extends Vue {
    */
   private get midiSupport() {
     return navigator.requestMIDIAccess
-  }
-  private readonly NO_INPUT = ''
-  
-  @settingsModule.Getter(MIDI_INPUT_ID)
-  private midiInputId: string
-  @settingsModule.Getter(MIDI_AVAILABLE)
-  private midiAvailable: string
-  @settingsModule.Getter(ENABLE_MIDI)
-  private midiEnabled: boolean
-  
-  @settingsModule.Action(SET_ENABLE_MIDI)
-  private setMidiEnabled: any
-  @settingsModule.Action(SET_MIDI_INPUT_ID)
-  private setMidiInputId: any
-   
-  private midiInputsAvailable: MIDIInput[] = []
+  } 
   
   /**
    * Gets the available midi inputs
@@ -125,8 +126,6 @@ export default class MidiSel extends Vue {
   } 
     
   private mounted() {
-    
-    
     EventBus.$on(EVENT_MIDI_STATE_CHANGE, this.getMidiInputs.bind(this))
   }
   

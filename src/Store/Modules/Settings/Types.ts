@@ -1,3 +1,4 @@
+import { KeySignaturesIndex } from '@/Notation/KeySignatures'
 
 export enum GameType {
   game,
@@ -26,5 +27,6 @@ export interface SettingsState {
   useAllNotesGuesses: boolean,
   enableMidi: boolean,
   midiAvailable: MidiStatus,
-  midiInputId: string
+  midiInputId: string,
+  keySignature: KeySignaturesIndex | null
 }

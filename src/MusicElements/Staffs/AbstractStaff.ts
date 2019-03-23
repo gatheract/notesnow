@@ -1,10 +1,14 @@
 import Stave from '../Stave'
 
 import { PentegramNote } from '../../Notation/NoteConstants'
-import { AllNotes } from '../../Notation/NoteData'
+import AllNotes from '../../Notation/AllNotes'
 import { Library} from 'svg.js'
 import AbstractMusicElement from '@/MusicElements/AbstractMusicElement'
 import LedgerLinesTypes from '@/Notation/LedgerLinesTypes'
+import KeySignature from '@/MusicElements/KeySignature'
+import AbstractClef from '../Clefs/AbstractClef'
+import {KeySignatureType, KeySignaturesData, KeySignaturesIndex} from '../../Notation/KeySignatures'
+import GameStore from '@/Game/GameStore'
 
 interface INotePosition {
     yPosition: number
@@ -12,7 +16,6 @@ interface INotePosition {
 }
 
 export default abstract class Staff extends AbstractMusicElement {
-    
     protected static readonly DOUBLE_STAFF_LINES = 11
     protected static readonly SINGLE_STAFF_LINES = 5
     public readonly STAVE_SEPARATION: number = 25
@@ -30,12 +33,13 @@ export default abstract class Staff extends AbstractMusicElement {
     protected size: number        
     protected staves: Stave[]
     protected noteHeight: number
+    protected keySignature: KeySignature
+    protected clefs: AbstractClef[] = []
     
     /**
      * The first and last stave, 4 in case of a double staff
      */
     protected staffBounds: number[]
-    
     public constructor() {
         super()
         this.staves = []
@@ -51,13 +55,13 @@ export default abstract class Staff extends AbstractMusicElement {
     
     public getRandomNote() {
         const pos = Math.floor((this.usableNotePositions.length - 1) * Math.random())
-        return this.usableNotePositions[pos]        
+        return this.usableNotePositions[pos]         
     }
     
     public getStaffBounds() {
         return this.staffBounds
     }
-    
+        
     /**
      * If the note needs a line drawn across when it's above or below the staff
      */
@@ -104,6 +108,10 @@ export default abstract class Staff extends AbstractMusicElement {
         return 1
     }
 
+    public getPlayableArea() {        
+        return this.keySignature.getStartX() + this.keySignature.getWidth()
+    }
+    
     public draw(x: number, y: number, size: number, noteHeight: number) {
         this.x = x
         this.y = y
@@ -125,7 +133,6 @@ export default abstract class Staff extends AbstractMusicElement {
             const stave = new Stave(this)
             stave.draw(startX, endX, yPosition)
             this.staves.push(stave)
-            
         }
                 
         /**
@@ -135,10 +142,11 @@ export default abstract class Staff extends AbstractMusicElement {
             if (this.staves[i]) {
                 this.staffBounds.push(this.staves[i].getY())
             }
-        })
-
+        })        
+        
         this.generatePositions()
-        this.drawClef()
+        this.drawClef()        
+        this.drawKeySignature()        
     }
     
     protected abstract drawClef(): void
@@ -152,12 +160,12 @@ export default abstract class Staff extends AbstractMusicElement {
          */
         const g4Position = this.staves[3].getY() - this.NOTE_Y_FIX
                
-        const g4Index = AllNotes.findIndex((element) => {
+        const g4Index = AllNotes.getInstance().notes.findIndex((element) => {
             return element.pitch === this.startingPitch
         })      
         let staffPos: number = 0             
         let staveCount: number = 0
-        let lastNote: PentegramNote = AllNotes[g4Index].penNote
+        let lastNote: PentegramNote = AllNotes.getInstance().notes[g4Index].penNote
         
         /**
          * I have to do two for loops because I can only calculate the 
@@ -169,8 +177,8 @@ export default abstract class Staff extends AbstractMusicElement {
          * @todo
          */
         for (let a = g4Index; a >= 0; a--) {
-            if (lastNote !== AllNotes[a].penNote) {
-                lastNote = AllNotes[a].penNote
+            if (lastNote !== AllNotes.getInstance().notes[a].penNote) {
+                lastNote = AllNotes.getInstance().notes[a].penNote
                 ++staveCount                
             }            
             staffPos = g4Position + (staveCount * this.NOTE_SEPARATION)            
@@ -182,10 +190,10 @@ export default abstract class Staff extends AbstractMusicElement {
         }
         
         staveCount = 0
-        lastNote = AllNotes[g4Index].penNote
-        for (let a = g4Index + 1 ; a < AllNotes.length; a++) {
-            if (lastNote !== AllNotes[a].penNote) {
-                lastNote = AllNotes[a].penNote
+        lastNote = AllNotes.getInstance().notes[g4Index].penNote
+        for (let a = g4Index + 1 ; a < AllNotes.getInstance().notes.length; a++) {
+            if (lastNote !== AllNotes.getInstance().notes[a].penNote) {
+                lastNote = AllNotes.getInstance().notes[a].penNote
                 ++staveCount                
             }            
             staffPos = g4Position - (staveCount * this.NOTE_SEPARATION)            
@@ -197,12 +205,43 @@ export default abstract class Staff extends AbstractMusicElement {
         }
     }    
     
+    protected drawKeySignature() {
+        const SIGNATURE_X = 80
+        
+        const keySig = GameStore.getKeySignature()
+        let pos: number[]
+        let type: KeySignatureType | null
+        
+        if (keySig !== null) {
+            const numAlt = KeySignaturesData[keySig].alterations.length
+            type = KeySignaturesData[keySig].type            
+            pos = this.generateKeySignaturePositions(type, numAlt)
+            
+        } else {
+            pos = []
+            type = null
+        }
+        this.keySignature = new KeySignature(type, pos, SIGNATURE_X, this.isDoubleStaff())
+        this.keySignature.draw()     
+    }
+    
+    /**
+     * Generate the y positions of the sharps or flats that go into the key signature
+     * First I get the position of the first stave, and then according to the note separation
+     * add or substract height
+     */
+    protected abstract generateKeySignaturePositions(type: KeySignatureType, numberAlterations: number): number[]
+    
     /**
      * Returns the y position of the point that goes through the stave position
      * @param noteY 
      */
     protected getNoteTopPosition(noteY: number ) {
         return noteY + this.NOTE_Y_FIX
+    }
+    
+    protected isDoubleStaff() {
+        return this.staves.length > 5
     }
     
 }

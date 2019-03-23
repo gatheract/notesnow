@@ -1,5 +1,5 @@
 import { Library } from 'svg.js'
-import AbstractMusicElement from '@/MusicElements/AbstractMusicDrawing'
+import AbstractMusicDrawing from '@/MusicElements/AbstractMusicDrawing'
 import {PianoKey} from '@/Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
 
@@ -8,7 +8,7 @@ const pianoImage = require('@/assets/images/piano_keys.svg')
 /**
  * Keys of a piano octave
  */
-export default class PianoOctave extends AbstractMusicElement {
+export default class PianoOctave extends AbstractMusicDrawing {
     private readonly WRONG_KEY_COLOR = '#f00'
     private readonly CORRECT_KEY_COLOR = '#0f0'
     private readonly NOTES_SVG_CLASSES: { [key in PianoKey | number]: string } = {

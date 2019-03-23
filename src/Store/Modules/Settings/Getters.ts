@@ -2,6 +2,7 @@ import { GetterTree } from 'vuex'
 import { SettingsState } from './Types'
 import { RootState } from '../../Types'
 import {GameType, GameStaff, MidiStatus} from './Types'
+import { KeySignaturesIndex } from '@/Notation/KeySignatures'
 
 export const GAME_TYPE = 'GAME_TYPE'
 export const STAFF_SELECTED = 'STAFF_SELECTED'
@@ -12,6 +13,7 @@ export const USE_ALL_NOTES_GUESSES = 'USE_ALL_NOTES_GUESSES'
 export const MIDI_AVAILABLE = 'MIDI_AVAILABLE'
 export const ENABLE_MIDI = 'ENABLE_MIDI'
 export const MIDI_INPUT_ID = 'MIDI_INPUT_ID'
+export const KEY_SIGNATURE = 'KEY_SIGNATURE'
 
 export const getters: GetterTree<SettingsState, RootState> = {
     [GAME_TYPE](state): GameType {
@@ -41,4 +43,7 @@ export const getters: GetterTree<SettingsState, RootState> = {
     [MIDI_INPUT_ID](state): string {
         return state.midiInputId
     },
+    [KEY_SIGNATURE](state): KeySignaturesIndex | null {
+        return state.keySignature
+    }
 }

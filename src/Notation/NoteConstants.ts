@@ -19,9 +19,8 @@ enum PianoKey {
 
 /**
  * I guess these are all the notes there is xd
- * https://jythonmusic.me/api/midi-constants/pitch/
  */
-enum NotePitch {
+enum Note {
   CF,
   C,
   CS,
@@ -56,9 +55,9 @@ enum PentegramNote {
 }
 
 enum Alterations {
-  natural, 
-  sharp,
-  flat
+  NATURAL, 
+  SHARP,
+  FLAT
 }
 
-export {PianoKey, NotePitch, Alterations, PentegramNote}
+export {PianoKey, Note, Alterations, PentegramNote}

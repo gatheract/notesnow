@@ -1,5 +1,6 @@
 import { MutationTree } from 'vuex'
 import { SettingsState, GameType, GameStaff, MidiStatus } from './Types'
+import { KeySignaturesIndex } from '@/Notation/KeySignatures'
 
 export const MUT_GAME_TYPE = 'MUT_GAME_TYPE'
 export const MUT_STAFF = 'MUT_STAFF'
@@ -7,6 +8,7 @@ export const MUT_USE_ALL_NOTES_GUESSES = 'MUT_USE_ALL_NOTES_GUESSES'
 export const MUT_MIDI_AVAILABLE = 'MUT_MIDI_AVAILABLE'
 export const MUT_ENABLE_MIDI = 'MUT_ENABLE_MIDI'
 export const MUT_MIDI_INPUT_ID = 'MUT_MIDI_INPUT_ID'
+export const MUT_KEY_SIGNATURE = 'MUT_KEY_SIGNATURE'
 
 export const mutations: MutationTree<SettingsState> = {
     [MUT_GAME_TYPE](state, gameType: GameType) {
@@ -26,5 +28,8 @@ export const mutations: MutationTree<SettingsState> = {
     },
     [MUT_MIDI_INPUT_ID](state, id: string ) {
         state.midiInputId = id
+    },
+    [MUT_KEY_SIGNATURE](state, key: KeySignaturesIndex | null ) {        
+        state.keySignature = key        
     }
 }
