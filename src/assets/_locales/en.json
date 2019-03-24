@@ -47,7 +47,7 @@
   "MidiSel":{
     "enabledLabel": "MIDI Controller Enabled",
     "disabledLabel": "Enable MIDI Controller",
-    "none": "None",
+    "none": "No MIDI input",
     "noInputs": "No MIDI inputs available",
     "notAvailable": "Browser does not support MIDI or an error occurred",
     "notSupported": "This browser doesn't support MIDI controllers"

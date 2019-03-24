@@ -1,5 +1,5 @@
 import AbstractMusicElement from './AbstractMusicElement'
-import LedgerLinesTypes from '@/Notation/LedgerLinesTypes'
+import LedgerLinesTypes from '@/Notation/LedgerLines'
 import AbstractNote from './Notes/AbstractNote'
 import DrawingArea from '@/Drawing/DrawingArea'
 

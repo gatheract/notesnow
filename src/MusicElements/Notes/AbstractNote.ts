@@ -2,7 +2,7 @@ import { INoteData} from '@/Notation/NoteData'
 import AbstractMusicDrawing from '../AbstractMusicDrawing'
 import AbstractStaff from '@/MusicElements/Staffs/AbstractStaff'
 import LedgerLines from '../LedgerLines'
-import LedgerLinesTypes from '@/Notation/LedgerLinesTypes'
+import LedgerLinesTypes from '@/Notation/LedgerLines'
 import Sharp from '../Alterations/Sharp'
 import Flat from '../Alterations/Flat'
 const noteSVG = require('@/assets/images/quarter.svg')
