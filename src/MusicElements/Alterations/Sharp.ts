@@ -1,10 +1,11 @@
 
-import AbstractMusicDrawing from '../AbstractMusicDrawing'
+import SVGDrawing from '../SVGDrawing'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
 
 const sharpSVG = require('@/assets/images/sharp.svg')
 
-export default class Sharp extends AbstractMusicDrawing {
-  public constructor() {
-    super(sharpSVG)
+export default class Sharp extends SVGDrawing {
+  public constructor(da: AbstractDrawingArea) {
+    super(sharpSVG, da)
   }
 }

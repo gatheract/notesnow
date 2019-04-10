@@ -1,5 +1,5 @@
-import { INoteData} from '@/Notation/NoteData'
-import AbstractMusicDrawing from '../AbstractMusicDrawing'
+import { INoteData, INotePitch } from '@/Notation/NoteData'
+import SVGDrawing from '../SVGDrawing'
 import AbstractStaff from '@/MusicElements/Staffs/AbstractStaff'
 import LedgerLines from '../LedgerLines'
 import LedgerLinesTypes from '@/Notation/LedgerLines'
@@ -10,30 +10,30 @@ const noteSVG = require('@/assets/images/quarter.svg')
 /**
  * Just a quarter note (for now)
  */
-export default class AbstractNote extends AbstractMusicDrawing {
+export default class AbstractNote extends SVGDrawing {
     public static readonly NOTE_HEIGHT = 50
-    protected staff: AbstractStaff 
+    protected staff: AbstractStaff
     protected alteration: Sharp | Flat
-    private  fadingOut = false
-    private noteRepresentation: INoteData
-    
-    constructor(note: INoteData, staff: AbstractStaff) {
-        super(noteSVG)
+    private fadingOut = false
+    private noteRepresentation: INotePitch
+
+    constructor(note: INotePitch, staff: AbstractStaff) {
+        super(noteSVG, staff.getDrawingArea())
         this.noteRepresentation = note
-        this.staff = staff        
+        this.staff = staff
     }
-    
-    public getNoteRepresentation(): INoteData {
+
+    public getNoteRepresentation() {
         return this.noteRepresentation
     }
-     
+
     /**
      * Get the width of the note
      */
-    public getWidth() {        
+    public getWidth() {
         return this.group.bbox().w
     }
-    
+
     /**
      * Gets the note alteration
      */
@@ -48,7 +48,7 @@ export default class AbstractNote extends AbstractMusicDrawing {
     public fill(color: string) {
         this.element.fill(color)
     }
-    
+
     public draw(x: number, y: number, sizeRatio?: number) {
         super.draw(x, y, sizeRatio, false)
         let ledgerLines: LedgerLines
@@ -58,18 +58,18 @@ export default class AbstractNote extends AbstractMusicDrawing {
             ledgerLines = new LedgerLines(numberLines, position, this, x)
             ledgerLines.draw()
         }
-        
+
         this.setVisible(true)
     }
-    
-    public getX(): number {        
+
+    public getX(): number {
         return this.element.rbox(this.element.doc()).x
     }
-    
+
     public getStaff() {
         return this.staff
     }
-    
+
     public getFadingOut() {
         return this.fadingOut
     }
@@ -78,9 +78,9 @@ export default class AbstractNote extends AbstractMusicDrawing {
         this.fadingOut = true
         this.fadeOut(500)
     }
-    
+
     public getNotePlusAlterationWidth() {
-        let width = this.getRbox().width 
+        let width = this.getRbox().width
         if (this.alteration) {
             width += + this.getAlteration().getRbox().width
         }

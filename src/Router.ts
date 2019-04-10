@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './Views/Home/Home.vue'
-import Play from './Views/Play.vue'
+import Game from './Views/Game/Game.vue'
 import GameOver from './Views/GameOver/GameOver.vue'
 import Options from './Views/Options/Options.vue'
 import MidiHelp from './Views/Help/MidiHelp.vue'
+import Notesinterval from './Views/Options/NotesInterval/NotesInterval.vue'
 
 Vue.use(Router)
 
@@ -20,7 +21,7 @@ export default new Router({
     {
       path: '/play',
       name: 'play',
-      component: Play
+      component: Game
     },
     {
       path: '/options',
@@ -36,6 +37,11 @@ export default new Router({
       path: '/midihelp',
       name: 'midihelp',
       component: MidiHelp
+    },
+    {
+      path: '/options/interval',
+      name: 'notesinterval',
+      component: Notesinterval
     }
   ],
 })

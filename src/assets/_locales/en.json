@@ -1,6 +1,6 @@
 {
-  "Site":{
-      "back": "Go Back"
+  "Site": {
+    "back": "Go Back"
   },
   "mainScreen": {
     "title": "Note Snow",
@@ -24,27 +24,34 @@
     "home": "Home",
     "playAgain": "Play Again"
   },
-  "Hamburguer":{
+  "Hamburguer": {
     "home": "Home",
     "settings": "Settings",
     "github": "Github Repository"
   },
-  "ForkMe":{
+  "ForkMe": {
     "title": "View source on GitHub"
   },
-  "Options":{
+  "Options": {
     "title": "Game Options",
     "start": "Start Playing",
     "enabledLabel": "MIDI Controller Enabled",
-    "disabledLabel": "Enable MIDI Controller"
+    "disabledLabel": "Enable MIDI Controller",
+    "keySignatureLabel": "Key Signature",
+    "sheetStaffLabel": "Sheet Staff",
+    "signatureInterval": "Notes from ",
+    "signatureIntervalTo": " to ",
+    "midiControllerLabel": "Midi Controller",
+    "changeInterval": " Change Interval "
+
   },
-  "MidiHelp":{
+  "MidiHelp": {
     "title": "MIDI Browser Support",
     "para1": "Some browsers don't provide MIDI support but it can be enabled through third party extensions.",
     "para2": "You can get the extensions and plugin here:",
     "para3": "I've tested Firefox with the plugin and it works, haven't tested it on Safari though."
   },
-  "MidiSel":{
+  "MidiSel": {
     "enabledLabel": "MIDI Controller Enabled",
     "disabledLabel": "Enable MIDI Controller",
     "none": "No MIDI input",
@@ -57,8 +64,12 @@
     "noKey": "No key signature",
     "keySignature": "Key Signature"
   },
-  "Notation":{
+  "Notation": {
     "major": "major",
     "minor": "minor"
+  },
+  "NotesInterval": {
+    "title": "Notes Interval",
+    "restore": "Restore to Default"
   }
 }

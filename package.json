@@ -12,30 +12,31 @@
   "dependencies": {
     "@types/webaudioapi": "0.0.27",
     "@types/webmidi": "^2.0.3",
-    "element-ui": "^2.5.4",
+    "element-ui": "^2.7.2",
     "fast-clone": "^1.5.13",
     "g": "^2.0.1",
     "gh-pages": "^2.0.1",
-    "register-service-worker": "^1.6.0",
+    "include-media": "^1.4.9",
+    "register-service-worker": "^1.6.2",
     "svg.js": "^2.7.1",
-    "vue": "^2.6.4",
+    "vue": "^2.6.10",
     "vue-class-component": "^6.0.0",
-    "vue-i18n": "^8.8.0",
+    "vue-i18n": "^8.10.0",
     "vue-property-decorator": "^7.3.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.1.0",
-    "vuex-class": "^0.3.1",
+    "vuex-class": "^0.3.2",
     "vuex-persist": "^2.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-typescript": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
+    "@vue/cli-plugin-typescript": "^3.5.3",
+    "@vue/cli-service": "^3.5.3",
     "json-loader": "^0.5.7",
     "node-sass": "^4.9.0",
     "raw-loader": "^1.0.0",
     "sass-loader": "^7.0.1",
-    "typescript": "^3.3.3",
-    "vue-template-compiler": "^2.6.4"
+    "typescript": "^3.4.2",
+    "vue-template-compiler": "^2.6.10"
   },
   "homepage": "https://enchufadoo.github.io/notesnow"
 }

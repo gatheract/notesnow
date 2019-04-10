@@ -2,7 +2,8 @@ import { Module } from 'vuex'
 import { getters } from './Getters'
 import { actions } from './Actions'
 import { mutations } from './Mutations'
-import { SettingsState, GameType, GameStaff, MidiStatus } from './Types'
+import { SettingsState, GameType, GameStaff, MidiStatus, StaffInterval, defaultIntervals } from './Types'
+import fastClone from 'fast-clone'
 import { RootState } from '../../Types'
 
 export const state: SettingsState = {
@@ -16,7 +17,9 @@ export const state: SettingsState = {
     enableMidi: false,
     midiAvailable: MidiStatus.INITIALIZING,
     midiInputId: '',
-    keySignature: null
+    keySignature: null,
+    staffIntervals: fastClone(defaultIntervals)
+
 }
 
 export const settings: Module<SettingsState, RootState> = {

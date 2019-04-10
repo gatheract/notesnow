@@ -1,14 +1,15 @@
 import { Library } from 'svg.js'
-import AbstractMusicDrawing from '@/MusicElements/AbstractMusicDrawing'
+import SVGDrawing from '@/MusicElements/SVGDrawing'
 import {PianoKey} from '@/Notation/NoteConstants'
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED } from '@/EventBus'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
 
 const pianoImage = require('@/assets/images/piano_keys.svg')
 
 /**
  * Keys of a piano octave
  */
-export default class PianoOctave extends AbstractMusicDrawing {
+export default class PianoOctave extends SVGDrawing {
     private readonly WRONG_KEY_COLOR = '#f00'
     private readonly CORRECT_KEY_COLOR = '#0f0'
     private readonly NOTES_SVG_CLASSES: { [key in PianoKey | number]: string } = {
@@ -26,8 +27,8 @@ export default class PianoOctave extends AbstractMusicDrawing {
         [PianoKey.G_MOD]: 'NOTE_G_SHARP'
     }
 
-    constructor() {
-        super(pianoImage)
+    constructor(da: AbstractDrawingArea) {
+        super(pianoImage, da)
         this.addClickListeners()
     }
 

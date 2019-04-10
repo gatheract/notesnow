@@ -1,8 +1,13 @@
-import DrawingArea from '@/Drawing/DrawingArea'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
+import SVGElement from '@/MusicElements/SVGElement'
 
-export default class LevelBanner {
-  public static draw(level: number, x: number, y: number) {
-    const text = DrawingArea.Instance.area
+export default class LevelBanner extends SVGElement {
+  public constructor(da: AbstractDrawingArea) {
+    super(da)
+  }
+  public draw(level: number, x: number, y: number) {
+    
+    const text = this.getDrawingArea().area
       .text('Level ' + level)
       .font({ family: 'Arial', size: 70, leading: '1.5em' })
       .opacity(0)

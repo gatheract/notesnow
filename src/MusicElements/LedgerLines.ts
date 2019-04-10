@@ -1,15 +1,15 @@
-import AbstractMusicElement from './AbstractMusicElement'
+import SVGElement from './SVGElement'
 import LedgerLinesTypes from '@/Notation/LedgerLines'
 import AbstractNote from './Notes/AbstractNote'
-import DrawingArea from '@/Drawing/DrawingArea'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
 
-export default class LedgerLines extends AbstractMusicElement {
+export default class LedgerLines extends SVGElement {
   private numberLines: number
   private position: LedgerLinesTypes
   private note: AbstractNote
   private startX: number
   public constructor(numberLines: number, position: LedgerLinesTypes, note: AbstractNote, startX: number) {
-    super()
+    super(note.getDrawingArea())
     this.numberLines = numberLines
     this.position = position
     this.note = note
@@ -40,7 +40,7 @@ export default class LedgerLines extends AbstractMusicElement {
       
       yPos += sign * this.note.getStaff().STAVE_SEPARATION
       
-      const line = DrawingArea.Instance.area.polyline([
+      const line = this.getDrawingArea().area.polyline([
           [18 + this.startX - 30 , yPos ],
           [67 + this.startX - 30, yPos ]
       ]).fill('none').stroke({ width: 1 })    

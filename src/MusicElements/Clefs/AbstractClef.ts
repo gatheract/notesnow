@@ -1,7 +1,8 @@
-import AbstractMusicDrawing from '../AbstractMusicDrawing'
+import SVGDrawing from '../SVGDrawing'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
 
-export default class AbstractClef extends AbstractMusicDrawing {
-    public constructor(clefSVG: string) {
-      super(clefSVG)
+export default class AbstractClef extends SVGDrawing {
+    public constructor(clefSVG: string, da: AbstractDrawingArea) {
+      super(clefSVG, da)
     }
 }

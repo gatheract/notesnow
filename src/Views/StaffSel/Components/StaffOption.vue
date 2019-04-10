@@ -1,8 +1,8 @@
 <template >
   <div class="option" @click="select" v-bind:class="{ selected: isSelected }">
     <!-- <div class="optionText">{{selectedText}}</div> -->
-    <img class="imgResponsive" :src="imgPath" alt="">
-  </div>  
+    <img class="imgResponsive" :src="imgPath" alt>
+  </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
@@ -21,7 +21,7 @@ const settingsModule = namespace('Settings')
     type: {
       type: Number as () => GameStaff,
       required: true,
-      validator(value) {      
+      validator(value) {
         return value in GameStaff
       }
     }
@@ -30,19 +30,19 @@ const settingsModule = namespace('Settings')
 export default class StaffOption extends Vue {
   @settingsModule.Getter(STAFF_SELECTED)
   private staffSelected: GameStaff
-  
+
   @settingsModule.Action(SET_STAFF)
   private setStaff: any
   private type: GameStaff
-  
+
   private select() {
     this.setStaff(this.type)
   }
-    
+
   get isSelected() {
     return this.staffSelected === this.type
   }
-  
+
   get imgPath(): string {
     switch (this.type) {
       case GameStaff.gStaff:
@@ -53,7 +53,7 @@ export default class StaffOption extends Vue {
         return imgBoth
     }
   }
-  
+
   /**
    * Doesn't look good
    * @deprecated
@@ -72,32 +72,33 @@ export default class StaffOption extends Vue {
 </script>
 
 <style scoped lang="scss">
-  .option{
-    height: 100%;
-    border: 1px solid transparent;    
-    padding: 5px;
-    position: relative;
-    
-    font-weight: 700;
-    color: black;
-    transition: all 0.3s;
-  }
-    
-  .option.selected{
-    transition: all 0.3s;
-     border-bottom: solid 1px red;
-     border-top: solid 1px red;
-  }
-  
-  .optionText{
-    position: absolute;
-    right: 10px;  
-    z-index: 9999;
-    font-size: 10px;
-  }
-  .imgResponsive{
-    width: auto;
-    height: auto;
-    max-height: 100px;
-  }
+.option {
+  height: 100%;
+  border: 1px solid transparent;
+  padding: 5px;
+  position: relative;
+
+  font-weight: 700;
+  color: black;
+  transition: all 0.3s;
+}
+
+.option.selected {
+  transition: all 0.3s;
+  border-bottom: solid 1px red;
+  border-top: solid 1px red;
+}
+
+.optionText {
+  position: absolute;
+  right: 10px;
+  z-index: 9999;
+  font-size: 10px;
+}
+.imgResponsive {
+  width: auto;
+  height: auto;
+  max-height: 130px;
+  max-width: 130px;
+}
 </style>

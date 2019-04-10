@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex'
 import { StatsState } from './Types'
 import { RootState } from '../../Types'
-import {MUT_LEVEL, MUT_RIGHT, MUT_WRONG, MUT_NOTES_ADDED, MUT_LEVEL_NOTES} from './Mutations'
+import { MUT_LEVEL, MUT_RIGHT, MUT_WRONG, MUT_NOTES_ADDED, MUT_LEVEL_NOTES } from './Mutations'
 import { GAME_SCORE_CHANGE, GAME_LEVEL_CHANGE, EventBus, GAME_OVER } from '@/EventBus'
 import GameStore from '@/Game/GameStore'
 export const SET_NEW_TRY = 'SET_NEW_TRY'
@@ -18,12 +18,12 @@ export const actions: ActionTree<StatsState, RootState> = {
       commit(MUT_RIGHT, ++state.right)
     } else {
       commit(MUT_WRONG, ++state.wrong)
-    }        
+    }
     EventBus.$emit(GAME_SCORE_CHANGE)
-    
+
     if (GameStore.getProgress() <= 0) {
-      EventBus.$emit(GAME_OVER)
-    } else if (!((state.right + state.wrong) % rootState.Settings!.notesPerLevel)) { 
+      // EventBus.$emit(GAME_OVER)
+    } else if (!((state.right + state.wrong) % rootState.Settings!.notesPerLevel)) {
       commit(MUT_LEVEL, ++state.level)
     }
   },
@@ -50,5 +50,5 @@ export const actions: ActionTree<StatsState, RootState> = {
   [SET_NOTE_ADDED]({ commit, state }) {
     commit(MUT_NOTES_ADDED, ++state.notesAdded)
     commit(MUT_LEVEL_NOTES, ++state.levelNotes)
-  },  
+  },
 }

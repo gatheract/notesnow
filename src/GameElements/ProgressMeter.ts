@@ -1,12 +1,13 @@
-import DrawingArea from '@/Drawing/DrawingArea'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
 import { GAME_SCORE_CHANGE, EventBus } from '@/EventBus'
 import { Library } from 'svg.js'
 import GameStore from '@/Game/GameStore'
+import SVGElement from '@/MusicElements/SVGElement'
 
 /**
  * Draw a status bar on top of the screen
  */
-export default class ProgressMeter {
+export default class ProgressMeter extends SVGElement {
   private meterBox: Library['Rect']
   private gradient: Library['Gradient']
   private stop1: Library['Stop'] 
@@ -14,16 +15,17 @@ export default class ProgressMeter {
   private readonly START_COLOR = '#0F0'
   private readonly ANIMATION_SPEED = 100
   
-  constructor() {
+  constructor(da: AbstractDrawingArea) {
+    super(da)
     EventBus.$on(GAME_SCORE_CHANGE, this.updateFill.bind(this))
   }
   
   public draw(x: number, y: number) {
     const WIDTH = 250
     const HEIGHT = 30
-    this.meterBox = DrawingArea.Instance.area.rect(WIDTH, HEIGHT).move(x - (WIDTH / 2) , y)
+    this.meterBox = this.getDrawingArea().area.rect(WIDTH, HEIGHT).move(x - (WIDTH / 2) , y)
     this.meterBox.attr({'stroke': '#000', 'stroke-width': 1})
-    this.gradient = DrawingArea.Instance.area.gradient('linear', (stop: Library['Gradient']) => {
+    this.gradient = this.getDrawingArea().area.gradient('linear', (stop: Library['Gradient']) => {
       this.stop1 = stop.at(1, this.START_COLOR)
       this.stop2 = stop.at(1, 'transparent')
     })

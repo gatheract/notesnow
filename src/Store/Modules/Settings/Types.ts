@@ -17,6 +17,10 @@ export enum MidiStatus {
   FAILED
 }
 
+export interface StaffInterval {
+  [index: number]: { startPitch: string, endPitch: string }
+}
+
 export interface SettingsState {
   gameType: GameType
   staffSelected: GameStaff,
@@ -28,5 +32,21 @@ export interface SettingsState {
   enableMidi: boolean,
   midiAvailable: MidiStatus,
   midiInputId: string,
-  keySignature: KeySignaturesIndex | null
+  keySignature: KeySignaturesIndex | null,
+  staffIntervals: StaffInterval
+}
+
+export const defaultIntervals: StaffInterval = {
+  [GameStaff.both]: {
+    startPitch: 'A1',
+    endPitch: 'F6',
+  },
+  [GameStaff.gStaff]: {
+    startPitch: 'E3',
+    endPitch: 'F6',
+  },
+  [GameStaff.fStaff]: {
+    startPitch: 'A1',
+    endPitch: 'G4',
+  },
 }

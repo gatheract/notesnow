@@ -1,6 +1,5 @@
 import {Note, PianoKey, Alterations as Alt, PentegramNote as Pen} from '@/Notation/NoteConstants'
 import {BasicNoteData} from '@/Notation/BasicNoteData'
-import {KeySignaturesData, KeySignaturesIndex} from '@/Notation/KeySignatures'
 
 /**
  * Returns whether a pitch note is flattened or sharpened or not

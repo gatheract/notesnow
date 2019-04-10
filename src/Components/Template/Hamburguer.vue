@@ -63,9 +63,13 @@ nav{
   top: 20px;
   left: 20px;
   z-index: 1;
-
   -webkit-user-select: none;
   user-select: none;
+  @include media("<tablet",) {
+    top: 10px;
+    left: 10px;
+  }
+  
 }
 
 #menuToggle input {

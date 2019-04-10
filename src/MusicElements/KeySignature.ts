@@ -1,17 +1,19 @@
-import AbstractMusicElement from './AbstractMusicElement'
+import SVGElement from './SVGElement'
 import * as ks from '@/Notation/KeySignatures'
 import Sharp from './Alterations/Sharp'
 import Flat from './Alterations/Flat'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
 
-export default class KeySignature extends AbstractMusicElement {
+export default class KeySignature extends SVGElement {
   
     protected keyPos: number[]
     protected keyType: ks.KeySignatureType | null
     protected startX: number
     protected doubleStaff: boolean
     
-    public constructor(keyType: ks.KeySignatureType | null, keyPos: number[], startX: number, doubleStaff = false) {
-      super()
+    public constructor(da: AbstractDrawingArea, keyType: ks.KeySignatureType | null, 
+                       keyPos: number[], startX: number, doubleStaff = false) {
+      super(da)
       this.keyPos = keyPos
       this.keyType = keyType
       this.startX = startX
@@ -40,10 +42,10 @@ export default class KeySignature extends AbstractMusicElement {
           }
         }
         if (this.keyType === ks.KeySignatureType.FLATS) {
-          alteration = new Flat()
+          alteration = new Flat(this.getDrawingArea())
           alteration.draw(this.startX + (i++ * FLAT_X_SEP) , pos - FLAT_Y_SEP , FLAT_SIZE_RATIO)
         } else {
-          alteration = new Sharp()
+          alteration = new Sharp(this.getDrawingArea())
           alteration.draw(this.startX + (i++ * SHARP_X_SEP) , pos - SHARP_Y_SEP , SHARP_SIZE_RATIO)
         } 
         this.addChild(alteration)  

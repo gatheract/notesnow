@@ -4,15 +4,16 @@
     <div class="contentContainer logoArea">
       <div class="titleContainer">
         <h1 class="title">{{$t("mainScreen.title")}}</h1>
-        <h2 class="subtitle">{{$t("mainScreen.subtitle")}}</h2>  
-      </div>      
+        <h2 class="subtitle">{{$t("mainScreen.subtitle")}}</h2>
+      </div>
       <HomeLogo></HomeLogo>
       <GameTypeSelect class="levelArea"></GameTypeSelect>
-    </div>   
-    <el-button  v-on:click="selectStaff" type="danger"><i class='uil uil-play'> </i> 
-      {{$t("mainScreen.startButton")}}</el-button>     
+    </div>
+    <el-button v-on:click="selectStaff" type="danger">
+      <i class="uil uil-play"></i>
+      {{$t("mainScreen.startButton")}}
+    </el-button>
   </MainContainer>
-  
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
@@ -38,6 +39,20 @@ export default class Home extends Vue {
 </script>
 
 <style scoped lang="scss">
+h1.title {
+  color: black;
+  font-family: "Arial", sans-serif;
+  font-size: 54px;
+  font-weight: 600;
+  line-height: 58px;
+}
+h2.subtitle {
+  color: #7c795d;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 32px;
+}
 
 .logoArea {
   display: flex;

@@ -1,15 +1,15 @@
-import DrawingArea from '@/Drawing/DrawingArea'
-import AbstractMusicElement from './AbstractMusicElement'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
+import SVGElement from './SVGElement'
 import AbstractStaff from '@/MusicElements/Staffs/AbstractStaff'
 /**
  *  A line inside the staff, a stave!
  */
-export default class Stave extends AbstractMusicElement {
+export default class Stave extends SVGElement {
     protected staff: AbstractStaff
     private y: number      
      
     constructor(staff: AbstractStaff) {
-        super()
+        super(staff.getDrawingArea())
         this.staff = staff
         this.staff.addParent(this)
     }
@@ -27,7 +27,7 @@ export default class Stave extends AbstractMusicElement {
     public draw(xStart: number, xEnd: number, y: number) {
         this.y = y
         
-        const element = DrawingArea.Instance.area.polyline(
+        const element = this.getDrawingArea().area.polyline(
             [
                 [xStart, y],
                 [xEnd, y]

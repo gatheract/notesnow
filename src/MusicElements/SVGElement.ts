@@ -1,17 +1,19 @@
 import { G, Library, Doc } from 'svg.js'
-import DrawingArea from '@/Drawing/DrawingArea'
+import AbstractDrawingArea from '@/Drawing/AbstractDrawingArea'
 
-export default abstract class AbstractMusicElement {
+export default abstract class SVGElement {
   protected element: Library['Element']
   protected group: G
   protected parentGroup: G
+  private drawingArea: AbstractDrawingArea
   
-  constructor() {
-    this.parentGroup = DrawingArea.Instance.area.group()
-    this.group = DrawingArea.Instance.area.group()
+  constructor(drawingArea: AbstractDrawingArea) {
+    this.parentGroup = drawingArea.area.group()
+    this.group = drawingArea.area.group()
     this.parentGroup.add(this.group)
     this.parentGroup.addClass('elementParentGroup')
     this.group.addClass('elementGroup')
+    this.drawingArea = drawingArea
   }
   
   /**
@@ -78,7 +80,7 @@ export default abstract class AbstractMusicElement {
    * Adds the parent group of an element to this parent group
    * (none of the transforms of this element are applied
    */
-  public addParent(element: AbstractMusicElement) {
+  public addParent(element: SVGElement) {
     this.parentGroup.add(element.getParentGroup())
   }
   
@@ -86,7 +88,11 @@ export default abstract class AbstractMusicElement {
    * Adds the parent group of an element to this group
    * (transforms applied)
    */
-  public addChild(element: AbstractMusicElement) {
+  public addChild(element: SVGElement) {
     this.group.add(element.getParentGroup())
+  }
+  
+  public getDrawingArea() {
+    return this.drawingArea
   }
 }

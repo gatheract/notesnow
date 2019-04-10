@@ -1,7 +1,7 @@
 import { GetterTree } from 'vuex'
-import { SettingsState } from './Types'
+import { SettingsState, StaffInterval } from './Types'
 import { RootState } from '../../Types'
-import {GameType, GameStaff, MidiStatus} from './Types'
+import { GameType, GameStaff, MidiStatus } from './Types'
 import { KeySignaturesIndex } from '@/Notation/KeySignatures'
 
 export const GAME_TYPE = 'GAME_TYPE'
@@ -14,11 +14,15 @@ export const MIDI_AVAILABLE = 'MIDI_AVAILABLE'
 export const ENABLE_MIDI = 'ENABLE_MIDI'
 export const MIDI_INPUT_ID = 'MIDI_INPUT_ID'
 export const KEY_SIGNATURE = 'KEY_SIGNATURE'
+export const START_PITCH = 'START_PITCH'
+export const END_PITCH = 'END_PITCH'
+export const SHOW_MINI_KEYBOARD = 'SHOW_MINI_KEYBOARD'
+export const STAFF_INTERVALS = 'STAFF_INTERVALS'
 
 export const getters: GetterTree<SettingsState, RootState> = {
     [GAME_TYPE](state): GameType {
         return state.gameType
-    },    
+    },
     [STAFF_SELECTED](state): GameStaff {
         return state.staffSelected
     },
@@ -45,5 +49,23 @@ export const getters: GetterTree<SettingsState, RootState> = {
     },
     [KEY_SIGNATURE](state): KeySignaturesIndex | null {
         return state.keySignature
+    },
+    [START_PITCH](state): string {
+        return state.staffIntervals[state.staffSelected].startPitch
+    },
+    [END_PITCH](state): string {
+        return state.staffIntervals[state.staffSelected].endPitch
+    },
+    /**
+     * If midi is enabled and a keyboard is selected then show full keyboard
+     * else show the minikeyboard
+     */
+    [SHOW_MINI_KEYBOARD](state): boolean {
+        return false
+        // return !(state.enableMidi && state.midiAvailable
+        // && state.midiInputId && state.midiInputId !== '')
+    },
+    [STAFF_INTERVALS](state) {
+        return state.staffIntervals
     }
 }
