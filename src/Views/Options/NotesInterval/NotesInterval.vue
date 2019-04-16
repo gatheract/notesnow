@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { STAFF_SELECTED, STAFF_INTERVALS } from '@/Store/Modules/Settings/Getters'
-import { NATURAL_PITCHES } from '@/Store/Modules/Game/Getters'
+import { GET_NATURAL_PITCHES } from '@/Store/Modules/Game/Getters'
 import { SET_STAFF_SELECTED_INTERVAL, RESTORE_STAFF_SELECTED_INTERVAL } from '@/Store/Modules/Settings/Actions'
 import { namespace } from 'vuex-class'
 import MainContainer from '@/Components/Template/MainContainer.vue'
@@ -54,7 +54,7 @@ export default class NotesInvterval extends Vue {
   @settingsModule.Action(RESTORE_STAFF_SELECTED_INTERVAL)
   private restoreStaffSelectedInterval: any
 
-  @gameModule.Getter(NATURAL_PITCHES)
+  @gameModule.Getter(GET_NATURAL_PITCHES)
   private notesUnfiltered: PitchesCollection
 
   private notes: PitchesCollection

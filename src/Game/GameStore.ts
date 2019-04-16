@@ -13,6 +13,7 @@ import { MidiStatus } from '@/Store/Modules/Settings/Types'
 import Store from '@/Store/Store'
 import { KeySignaturesIndex } from '@/Notation/KeySignatures'
 import { PitchesCollection } from '@/Notation/Pitches'
+import { INotePitch } from '@/Notation/NoteData'
 
 const statsModule = 'Stats/'
 const settingsModule = 'Settings/'
@@ -67,9 +68,12 @@ export default class GameStore {
     return Store.getters[settingsModule + SetGet.END_PITCH]
   }
   public static getNaturalPitches(): PitchesCollection {
-    return Store.getters[gameModule + GameGet.NATURAL_PITCHES]
+    return Store.getters[gameModule + GameGet.GET_NATURAL_PITCHES]
   }
   public static getAlteredPitches(): PitchesCollection {
-    return Store.getters[gameModule + GameGet.ALTERED_PITCHES]
+    return Store.getters[gameModule + GameGet.GET_ALTERED_PITCHES]
+  }
+  public static setActivePitch(pitch: INotePitch | null) {
+    Store.dispatch('Game/' + Game.SET_ACTIVE_PITCH, pitch)
   }
 } 

@@ -9,7 +9,8 @@ import { Pitches } from '@/Notation/Pitches'
 export const state: GameState = {
     naturalPitches: new Pitches().initialize(null, null, null),
     alteredPitches: {},
-    staffIntervalPitches: {}
+    staffIntervalPitches: {},
+    activePitch: null
 }
 
 export const game: Module<GameState, RootState> = {

@@ -8,6 +8,10 @@ export interface PitchesCollection {
     [index: string]: INotePitch
 }
 
+/**
+ * Class to generate the different pitches and their corresponding midi value
+ * When a key signature is applied the pitch refers to another value
+ */
 export class Pitches {
     protected notesInt: PitchesCollection = {}
 
@@ -100,7 +104,6 @@ export class Pitches {
             } else {
                 newNote = Number(PianoKey.B)
             }
-
         }
         /** Note key is used by the the svg keyboard */
         note.key = newNote

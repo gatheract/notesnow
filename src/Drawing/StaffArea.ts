@@ -37,6 +37,7 @@ export default class StaffArea extends AbstractDrawingArea {
     this.activeNote = NoteFactory.createNote(noteData.notePitch, this.staff)
     this.activeNote.draw(this.staff.getPlayableArea(), noteData.yPosition, NOTE_SIZE_RATIO)
     this.activeNote.fadeIn(500)
+    GameStore.setActivePitch(noteData.notePitch)
   }
 
   public getStaff() {

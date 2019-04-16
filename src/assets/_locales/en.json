@@ -42,7 +42,8 @@
     "signatureInterval": "Notes from ",
     "signatureIntervalTo": " to ",
     "midiControllerLabel": "Midi Controller",
-    "changeInterval": " Change Interval "
+    "changeInterval": " Change Interval ",
+    "pianoSettings": "Configure Piano Keyboard"
 
   },
   "MidiHelp": {
@@ -71,5 +72,16 @@
   "NotesInterval": {
     "title": "Notes Interval",
     "restore": "Restore to Default"
+  },
+  "PianoSettings": {
+    "title": "Piano Settings",
+    "helpers": "Additional Helpers",
+    "miniKey": "Mini Piano",
+    "markOctave": "Mark the current octave",
+    "showKeyName": "Show key names",
+    "midiKey": "Midi Keyboard",
+    "highlightKey": "Highlight the correct key",
+    "highlightAttemptKey": "Highlight the key after a wrong attempt",
+    "blurKeys": "Blur unnecesary keys"
   }
 }

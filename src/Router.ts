@@ -4,6 +4,7 @@ import Home from './Views/Home/Home.vue'
 import Game from './Views/Game/Game.vue'
 import GameOver from './Views/GameOver/GameOver.vue'
 import Options from './Views/Options/Options.vue'
+import PianoSettings from './Views/PianoSettings/PianoSettings.vue'
 import MidiHelp from './Views/Help/MidiHelp.vue'
 import Notesinterval from './Views/Options/NotesInterval/NotesInterval.vue'
 
@@ -42,6 +43,11 @@ export default new Router({
       path: '/options/interval',
       name: 'notesinterval',
       component: Notesinterval
+    },
+    {
+      path: '/options/piano',
+      name: 'pianosettings',
+      component: PianoSettings
     }
   ],
 })

@@ -4,6 +4,7 @@ import { RootState } from './Types'
 import { settings } from './Modules/Settings/Settings'
 import { stats } from './Modules/Stats/Stats'
 import { game } from './Modules/Game/Game'
+import { piano } from './Modules/Piano/Piano'
 import VuexPersistence from 'vuex-persist'
 
 Vue.use(Vuex)
@@ -23,7 +24,8 @@ const store: StoreOptions<RootState> = {
     modules: {
         Settings: settings,
         Stats: stats,
-        Game: game
+        Game: game,
+        Piano: piano
     },
 
     plugins: [vuexLocal.plugin]

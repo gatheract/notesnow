@@ -12,7 +12,7 @@ import { GameType, GameStaff } from '@/Store/Modules/Settings/Types'
 const pianoSVG = require('@/assets/images/piano_octave.svg2')
 import { EventBus, EVENT_PIANO_KEY_PRESSED, EVENT_PIANO_KEY_RELEASED, EVENT_GUESS_RESULT } from '@/EventBus'
 const gameModule = namespace('Game')
-import { NATURAL_PITCHES } from '@/Store/Modules/Game/Getters'
+import { GET_NATURAL_PITCHES } from '@/Store/Modules/Game/Getters'
 import { PitchesCollection } from '@/Notation/Pitches'
 import GameStore from '@/Game/GameStore'
 import Game from '@/Game/Game'
@@ -21,7 +21,7 @@ import PianoComponent from './Piano.vue'
 @Component
 export default class PianoOctave extends PianoComponent {
   protected ignorePitch: boolean = true
-  @gameModule.Getter(NATURAL_PITCHES)
+  @gameModule.Getter(GET_NATURAL_PITCHES)
   protected notes: PitchesCollection
 
   get imgPath(): string {

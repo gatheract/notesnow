@@ -13,10 +13,14 @@
           {{$t("Options.signatureIntervalTo")}}
           <p class="interval">{{endPitch}}</p>
           <span>
-            <router-link
-              class="changeInterval"
-              to="/options/interval"
-            >{{$t("Options.changeInterval")}}</router-link>
+            <router-link class="bigLink" to="/options/interval">{{$t("Options.changeInterval")}}</router-link>
+          </span>
+        </div>
+        <div>
+          <span>
+            <hr class="sep">
+            <span class="pianoIcon"></span>
+            <router-link class="bigLink" to="/options/piano">{{$t("Options.pianoSettings")}}</router-link>
           </span>
         </div>
       </div>
@@ -97,11 +101,27 @@ export default class Options extends Vue {
   margin-bottom: 10px;
 }
 
-.changeInterval {
+.bigLink {
   text-decoration: none;
   font-size: 15px;
-  &:visited {
-    color: blue;
+  &:visited,
+  & {
+    color: #0d60c6;
   }
+}
+.pianoIcon {
+  content: url("https://api.iconify.design/mdi-piano.svg?height=16");
+  vertical-align: -0.125em;
+  padding-right: 5px;
+}
+
+.sep {
+  height: 1px;
+  border: none;
+  color: #000;
+  background-color: #000;
+  width: 250px;
+  text-align: center;
+  margin: 10px auto;
 }
 </style>

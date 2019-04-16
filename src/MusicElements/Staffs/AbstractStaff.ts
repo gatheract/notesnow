@@ -164,14 +164,28 @@ export default abstract class Staff extends SVGElement {
      */
     protected generatePositions() {
         const altNotes = GameStore.getAlteredPitches()
+        const natNotes = GameStore.getNaturalPitches()
         const altNotesArray = Object.values(altNotes).reverse()
-        const startNote = altNotes[GameStore.getStartPitch()]
-        const endNote = altNotes[GameStore.getEndPitch()]
+
+        /**
+         * The staff uses altNotes that are those with the keysignature applied
+         * meaning that for a specific pitch a key in the piano corresponds to it
+         * but when key signature changes another key may be the one for that specific pitch.
+         * Midivalue also changes so the midivalue of the note on the staff varies according
+         * to the key signature.
+         * 
+         * But altNotes are not the ones limiting the staff, these have to be the same
+         * as the ones I use on the keyboard: natNotes
+         * 
+         * Probably there's another way to use only one array of pitches @todo         * 
+         */
+        const startNote = natNotes[GameStore.getStartPitch()]
+        const endNote = natNotes[GameStore.getEndPitch()]
 
         /**
          * The end note is the one at the top of the staff
          */
-        const staffBegNote = altNotes[PianoLayouts[EDefaultPianoLayouts.keys88].endPitch]
+        const staffEndNote = altNotes[PianoLayouts[EDefaultPianoLayouts.keys88].endPitch]
 
         /**
          * First set a starting point (the first note in the piano pentagram
@@ -180,17 +194,23 @@ export default abstract class Staff extends SVGElement {
 
         let staffPos: number = 0
         let staveCount: number = 0
-        let lastNote: PentegramNote = staffBegNote.penNote
+        let lastNote: PentegramNote = staffEndNote.penNote
 
         for (const a in altNotesArray) {
-            if (altNotesArray[a].midiValue <= staffBegNote.midiValue) {
+            /**
+             * First check that the note is not outside the staff bounds
+             * The biggest note allowed is the highest in the 88 key piano
+             */
+            if (altNotesArray[a].midiValue <= staffEndNote.midiValue) {
                 if (lastNote !== altNotesArray[a].penNote) {
                     lastNote = altNotesArray[a].penNote
                     ++staveCount
                 }
                 staffPos = startPosition + (staveCount * this.NOTE_SEPARATION)
                 const data = { notePitch: altNotesArray[a], yPosition: staffPos }
+
                 this.notePositions.push(data)
+
                 if (
                     (altNotesArray[a].midiValue >= startNote.midiValue) &&
                     altNotesArray[a].midiValue <= endNote.midiValue

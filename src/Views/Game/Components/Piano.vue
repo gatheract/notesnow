@@ -4,21 +4,24 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { PitchesCollection } from '@/Notation/Pitches'
-const settingsModule = namespace('Settings')
+const pianoModule = namespace('Piano')
 const gameModule = namespace('Game')
 import { GAME_TYPE, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
-import { NATURAL_PITCHES } from '@/Store/Modules/Game/Getters'
+import { GET_BLUR_UNNECESARY, GET_MARK_OCTAVE } from '@/Store/Modules/Piano/Getters'
+import { GET_NATURAL_PITCHES, GET_ACTIVE_PITCH } from '@/Store/Modules/Game/Getters'
 import { GameType, GameStaff } from '@/Store/Modules/Settings/Types'
 const pianoSVG = require('@/assets/images/piano.svg2')
 import {  EventBus, EVENT_PIANO_KEY_PRESSED,
-  EVENT_PIANO_KEY_RELEASED, EVENT_GUESS_RESULT, EVENT_MIDI_DEV_KEY_RELEASED} from '@/EventBus'
+  EVENT_PIANO_KEY_RELEASED, EVENT_GUESS_RESULT,
+  EVENT_MIDI_DEV_KEY_RELEASED} from '@/EventBus'
 
 import GameStore from '@/Game/GameStore'
 import Game from '@/Game/Game'
 import { EDefaultPianoLayouts, PianoLayouts } from '@/Piano/PianoLayouts'
+import { INotePitch } from '../../../Notation/NoteData'
 
 @Component
 export default class Piano extends Vue {
@@ -29,14 +32,55 @@ export default class Piano extends Vue {
   protected offEvents = ['mouseup', 'mouseout', 'touchleave', 'touchend', 'touchcancel']
   protected readonly WRONG_KEY_CLASS = 'incorrect'
   protected readonly CORRECT_KEY_CLASS = 'correct'
+  protected readonly DISABLED_KEY_CLASS = 'disabled'
+  protected readonly MARK_OCTAVE_COLOR = '#e67e22'
   protected ignorePitch: boolean = false
+  protected octaveStartLine: SVGLineElement
+  protected octaveEndLine: SVGLineElement
 
-  @gameModule.Getter(NATURAL_PITCHES)
+  @gameModule.Getter(GET_NATURAL_PITCHES)
   protected notes: PitchesCollection
+  @gameModule.Getter(GET_ACTIVE_PITCH)
+  protected activePitch: INotePitch | null
+  @pianoModule.Getter(GET_BLUR_UNNECESARY)
+  protected blur: boolean
+  @pianoModule.Getter(GET_MARK_OCTAVE)
+  protected markOctave: boolean
+
+  @Watch('activePitch')
+  public onPropertyChanged(value: INotePitch | null, oldValue: string) {
+    this.markOctaveHandler(value)
+  }
 
   get imgPath(): string {
     return pianoSVG
   }
+
+  protected markOctaveHandler(pitch: INotePitch | null) {
+    if (this.markOctave && pitch) {
+      if (this.midiKeys[pitch.midiValue]) {
+        const layout = EDefaultPianoLayouts.keys88
+        const octave = 12
+        const startOctave = this.notes[PianoLayouts[layout].startPitch].midiValue
+        const endOctave = this.notes[PianoLayouts[layout].endPitch].midiValue
+
+        const startSubs = pitch.midiValue - pitch.key
+        const endSubs = pitch.midiValue + (octave - pitch.key - 1) + 1
+
+        const startIndex = startSubs >= startOctave ? startSubs : startOctave
+        const endIndex = endSubs <= endOctave ? endSubs : endOctave
+        if (this.octaveStartLine) {
+          this.octaveStartLine.remove()
+        }
+        if (this.octaveEndLine) {
+          this.octaveEndLine.remove()
+        }
+        this.octaveStartLine = this.createOctaveLine(this.midiKeys[startIndex])
+        this.octaveEndLine = this.createOctaveLine(this.midiKeys[endIndex])
+      }
+    }
+  }
+
   protected mounted() {
     const pianoDOM = document.getElementById('piano') as HTMLObjectElement
 
@@ -75,15 +119,21 @@ export default class Piano extends Vue {
     for (const key of this.keys) {
       midiVal = piaBegVal + Number(key.getAttribute('data-key'))
       this.midiKeys[midiVal] = key
+      key.setAttribute('midi-val', midiVal.toString())
+
+      /**
+       * Blur non relevant keys
+       */
       if (midiVal < setBegVal || midiVal > setEndVal) {
-        key.style.display = 'none'
-      } else {
-        key.setAttribute('midi-val', midiVal.toString())
-        this.posEvents.map((ev) => key.addEventListener(ev, self.handlePosEvent.bind(self)))
-        this.offEvents.map((ev) => key.addEventListener(ev, self.handleOffEvent.bind(self)))
+        if (this.blur) {
+          key.setAttribute('class', this.DISABLED_KEY_CLASS)
+        }
       }
+      this.posEvents.map((ev) => key.addEventListener(ev, self.handlePosEvent.bind(self)))
+      this.offEvents.map((ev) => key.addEventListener(ev, self.handleOffEvent.bind(self)))
     }
-    this.centerPiano()
+
+    this.markOctaveHandler(this.activePitch)
   }
 
   /**
@@ -122,6 +172,25 @@ export default class Piano extends Vue {
   protected keyOff(midiVal: number) {
     this.midiKeys[midiVal].setAttribute('class', '')
   }
+
+  protected createOctaveLine(key: SVGRectElement) {
+    const x = key.getBBox().x
+    const svgns = 'http://www.w3.org/2000/svg'
+    const line = document.createElementNS(svgns, 'line')
+
+    line.setAttributeNS(null, 'x1', x.toString())
+    line.setAttributeNS(null, 'x2', x.toString())
+    line.setAttributeNS(null, 'y1', '-50')
+    line.setAttributeNS(null, 'y2', '500')
+    line.setAttributeNS(null, 'stroke', this.MARK_OCTAVE_COLOR)
+    line.setAttributeNS(null, 'stroke-width', '13px')
+    if (key.parentNode) {
+      key.parentNode.appendChild(line)
+    }
+
+    return line
+  }
+
 
   /**
    * After the unnecesary keys are removed, the main layer has a new width but
