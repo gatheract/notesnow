@@ -26,6 +26,18 @@
       .selected{
          fill: #2f8df1  !important;
       }
+      .disabled{
+         fill: #d1d1d1  !important;
+         pointer-events: none;
+         opacity: 0.3;
+      }
+      .highCorrect{
+         stroke: blue !important;
+         stroke-width: 5 !important;
+         fill: rgba(0,0,255,0.3)!important;
+         
+      }
+      
    </style>
   <defs
      id="defs4540" />
