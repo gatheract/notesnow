@@ -11,9 +11,15 @@ export const SET_BLUR_UNNECESARY = 'SET_BLUR_UNNECESARY'
 
 export const actions: ActionTree<PianoState, RootState> = {
   [SET_HIGH_CORRECT]({ commit }, high: boolean) {
+    if (high) {
+      commit(MUT.MUT_HIGH_ATTEMPT_CORRECT, false)
+    }
     commit(MUT.MUT_HIGH_CORRECT, high)
   },
   [SET_HIGH_ATTEMPT_CORRECT]({ commit }, high: boolean) {
+    if (high) {
+      commit(MUT.MUT_HIGH_CORRECT, false)
+    }
     commit(MUT.MUT_HIGH_ATTEMPT_CORRECT, high)
   },
   [SET_SHOW_KEY_NAMES]({ commit }, show: boolean) {

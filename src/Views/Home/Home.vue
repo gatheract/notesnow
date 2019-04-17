@@ -9,10 +9,12 @@
       <HomeLogo></HomeLogo>
       <GameTypeSelect class="levelArea"></GameTypeSelect>
     </div>
-    <el-button v-on:click="selectStaff" type="danger">
-      <i class="uil uil-play"></i>
-      {{$t("mainScreen.startButton")}}
-    </el-button>
+    <div class="buttonContainer">
+      <el-button v-on:click="selectStaff" type="danger">
+        <i class="uil uil-play"></i>
+        {{$t("mainScreen.startButton")}}
+      </el-button>
+    </div>
   </MainContainer>
 </template>
 <script lang="ts">

@@ -120,7 +120,7 @@ export default class Options extends Vue {
   border: none;
   color: #000;
   background-color: #000;
-  width: 250px;
+  max-width: 250px;
   text-align: center;
   margin: 10px auto;
 }

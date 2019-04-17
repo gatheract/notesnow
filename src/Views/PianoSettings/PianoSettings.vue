@@ -61,7 +61,12 @@
         </div>
       </div>
     </div>
-    <div class="buttonContainer"></div>
+    <div class="buttonContainer">
+      <el-button v-on:click="goBack" size="large" type="primary">
+        <i class="uil uil-left-arrow-from-left"></i>
+        {{$t("Site.back")}}
+      </el-button>
+    </div>
   </MainContainer>
 </template>
 <script lang="ts">
@@ -99,6 +104,10 @@ export default class PianoSettings extends Vue {
   private setMarkOctave: any
   @pianoModule.Action(Actions.SET_BLUR_UNNECESARY)
   private setBlurUnnecesary: any
+
+  private goBack() {
+    this.$router.replace('/options')
+  }
 }
 </script>
 

@@ -10,7 +10,8 @@ import { PitchesCollection } from '@/Notation/Pitches'
 const pianoModule = namespace('Piano')
 const gameModule = namespace('Game')
 import { GAME_TYPE, STAFF_SELECTED } from '@/Store/Modules/Settings/Getters'
-import { GET_BLUR_UNNECESARY, GET_MARK_OCTAVE } from '@/Store/Modules/Piano/Getters'
+import {  GET_BLUR_UNNECESARY, GET_MARK_OCTAVE,
+  GET_HIGH_CORRECT, GET_HIGH_ATTEMPT_CORRECT} from '@/Store/Modules/Piano/Getters'
 import { GET_NATURAL_PITCHES, GET_ACTIVE_PITCH } from '@/Store/Modules/Game/Getters'
 import { GameType, GameStaff } from '@/Store/Modules/Settings/Types'
 const pianoSVG = require('@/assets/images/piano.svg2')
@@ -33,10 +34,12 @@ export default class Piano extends Vue {
   protected readonly WRONG_KEY_CLASS = 'incorrect'
   protected readonly CORRECT_KEY_CLASS = 'correct'
   protected readonly DISABLED_KEY_CLASS = 'disabled'
+  protected readonly HIGH_CORRECT_KEY_CLASS = 'highCorrect'
   protected readonly MARK_OCTAVE_COLOR = '#e67e22'
   protected ignorePitch: boolean = false
   protected octaveStartLine: SVGLineElement
   protected octaveEndLine: SVGLineElement
+  protected highlightedKey: SVGRectElement
 
   @gameModule.Getter(GET_NATURAL_PITCHES)
   protected notes: PitchesCollection
@@ -46,17 +49,38 @@ export default class Piano extends Vue {
   protected blur: boolean
   @pianoModule.Getter(GET_MARK_OCTAVE)
   protected markOctave: boolean
+  @pianoModule.Getter(GET_HIGH_CORRECT)
+  protected highCorrect: boolean
+  @pianoModule.Getter(GET_HIGH_ATTEMPT_CORRECT)
+  protected highCorrectAttempt: boolean
 
   @Watch('activePitch')
-  public onPropertyChanged(value: INotePitch | null, oldValue: string) {
-    this.markOctaveHandler(value)
+  public onPropertyChanged() {
+    this.markOctaveHandler()
+    this.highCorrectHandler()
   }
 
   get imgPath(): string {
     return pianoSVG
   }
 
-  protected markOctaveHandler(pitch: INotePitch | null) {
+  protected highCorrectHandler() {
+    const pitch = this.activePitch
+
+    if (this.highlightedKey) {
+      this.highlightedKey.classList.remove(this.HIGH_CORRECT_KEY_CLASS)
+    }
+    if (this.highCorrect && pitch && this.midiKeys[pitch.midiValue]) {
+      this.highlightedKey = this.midiKeys[pitch.midiValue]
+      this.highlightedKey.classList.add(this.HIGH_CORRECT_KEY_CLASS)
+    }
+  }
+
+  /**
+   * Mark the start and end of the octave of the current note with a vertical line
+   */
+  protected markOctaveHandler() {
+    const pitch = this.activePitch
     if (this.markOctave && pitch) {
       if (this.midiKeys[pitch.midiValue]) {
         const layout = EDefaultPianoLayouts.keys88
@@ -91,7 +115,8 @@ export default class Piano extends Vue {
       pianoDOM.addEventListener('load', () => {
         this.svgDoc = pianoDOM.contentDocument as Document
         this.keys = this.svgDoc.getElementsByTagName('rect') as any
-        this.addKeyListeners()
+        this.initializePiano()
+        // this.centerPiano()
       }, false)
     }
   }
@@ -103,7 +128,7 @@ export default class Piano extends Vue {
    * So add it to the starting 88 key (A0) midi value 
    * and if it's outside the bounds hide it 
    */
-  protected addKeyListeners() {
+  protected initializePiano() {
     const self = this
 
     const pianoBeginNote = this.notes[PianoLayouts[EDefaultPianoLayouts.keys88].startPitch]
@@ -118,22 +143,24 @@ export default class Piano extends Vue {
 
     for (const key of this.keys) {
       midiVal = piaBegVal + Number(key.getAttribute('data-key'))
+
       this.midiKeys[midiVal] = key
       key.setAttribute('midi-val', midiVal.toString())
 
       /**
        * Blur non relevant keys
        */
-      if (midiVal < setBegVal || midiVal > setEndVal) {
-        if (this.blur) {
-          key.setAttribute('class', this.DISABLED_KEY_CLASS)
+      if (this.blur) {
+        if (midiVal < setBegVal || midiVal > setEndVal) {
+          key.classList.add(this.DISABLED_KEY_CLASS)
         }
       }
+
       this.posEvents.map((ev) => key.addEventListener(ev, self.handlePosEvent.bind(self)))
       this.offEvents.map((ev) => key.addEventListener(ev, self.handleOffEvent.bind(self)))
     }
-
-    this.markOctaveHandler(this.activePitch)
+    this.markOctaveHandler()
+    this.highCorrectHandler()
   }
 
   /**
@@ -162,17 +189,39 @@ export default class Piano extends Vue {
    * Receive the result of a guess and paint the key
    */
   protected guessResult(midiVal: number, correct: boolean) {
-    this.midiKeys[midiVal].setAttribute('class',
-      correct ? this.CORRECT_KEY_CLASS : this.WRONG_KEY_CLASS)
+    this.midiKeys[midiVal].classList.add(
+      correct ? this.CORRECT_KEY_CLASS : this.WRONG_KEY_CLASS
+    )
+    this.highlightAttempt(correct)
+  }
+
+  protected highlightAttempt(correct: boolean) {
+    if (this.highCorrectAttempt) {
+      const pitch = this.activePitch
+      if (correct) {
+        if (this.highlightedKey) {
+          this.highlightedKey.classList.remove(this.HIGH_CORRECT_KEY_CLASS)
+        }
+      } else {
+        if (pitch && this.midiKeys[pitch.midiValue]) {
+          this.highlightedKey = this.midiKeys[pitch.midiValue]
+          this.highlightedKey.classList.add(this.HIGH_CORRECT_KEY_CLASS)
+        }
+      }
+    }
   }
 
   /**
    * Remove the guess result color from a key
    */
   protected keyOff(midiVal: number) {
-    this.midiKeys[midiVal].setAttribute('class', '')
+    this.midiKeys[midiVal].classList.remove(this.CORRECT_KEY_CLASS)
+    this.midiKeys[midiVal].classList.remove(this.WRONG_KEY_CLASS)
   }
 
+  /**
+   * Creates a vertical line from the beginning coordinates of a key
+   */
   protected createOctaveLine(key: SVGRectElement) {
     const x = key.getBBox().x
     const svgns = 'http://www.w3.org/2000/svg'
@@ -190,7 +239,6 @@ export default class Piano extends Vue {
 
     return line
   }
-
 
   /**
    * After the unnecesary keys are removed, the main layer has a new width but

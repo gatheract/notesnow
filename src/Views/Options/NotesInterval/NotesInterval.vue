@@ -6,8 +6,17 @@
       </div>
       <div class="svgCont">
         <object id="piano" class="imgResponsive" type="image/svg+xml" :data="imgPath"/>
-        <span v-on:click="restore" class="restoreDefault">{{$t('NotesInterval.restore')}}</span>
       </div>
+      <el-button v-on:click="restore" size="small" class="restoreDefault">
+        <i class="uil uil-refresh"></i>
+        {{$t('NotesInterval.restore')}}
+      </el-button>
+    </div>
+    <div class="buttonContainer">
+      <el-button v-on:click="goBack" size="large" type="primary">
+        <i class="uil uil-left-arrow-from-left"></i>
+        {{$t("Site.back")}}
+      </el-button>
     </div>
   </MainContainer>
 </template>
@@ -150,31 +159,32 @@ export default class NotesInvterval extends Vue {
     }
   }
 
-  private goHome() {
-    this.$router.push('/')
+  private goBack() {
+    this.$router.replace('/options')
   }
-  private playAgain() {
-    this.$router.push('play')
-  }
+
 }
 </script>
 
 <style scoped lang="scss">
 .svgCont {
-  height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .restoreDefault {
   margin-top: 10px;
   cursor: pointer;
   font-size: 14px;
-  color: darkblue;
+
   font-weight: 500;
+  text-align: right;
+  float: right;
+  margin-right: 10px;
 }
 
 @include media("<tablet") {

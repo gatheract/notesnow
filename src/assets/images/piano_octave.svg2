@@ -26,6 +26,11 @@
       .incorrect{
          fill: #f00 !important;
       }
+      .highCorrect{
+         stroke: blue !important;
+         stroke-width: 5 !important;
+         fill: rgba(0,0,255,0.3)!important;
+      }
    </style>
   <defs
      id="defs4540" />
@@ -80,6 +85,7 @@
            y="-6.7649989"
            style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.77070045;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98009949"
            ry="7.7258973"
+           key-name="C"
            data-key="0" />
         <rect
            id="rect3724-2"
@@ -89,6 +95,7 @@
            y="-6.7649989"
            style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.77070045;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98009949"
            ry="7.7258978"
+           key-name="D"
            data-key="2" />
         <rect
            id="rect3724-9"
@@ -96,6 +103,7 @@
            height="305.14905"
            x="162.61542"
            y="-6.7649989"
+           key-name="E"
            style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.77070045;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98009949"
            ry="7.7258978"
            data-key="4" />
@@ -105,6 +113,7 @@
            height="305.14905"
            x="229.70029"
            y="-6.7649989"
+           key-name="F"
            style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.77070045;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98009949"
            ry="7.7258978"
            data-key="5" />
@@ -114,6 +123,7 @@
            height="305.14905"
            x="296.78516"
            y="-6.7649989"
+           key-name="G"
            style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.77070045;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98009949"
            ry="7.7258978"
            data-key="7" />
@@ -123,6 +133,7 @@
            height="305.14905"
            x="363.87003"
            y="-6.7649989"
+           key-name="A"
            style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.77070045;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98009949"
            ry="7.7258978"
            data-key="9" />
@@ -132,6 +143,7 @@
            height="305.14905"
            x="430.9549"
            y="-6.7649989"
+           key-name="B"
            style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.77070045;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98009949"
            ry="7.7258978"
            data-key="11" />
