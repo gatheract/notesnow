@@ -12,6 +12,8 @@
   "dependencies": {
     "@types/webaudioapi": "0.0.27",
     "@types/webmidi": "^2.0.3",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0-beta.3",
+    "@vue/babel-preset-jsx": "^1.0.0-beta.3",
     "element-ui": "^2.7.2",
     "fast-clone": "^1.5.13",
     "g": "^2.0.1",
@@ -29,6 +31,7 @@
     "vuex-persist": "^2.0.0"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.2.0",
     "@vue/cli-plugin-typescript": "^3.5.3",
     "@vue/cli-service": "^3.5.3",
     "json-loader": "^0.5.7",

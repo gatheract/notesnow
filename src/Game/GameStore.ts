@@ -34,8 +34,8 @@ export default class GameStore {
   public static getProgress() {
     return Store.getters[statsModule + PROGRESS]
   }
-  public static getBaseSpeed() {
-    return Store.getters[settingsModule + SetGet.BASE_SPEED]
+  public static getSpeed() {
+    return Store.getters[gameModule + GameGet.GET_SPEED]
   }
   public static getSpeedIncrement() {
     return Store.getters[settingsModule + SetGet.SPEED_INCREMENT]

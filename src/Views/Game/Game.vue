@@ -1,6 +1,9 @@
 <template>
   <div id="game">
     <div id="progressArea"></div>
+    <div id="gameSpeed">
+      <SpeedSelect></SpeedSelect>
+    </div>
     <div id="staffArea"></div>
     <div id="pianoCont">
       <PianoOctave v-if="showMiniKeyboard"></PianoOctave>
@@ -9,7 +12,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import GameObj from '@/Game/Game'
 import { namespace } from 'vuex-class'
 import { SHOW_MINI_KEYBOARD } from '@/Store/Modules/Settings/Getters'
@@ -18,27 +21,47 @@ const settingsModule = namespace('Settings')
 import { EventBus, GAME_OVER } from '@/EventBus'
 import Piano from './Components/Piano.vue'
 import PianoOctave from './Components/PianoOctave.vue'
+import SpeedSelect from './Components/SpeedSelect.vue'
+const gameModule = namespace('Game')
+import { GET_PRACTICE_SPEED, GET_PAUSED } from '@/Store/Modules/Game/Getters'
+
 @Component({
   components: {
     Piano,
-    PianoOctave
+    PianoOctave,
+    SpeedSelect
   }
 })
 export default class Game extends Vue {
+  @gameModule.Getter(GET_PRACTICE_SPEED)
+  protected speed: number
+  @gameModule.Getter(GET_PAUSED)
+  protected paused: boolean
   @settingsModule.Getter(SHOW_MINI_KEYBOARD)
   private showMiniKeyboard: boolean
-
   private game: GameObj
 
-  public mounted() {
+  public beforeDestroy() {
+    this.game.stop()
+    EventBus.$off(GAME_OVER)
+  }
+  private mounted() {
     EventBus.$on(GAME_OVER, this.gameOver.bind(this))
     this.game = GameObj.getInstance()
     this.game.start()
   }
 
-  public beforeDestroy() {
-    this.game.stop()
-    EventBus.$off(GAME_OVER)
+  @Watch('speed')
+  private watchSpeed(speed: number) {
+    this.game.updateSpeed()
+  }
+  @Watch('paused')
+  private watchPaused(paused: boolean) {
+    this.game.setPaused(!paused)
+  }
+  private data() {
+    return {
+    }
   }
 
   private gameOver() {

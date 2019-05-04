@@ -4,6 +4,32 @@
       <div class="titleContainer">
         <h1>{{$t("NotesInterval.title")}}</h1>
       </div>
+      <div class="pitchCont">
+        <div class="option optionLeft">
+          <div>
+            <el-select v-model="value" filterable placeholder="Start">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+        </div>
+        <div class="option optionRight">
+          <div>
+            <el-select v-model="value" filterable placeholder="End">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+        </div>
+      </div>
       <div class="svgCont">
         <object id="piano" class="imgResponsive" type="image/svg+xml" :data="imgPath"/>
       </div>
@@ -42,15 +68,24 @@ import { PitchesCollection } from '@/Notation/Pitches'
   }
 })
 export default class NotesInvterval extends Vue {
+  get imgPath(): string {
+    return pianoSVG
+  }
+
+  private get staffInterval() {
+    return this.staffIntervals[this.staffSelected]
+  }
+  private get startNote() {
+    return this.notesUnfiltered[this.staffInterval.startPitch]
+  }
+  private get endNote() {
+    return this.notesUnfiltered[this.staffInterval.endPitch]
+  }
   private svgDoc: Document
   private keys: HTMLCollectionOf<SVGRectElement>
   private posEvents = ['mousedown', 'touchstart']
   private readonly SELECTED_KEY_CLASS = 'selected'
   private pianoBeginNote: INotePitch
-
-  get imgPath(): string {
-    return pianoSVG
-  }
   @settingsModule.Getter(STAFF_SELECTED)
   private staffSelected: GameStaff
 
@@ -67,20 +102,31 @@ export default class NotesInvterval extends Vue {
   private notesUnfiltered: PitchesCollection
 
   private notes: PitchesCollection
+  private data() {
+    return {
+      options: [{
+        value: 'Option1',
+        label: 'Option1'
+      }, {
+        value: 'Option2',
+        label: 'Option2'
+      }, {
+        value: 'Option3',
+        label: 'Option3'
+      }, {
+        value: 'Option4',
+        label: 'Option4'
+      }, {
+        value: 'Option5',
+        label: 'Option5'
+      }],
+      value: ''
+    }
+  }
 
   private restore() {
     this.restoreStaffSelectedInterval()
     this.markKeysSelected()
-  }
-
-  private get staffInterval() {
-    return this.staffIntervals[this.staffSelected]
-  }
-  private get startNote() {
-    return this.notesUnfiltered[this.staffInterval.startPitch]
-  }
-  private get endNote() {
-    return this.notesUnfiltered[this.staffInterval.endPitch]
   }
   private mounted() {
     const notes: PitchesCollection = {}
@@ -191,6 +237,22 @@ export default class NotesInvterval extends Vue {
   .mainContainer {
     padding-left: 5px;
     padding-right: 5px;
+  }
+}
+
+.pitchCont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  .option {
+    max-width: 100px;
+  }
+  .optionLeft {
+    text-align: left;
+  }
+  .optionRight {
+    text-align: right;
   }
 }
 </style>

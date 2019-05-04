@@ -61,9 +61,8 @@ export const getters: GetterTree<SettingsState, RootState> = {
      * else show the minikeyboard
      */
     [SHOW_MINI_KEYBOARD](state): boolean {
-        return false
-        // return !(state.enableMidi && state.midiAvailable
-        // && state.midiInputId && state.midiInputId !== '')
+        return !(state.enableMidi && state.midiAvailable === MidiStatus.AVAILABLE
+            && (state.midiInputId.length > 0))
     },
     [STAFF_INTERVALS](state) {
         return state.staffIntervals

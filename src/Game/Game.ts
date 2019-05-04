@@ -26,8 +26,8 @@ export default class Game {
 
   private levelRunning: boolean
   private progressMeter: ProgressMeter
-  private baseSpeed: number
-  private speedIncrement: number
+  private speed: number
+
   private gameType: GameType
 
   private keyUpListener: any
@@ -49,9 +49,7 @@ export default class Game {
     GameStore.initializeNotes()
 
     this.gameType = GameStore.getGameType()
-    this.baseSpeed = GameStore.getBaseSpeed()
-    this.speedIncrement = GameStore.getSpeedIncrement()
-
+    this.speed = GameStore.getSpeed()
     this.addKeyListeners()
     this.running = true
     this.fillScreen()
@@ -72,6 +70,14 @@ export default class Game {
     this.running = false
     this.removeKeyListeners()
     this.staffArea.destroy()
+  }
+
+  public setPaused(paused: boolean) {
+    this.running = paused
+  }
+
+  public updateSpeed() {
+    this.speed = GameStore.getSpeed()
   }
 
   /**
@@ -167,7 +173,7 @@ export default class Game {
     if (this.levelRunning) {
       const activeNote = this.staffArea.getActiveNote()
       if (activeNote) {
-        activeNote.moveX((this.level * this.speedIncrement) + this.baseSpeed)
+        activeNote.moveX(this.speed)
       } else {
         this.staffArea.addNewNote()
       }
@@ -181,12 +187,10 @@ export default class Game {
    * @param ms
    */
   private mainLoop(ms: number) {
-    if (!this.running) {
-      return
-    }
-
-    if (this.lastTime) {
-      this.handleGameLogic((ms - this.lastTime) / 1000)
+    if (this.running) {
+      if (this.lastTime) {
+        this.handleGameLogic((ms - this.lastTime) / 1000)
+      }
     }
 
     this.lastTime = ms
@@ -211,4 +215,5 @@ export default class Game {
       this.progressMeter.draw(this.progressArea.WINDOW_WIDTH / 2, 0)
     }
   }
+
 }

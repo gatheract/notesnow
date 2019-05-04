@@ -4,5 +4,10 @@ export interface GameState {
   naturalPitches: PitchesCollection,
   alteredPitches: PitchesCollection,
   staffIntervalPitches: PitchesCollection,
-  activePitch: INotePitch | null
+  activePitch: INotePitch | null,
+  gameSpeed: number,
+  practiceSpeed: number,
+  baseSpeed: number,
+  speedIncrement: number,
+  paused: boolean
 }

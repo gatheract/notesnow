@@ -35,7 +35,7 @@
     </div>
     <div class="buttonContainer">
       <el-button v-on:click="startGame" size="large" type="danger">
-        <i class="uil uil-check"></i>
+        <i class="uil uil-play"></i>
         {{$t("Options.start")}}
       </el-button>
     </div>

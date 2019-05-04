@@ -11,7 +11,7 @@ export const state: SettingsState = {
     staffSelected: GameStaff.gStaff,
     initialMistakesAllowed: 10,
     notesPerLevel: 4,
-    baseSpeed: 1,
+    baseSpeed: 0.7,
     speedIncrement: 0.3,
     useAllNotesGuesses: false,
     enableMidi: false,
