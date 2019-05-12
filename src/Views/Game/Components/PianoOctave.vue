@@ -25,10 +25,8 @@ import { PianoKey } from '../../../Notation/NoteConstants'
 @Component
 export default class PianoOctave extends PianoComponent {
   protected ignorePitch: boolean = true
-  @gameModule.Getter(GET_NATURAL_PITCHES)
-  protected notes: PitchesCollection
-  @pianoModule.Getter(GET_SHOW_KEY_NAMES)
-  protected showKeyNames: boolean
+  @gameModule.Getter(GET_NATURAL_PITCHES) protected notes: PitchesCollection
+  @pianoModule.Getter(GET_SHOW_KEY_NAMES) protected showKeyNames: boolean
   protected readonly KEY_NAME_ATTR = 'key-name'
   protected pianoKeys: SVGRectElement[] = []
   get imgPath(): string {

@@ -26,6 +26,7 @@
   },
   "Hamburguer": {
     "home": "Home",
+    "newGame": "New Game",
     "settings": "Settings",
     "github": "Github Repository"
   },
@@ -33,7 +34,7 @@
     "title": "View source on GitHub"
   },
   "Options": {
-    "title": "Game Options",
+    "title": "Main Options",
     "start": "Start Playing",
     "enabledLabel": "MIDI Controller Enabled",
     "disabledLabel": "Enable MIDI Controller",
@@ -43,8 +44,11 @@
     "signatureIntervalTo": " to ",
     "midiControllerLabel": "Midi Controller",
     "changeInterval": " Change Interval ",
-    "pianoSettings": "Configure Piano Keyboard"
-
+    "pianoSettings": "Configure Piano Keyboard",
+    "moreOptions": "More Options",
+    "sound": "Sound Settings",
+    "soundOn": "Sound On",
+    "soundOff": "Sound Off"
   },
   "MidiHelp": {
     "title": "MIDI Browser Support",
@@ -71,10 +75,11 @@
   },
   "NotesInterval": {
     "title": "Notes Interval",
-    "restore": "Restore to Default"
+    "restore": "Restore to Default",
+    "noteNotFound": "Not Found"
   },
   "PianoSettings": {
-    "title": "Piano Settings",
+    "title": "Advanced Settings",
     "helpers": "Additional Helpers",
     "miniKey": "Mini Piano",
     "markOctave": "Mark the current octave",

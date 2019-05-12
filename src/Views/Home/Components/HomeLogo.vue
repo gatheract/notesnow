@@ -15,12 +15,12 @@ export default class HomeLogo extends Vue {
   private drawing: SVG.Doc
   private insertedGroup: G
   private elementGroup: Library['Element']
+  public beforeDestroy() {
+    this.drawing.remove()
+  }
   
   private mounted() {
     this.insertPiano()
-  }
-  private beforeDestroy() {
-    this.drawing.remove()
   }
   /**
    * Draw a little svg piano 

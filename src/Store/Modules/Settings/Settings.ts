@@ -18,8 +18,8 @@ export const state: SettingsState = {
     midiAvailable: MidiStatus.INITIALIZING,
     midiInputId: '',
     keySignature: null,
-    staffIntervals: fastClone(defaultIntervals)
-
+    staffIntervals: fastClone(defaultIntervals),
+    sound: false
 }
 
 export const settings: Module<SettingsState, RootState> = {

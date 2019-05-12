@@ -18,6 +18,7 @@ export const START_PITCH = 'START_PITCH'
 export const END_PITCH = 'END_PITCH'
 export const SHOW_MINI_KEYBOARD = 'SHOW_MINI_KEYBOARD'
 export const STAFF_INTERVALS = 'STAFF_INTERVALS'
+export const SOUND = 'SOUND'
 
 export const getters: GetterTree<SettingsState, RootState> = {
     [GAME_TYPE](state): GameType {
@@ -61,10 +62,14 @@ export const getters: GetterTree<SettingsState, RootState> = {
      * else show the minikeyboard
      */
     [SHOW_MINI_KEYBOARD](state): boolean {
+        return false
         return !(state.enableMidi && state.midiAvailable === MidiStatus.AVAILABLE
             && (state.midiInputId.length > 0))
     },
     [STAFF_INTERVALS](state) {
         return state.staffIntervals
+    },
+    [SOUND](state) {
+        return state.sound
     }
 }

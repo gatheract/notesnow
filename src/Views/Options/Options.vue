@@ -7,30 +7,36 @@
       <div class="option">
         <div class="label">{{$t("Options.sheetStaffLabel")}}</div>
         <StaffSel></StaffSel>
-        <div class="signatureInterval">
-          {{$t("Options.signatureInterval")}}
-          <p class="interval">{{startPitch}}</p>
-          {{$t("Options.signatureIntervalTo")}}
-          <p class="interval">{{endPitch}}</p>
-          <span>
-            <router-link class="bigLink" to="/options/interval">{{$t("Options.changeInterval")}}</router-link>
-          </span>
-        </div>
-        <div>
-          <span>
-            <hr class="sep">
-            <span class="pianoIcon"></span>
-            <router-link class="bigLink" to="/options/piano">{{$t("Options.pianoSettings")}}</router-link>
-          </span>
-        </div>
       </div>
       <div class="option">
-        <div class="label">{{$t("Options.keySignatureLabel")}}</div>
         <KeySel></KeySel>
+      </div>
+      <div class="option">
+        <div class="label">{{$t("Options.moreOptions")}}</div>
+        <router-link to="/options/piano" class="bigLink">
+          <i class="uil uil-cog"></i> Advanced Settings
+        </router-link>
       </div>
       <div class="option">
         <div class="label">{{$t("Options.midiControllerLabel")}}</div>
         <MidiSel></MidiSel>
+      </div>
+      <div class="option">
+        <div class="label">{{$t("Options.sound")}}</div>
+        <div
+          @click="toggleSound"
+          class="soundToggle"
+          :class="{'soundOff': !sound, 'soundOn': sound,}"
+        >
+          <div class="soundIcon">
+            <i v-if="!sound" class="uil uil-volume-off"></i>
+            <i v-if="sound" class="uil uil-volume"></i>
+          </div>
+          <div class="soundLabel">
+            <span v-if="sound">{{$t("Options.soundOn")}}</span>
+            <span v-if="!sound">{{$t("Options.soundOff")}}</span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="buttonContainer">
@@ -46,7 +52,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import MainContainer from '@/Components/Template/MainContainer.vue'
 import { namespace } from 'vuex-class'
 const settingsModule = namespace('Settings')
-import { START_PITCH, END_PITCH } from '@/Store/Modules/Settings/Getters'
+import { START_PITCH, END_PITCH, SOUND } from '@/Store/Modules/Settings/Getters'
+import { SET_SOUND } from '@/Store/Modules/Settings/Actions'
 import MidiSel from './Components/MidiSel.vue'
 import StaffSel from './Components/StaffSel.vue'
 import KeySel from './Components/KeySel.vue'
@@ -60,14 +67,16 @@ import KeySel from './Components/KeySel.vue'
   }
 })
 export default class Options extends Vue {
-  @settingsModule.Getter(END_PITCH)
-  private endPitch: string
-
-  @settingsModule.Getter(START_PITCH)
-  private startPitch: string
+  @settingsModule.Getter(END_PITCH) private endPitch: string
+  @settingsModule.Getter(START_PITCH) private startPitch: string
+  @settingsModule.Getter(SOUND) private sound: boolean
+  @settingsModule.Action(SET_SOUND) private setSound: any
 
   private startGame() {
     this.$router.push('play')
+  }
+  private toggleSound() {
+    this.setSound(!this.sound)
   }
 }
 </script>
@@ -123,5 +132,27 @@ export default class Options extends Vue {
   max-width: 250px;
   text-align: center;
   margin: 10px auto;
+}
+
+.soundToggle {
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.soundOff {
+    color: grey;
+  }
+  &.soundOn {
+    color: green;
+  }
+
+  .soundLabel {
+    font-size: 15px;
+    line-height: 30px;
+  }
+  .soundIcon {
+    font-size: 30px;
+  }
 }
 </style>

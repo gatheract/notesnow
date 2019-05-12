@@ -73,6 +73,9 @@ export default class GameStore {
   public static getAlteredPitches(): PitchesCollection {
     return Store.getters[gameModule + GameGet.GET_ALTERED_PITCHES]
   }
+  public static getSoundStatus(): boolean {
+    return Store.getters[settingsModule + SetGet.SOUND]
+  }
   public static setActivePitch(pitch: INotePitch | null) {
     Store.dispatch('Game/' + Game.SET_ACTIVE_PITCH, pitch)
   }

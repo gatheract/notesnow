@@ -11,6 +11,7 @@ export const MUT_MIDI_INPUT_ID = 'MUT_MIDI_INPUT_ID'
 export const MUT_KEY_SIGNATURE = 'MUT_KEY_SIGNATURE'
 export const MUT_STAFF_SELECTED_INTERVAL_START = 'MUT_STAFF_SELECTED_INTERVAL_START'
 export const MUT_STAFF_SELECTED_INTERVAL_END = 'MUT_STAFF_SELECTED_INTERVAL_END'
+export const MUT_SOUND = 'MUT_SOUND'
 
 export const mutations: MutationTree<SettingsState> = {
     [MUT_GAME_TYPE](state, gameType: GameType) {
@@ -39,5 +40,8 @@ export const mutations: MutationTree<SettingsState> = {
     },
     [MUT_STAFF_SELECTED_INTERVAL_END](state, endPitch: string) {
         state.staffIntervals[state.staffSelected].endPitch = endPitch
+    },
+    [MUT_SOUND](state, sound: boolean) {
+        state.sound = sound
     }
 }

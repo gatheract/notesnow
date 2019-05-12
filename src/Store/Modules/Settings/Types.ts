@@ -33,7 +33,8 @@ export interface SettingsState {
   midiAvailable: MidiStatus,
   midiInputId: string,
   keySignature: KeySignaturesIndex | null,
-  staffIntervals: StaffInterval
+  staffIntervals: StaffInterval,
+  sound: boolean
 }
 
 export const defaultIntervals: StaffInterval = {

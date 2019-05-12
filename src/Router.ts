@@ -6,7 +6,6 @@ import GameOver from './Views/GameOver/GameOver.vue'
 import Options from './Views/Options/Options.vue'
 import PianoSettings from './Views/PianoSettings/PianoSettings.vue'
 import MidiHelp from './Views/Help/MidiHelp.vue'
-import Notesinterval from './Views/Options/NotesInterval/NotesInterval.vue'
 
 Vue.use(Router)
 
@@ -40,9 +39,9 @@ export default new Router({
       component: MidiHelp
     },
     {
-      path: '/options/interval',
+      path: '/options/notes',
       name: 'notesinterval',
-      component: Notesinterval
+      component: PianoSettings
     },
     {
       path: '/options/piano',

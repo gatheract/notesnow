@@ -26,6 +26,10 @@ import { INotePitch } from '../../../Notation/NoteData'
 
 @Component
 export default class Piano extends Vue {
+
+  get imgPath(): string {
+    return pianoSVG
+  }
   protected svgDoc: Document
   protected keys: HTMLCollectionOf<SVGRectElement>
   protected midiKeys: SVGRectElement[] = []
@@ -41,18 +45,12 @@ export default class Piano extends Vue {
   protected octaveEndLine: SVGLineElement
   protected highlightedKey: SVGRectElement
 
-  @gameModule.Getter(GET_NATURAL_PITCHES)
-  protected notes: PitchesCollection
-  @gameModule.Getter(GET_ACTIVE_PITCH)
-  protected activePitch: INotePitch | null
-  @pianoModule.Getter(GET_BLUR_UNNECESARY)
-  protected blur: boolean
-  @pianoModule.Getter(GET_MARK_OCTAVE)
-  protected markOctave: boolean
-  @pianoModule.Getter(GET_HIGH_CORRECT)
-  protected highCorrect: boolean
-  @pianoModule.Getter(GET_HIGH_ATTEMPT_CORRECT)
-  protected highCorrectAttempt: boolean
+  @gameModule.Getter(GET_NATURAL_PITCHES) protected notes: PitchesCollection
+  @gameModule.Getter(GET_ACTIVE_PITCH) protected activePitch: INotePitch | null
+  @pianoModule.Getter(GET_BLUR_UNNECESARY) protected blur: boolean
+  @pianoModule.Getter(GET_MARK_OCTAVE) protected markOctave: boolean
+  @pianoModule.Getter(GET_HIGH_CORRECT) protected highCorrect: boolean
+  @pianoModule.Getter(GET_HIGH_ATTEMPT_CORRECT) protected highCorrectAttempt: boolean
 
   @Watch('activePitch')
   public onPropertyChanged() {
@@ -60,8 +58,9 @@ export default class Piano extends Vue {
     this.highCorrectHandler()
   }
 
-  get imgPath(): string {
-    return pianoSVG
+  public beforeDestroy() {
+    this.$off(EVENT_GUESS_RESULT)
+    this.$off(EVENT_MIDI_DEV_KEY_RELEASED)
   }
 
   protected highCorrectHandler() {
@@ -182,6 +181,7 @@ export default class Piano extends Vue {
     if (keyElement.getAttribute('class')) {
       const midiVal = Number(keyElement.getAttribute('midi-val'))
       this.keyOff(midiVal)
+      EventBus.$emit(EVENT_PIANO_KEY_RELEASED, midiVal, this.ignorePitch)
     }
   }
 
@@ -189,6 +189,7 @@ export default class Piano extends Vue {
    * Receive the result of a guess and paint the key
    */
   protected guessResult(midiVal: number, correct: boolean) {
+
     this.midiKeys[midiVal].classList.add(
       correct ? this.CORRECT_KEY_CLASS : this.WRONG_KEY_CLASS
     )
@@ -266,11 +267,6 @@ export default class Piano extends Vue {
       s.rootElement.style.display = 'none'
       setTimeout(() => { s.rootElement.style.display = 'block' }, 100)
     }
-  }
-
-  protected beforeDestroy() {
-    this.$off(EVENT_GUESS_RESULT)
-    this.$off(EVENT_MIDI_DEV_KEY_RELEASED)
   }
 }
 </script>

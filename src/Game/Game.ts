@@ -9,6 +9,7 @@ import PianoArea from '@/Drawing/PianoArea'
 import StaffArea from '@/Drawing/StaffArea'
 import ProgressArea from '@/Drawing/ProgressArea'
 import { INotePitch } from '@/Notation/NoteData'
+import Audio from '@/Audio/Audio'
 
 export default class Game {
   public static getInstance() {
@@ -27,7 +28,7 @@ export default class Game {
   private levelRunning: boolean
   private progressMeter: ProgressMeter
   private speed: number
-
+  private soundEnabled: boolean
   private gameType: GameType
 
   private keyUpListener: any
@@ -36,6 +37,7 @@ export default class Game {
   private progressArea: ProgressArea
   private staffArea: StaffArea
   private pianoArea: PianoArea
+  private audio: Audio
 
   private constructor() { }
 
@@ -48,8 +50,11 @@ export default class Game {
     GameStore.setClearStats()
     GameStore.initializeNotes()
 
+    this.audio = new Audio()
     this.gameType = GameStore.getGameType()
     this.speed = GameStore.getSpeed()
+    this.soundEnabled = GameStore.getSoundStatus()
+
     this.addKeyListeners()
     this.running = true
     this.fillScreen()
@@ -96,6 +101,9 @@ export default class Game {
     document.addEventListener('keyup', this.keyUpListener, false)
     EventBus.$on(EVENT_PIANO_KEY_PRESSED, this.handleNotePress.bind(this))
     EventBus.$on(EVENT_MIDI_DEV_KEY_PRESSED, this.handleMidiNotePress.bind(this))
+
+    EventBus.$on(EVENT_PIANO_KEY_RELEASED, this.handleNoteRelease.bind(this))
+    EventBus.$on(EVENT_MIDI_DEV_KEY_RELEASED, this.handleNoteRelease.bind(this))
   }
 
   /**
@@ -108,11 +116,21 @@ export default class Game {
     EventBus.$off(EVENT_MIDI_DEV_KEY_RELEASED)
   }
 
+  private handleNoteRelease(midiVal: number, ignorePitch: boolean) {
+    if (this.soundEnabled) {
+      this.audio.stopNote(midiVal)
+    }
+
+  }
+
   /**
    * Use the note pressed (by keyboard/touch/click)
    * to display wrong/right guess result
    */
   private handleNotePress(midiVal: number, ignorePitch: boolean) {
+    if (this.soundEnabled) {
+      this.audio.playNote(midiVal)
+    }
     const notes = GameStore.getNaturalPitches()
     const note = Object.values(notes).find((i) => i.midiValue === midiVal)
     if (note) {

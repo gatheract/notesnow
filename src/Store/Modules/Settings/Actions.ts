@@ -13,6 +13,7 @@ export const SET_ENABLE_MIDI = 'SET_ENABLE_MIDI'
 export const SET_MIDI_INPUT_ID = 'SET_MIDI_INPUT_ID'
 export const SET_KEY_SIGNATURE = 'SET_KEY_SIGNATURE'
 export const SET_STAFF_SELECTED_INTERVAL = 'SET_STAFF_SELECTED_INTERVAL'
+export const SET_SOUND = 'SET_SOUND'
 export const RESTORE_STAFF_SELECTED_INTERVAL = 'RESTORE_STAFF_SELECTED_INTERVAL'
 
 export const actions: ActionTree<SettingsState, RootState> = {
@@ -46,6 +47,9 @@ export const actions: ActionTree<SettingsState, RootState> = {
     commit(MUT.MUT_STAFF_SELECTED_INTERVAL_START, interval.startPitch)
     commit(MUT.MUT_STAFF_SELECTED_INTERVAL_END, interval.endPitch)
 
+  },
+  [SET_SOUND]({ commit }, sound: boolean) {
+    commit(MUT.MUT_SOUND, sound)
   },
 
 }

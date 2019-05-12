@@ -13,7 +13,7 @@ export const state: GameState = {
     activePitch: null,
     gameSpeed: 100,
     practiceSpeed: 100,
-    baseSpeed: 1.3,
+    baseSpeed: 1,
     speedIncrement: 0.1,
     paused: false
 }

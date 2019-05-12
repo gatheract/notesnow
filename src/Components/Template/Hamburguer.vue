@@ -1,29 +1,41 @@
 <template>
   <nav role="navigation">
     <div id="menuToggle">
-      <input type="checkbox" v-on:click="toggle">
+      <input type="checkbox" v-on:click="toggle" v-model="showMenu">
       <span></span>
       <span></span>
       <span></span>
     </div>
-    <ul id="menu" v-bind:class="{ hidden: showMenu}">
-        
-        <div class="linksContainer">
-          <div id="menuTitle">
-            Game Menu
-          </div>
-        <router-link to="/">        
-          <li><i class='uil uil-home'> </i>  {{$t('Hamburguer.home')}}</li>
+    <ul id="menu" v-bind:class="{ hidden: showMenu}" @click="close">
+      <div class="linksContainer">
+        <div id="menuTitle">Game Menu</div>
+        <router-link to="/">
+          <li>
+            <i class="uil uil-home"></i>
+            {{$t('Hamburguer.home')}}
+          </li>
         </router-link>
+
         <router-link to="/options">
-          <li><i class='uil uil-cog'> </i>{{$t('Hamburguer.settings')}}</li>
+          <li>
+            <i class="uil uil-play"></i>
+            {{$t('Hamburguer.newGame')}}
+          </li>
+        </router-link>
+        <router-link to="/options/piano">
+          <li>
+            <i class="uil uil-cog"></i>
+            {{$t('Hamburguer.settings')}}
+          </li>
         </router-link>
         <a href="https://github.com/Enchufadoo/notesnow" class="lastLink">
-          <li><i></i>{{$t('Hamburguer.github')}}</li>
-        </a>  
-        </div>
-        
-      </ul>
+          <li>
+            <i></i>
+            {{$t('Hamburguer.github')}}
+          </li>
+        </a>
+      </div>
+    </ul>
   </nav>
 </template>
 
@@ -36,6 +48,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class Hamburguer extends Vue {
   private showMenu: boolean = false
+  private close() {
+    this.showMenu = false
+  }
+
   private toggle() {
     this.showMenu = !this.showMenu
   }
@@ -50,9 +66,9 @@ a {
 }
 
 a:hover {
-  color:#888;
+  color: #888;
 }
-nav{
+nav {
   position: absolute;
   z-index: 999;
 }
@@ -65,11 +81,10 @@ nav{
   z-index: 1;
   -webkit-user-select: none;
   user-select: none;
-  @include media("<tablet",) {
+  @include media("<tablet") {
     top: 10px;
     left: 10px;
   }
-  
 }
 
 #menuToggle input {
@@ -98,7 +113,7 @@ nav{
   margin-bottom: 5px;
   position: relative;
 
-  background:black;
+  background: black;
   border-radius: 3px;
 
   z-index: 1;
@@ -138,7 +153,6 @@ nav{
  * Ohyeah and the last one should go the other direction
  */
 #menuToggle input:checked ~ span:nth-last-child(2) {
-  
   transform: rotate(0deg) scale(0.2, 0.2);
   opacity: 0;
 }
@@ -152,7 +166,7 @@ nav{
   top: 0;
   height: 100vh;
   width: 300px;
-  
+
   padding: 20px;
   padding-top: 115px;
   height: 100vh;
@@ -163,13 +177,13 @@ nav{
 
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
- 
+
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    
-    @media only screen and (max-width: 600px) {
-      width: 100vw;
-    }
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  @media only screen and (max-width: 600px) {
+    width: 100vw;
+  }
 }
 
 #menu li {
@@ -177,20 +191,22 @@ nav{
   font-size: 18px;
 }
 
-#menu.hidden{
+#menu.hidden {
   transform: none;
 }
 
-#menuTitle{
-  font-size: 20px; font-weight: bold; margin-left: 5px
+#menuTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 5px;
 }
 
-.linksContainer{
-  display: flex; 
-  flex-direction: column; 
-  height: 100%
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
-.lastLink{
+.lastLink {
   margin-top: auto;
 }
 </style>
