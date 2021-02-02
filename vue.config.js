@@ -38,8 +38,6 @@ module.exports = {
       .end()
     
   },
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/notesnow/'
-    : '/',
+  publicPath: '/',
   productionSourceMap: false
 }
